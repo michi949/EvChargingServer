@@ -12,15 +12,16 @@ public class LoadyServer {
         LoadyServer server =  new LoadyServer();
         SpringApplication.run(LoadyServer.class, args);
         System.out.println("Rest API Started!");
-
         server.startOptimizer();
     }
 
 
+
+    /**
+     * Starts the Optimizer
+     */
     private void startOptimizer() {
         optimizer = new Optimizer();
         optimizer.run();
     }
-
-
 }
