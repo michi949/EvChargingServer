@@ -1,8 +1,11 @@
 package at.fhooe.mc.server;
 
+import at.fhooe.mc.server.Connector.WeatherConnector;
 import at.fhooe.mc.server.Services.Optimizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.UnsupportedEncodingException;
 
 @SpringBootApplication
 public class LoadyServer {

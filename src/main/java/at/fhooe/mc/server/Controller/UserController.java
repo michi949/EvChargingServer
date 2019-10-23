@@ -7,27 +7,27 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    @GetMapping("/getUserID")
+    @GetMapping(value = "/getUserID", produces = "application/json")
     public User getUserID(@RequestParam(name="id") int id) {
 
         return new User();
     }
 
-    @GetMapping("/getUserName")
+    @GetMapping(value = "/getUserName", produces = "application/json")
     public User getUserName(@RequestParam(name="id") int id){
 
 
         return new User();
     }
 
-    @PostMapping("/setUser")
+    @PostMapping(value = "/setUser", produces = "application/json")
     public String setUser() {
 
         return "success";
     }
 
 
-    @PutMapping("/updateUser")
+    @PutMapping(value = "/updateUser", produces = "application/json")
     public String updateUser() {
 
         return "success";

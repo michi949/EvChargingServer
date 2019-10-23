@@ -9,33 +9,33 @@ import java.util.ArrayList;
 @RestController
 public class SessionController {
 
-    @GetMapping("/getSession")
+    @GetMapping(value = "/getSession", produces = "application/json")
     public Session getSession(@RequestParam(name="user") String user, @RequestParam(name="id") int id) {
 
         return new Session();
     }
 
 
-    @GetMapping("/getAllSession")
+    @GetMapping(value = "/getAllSession", produces = "application/json")
     public ArrayList<Session> getAllSession(){
 
         return new ArrayList<Session>();
     }
 
 
-    @PostMapping("/setSession")
+    @PostMapping(value = "/setSession", produces = "application/json")
     public String setSession(){
 
         return "success";
     }
 
-    @PutMapping("/updateSession")
+    @PutMapping(value = "/updateSession", produces = "application/json")
     public String updateSession() {
 
         return "success";
     }
 
-    @PutMapping("/stopSession")
+    @PutMapping(value = "/stopSession", produces = "application/json")
     public String stopSession() {
 
         return "success";
