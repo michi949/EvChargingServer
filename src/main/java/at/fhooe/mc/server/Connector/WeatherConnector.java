@@ -36,11 +36,17 @@ public class WeatherConnector {
      * @return Weather Data.
      * @throws UnsupportedEncodingException
      */
-    public Weather peformRequest() throws UnsupportedEncodingException {
+    public Weather peformRequest() {
 
-        String url = path + getParamsString();
+        String url = null;
+        try {
+            url = path + getParamsString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+
         String jsonWeather =  this.restTemplate.getForObject(url, String.class);
-
 
         return WeatherParser.parseWeather(jsonWeather);
     }
@@ -65,7 +71,6 @@ public class WeatherConnector {
         String resultString = result.toString();
         return resultString.length() > 0 ? resultString.substring(0, resultString.length() - 1) : resultString;
     }
-
 
     /**
      * Setups the parametes for an request.
