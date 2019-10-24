@@ -1,0 +1,21 @@
+version: "2"
+services:
+  db:
+      image: mariadb
+      environment:
+          - MYSQL_ROOT_PASSWORD=Longboard135
+          - MYSQL_DATABASE=Loady
+      volumes:
+          - ./database:/var/lib/mysql
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      environment:
+          - PMA_HOST=db
+      restart: always
+      ports:
+          - 4040:80
+      volumes:
+          - /sessions
+      links:
+          - db
