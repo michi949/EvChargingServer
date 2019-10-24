@@ -1,6 +1,10 @@
 package at.fhooe.mc.server.Data;
 
-public class Weather {
+import javax.persistence.Entity;
+import java.io.Serializable;
+
+@Entity
+public class Weather implements Serializable {
     String location;
     double temperature;
     int pressure;
