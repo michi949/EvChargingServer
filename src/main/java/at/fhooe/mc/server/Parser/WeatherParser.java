@@ -59,9 +59,9 @@ public class WeatherParser {
      * @return updated weather data
      */
     private static Weather readSysValues(Weather weather, JsonNode subNode) {
-
-        weather.setSunrise(new Date(subNode.path("sunrise").asInt()));
-        weather.setSunset(new Date(subNode.path("sunset").asInt()));
+        //TODO: Fix Date converting with timestamp
+        weather.setSunrise(new Date(subNode.path("sunrise").asLong()));
+        weather.setSunset(new Date(subNode.path("sunset").asLong()));
 
         return weather;
     }

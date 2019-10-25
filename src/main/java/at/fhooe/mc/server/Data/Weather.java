@@ -12,25 +12,16 @@ public class Weather implements Serializable {
     @Id
     @GeneratedValue
     int id;
-    @NotBlank
     String location;
-    @NotBlank
     double temperature;
-    @NotBlank
     int pressure;
-    @NotBlank
     double temperature_max;
-    @NotBlank
     double temperature_min;
-    @NotBlank
     int clouds;
-    @NotBlank
     @Temporal(TemporalType.TIMESTAMP)
     Date sunrise;
-    @NotBlank
     @Temporal(TemporalType.TIMESTAMP)
     Date sunset;
-    @NotBlank
     String light;
 
     public Weather() {
