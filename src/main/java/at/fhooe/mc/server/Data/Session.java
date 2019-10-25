@@ -1,11 +1,18 @@
 package at.fhooe.mc.server.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "Session")
 public class Session implements Serializable {
+    @Id
+    @GeneratedValue
     int id;
+    @Temporal(TemporalType.TIMESTAMP)
     Date startDate;
+    @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
     int currentPercent;
     int power;

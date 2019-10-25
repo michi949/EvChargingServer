@@ -1,9 +1,17 @@
 package at.fhooe.mc.server.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "Reservation")
 public class Reservation implements Serializable {
+    @Id
+    @GeneratedValue
     int id;
     Date startDate;
     Date endDate;

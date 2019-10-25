@@ -1,7 +1,11 @@
 package at.fhooe.mc.server.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "User")
 public class User implements Serializable {
     int id;
     String name;
