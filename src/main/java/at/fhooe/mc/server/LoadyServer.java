@@ -4,10 +4,12 @@ import at.fhooe.mc.server.Connector.WeatherConnector;
 import at.fhooe.mc.server.Services.Optimizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.io.UnsupportedEncodingException;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class LoadyServer {
     Optimizer optimizer;
 
@@ -17,8 +19,6 @@ public class LoadyServer {
         System.out.println("Rest API Started!");
         server.startOptimizer();
     }
-
-
 
     /**
      * Starts the Optimizer

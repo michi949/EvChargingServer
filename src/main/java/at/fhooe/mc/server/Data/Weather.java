@@ -1,31 +1,51 @@
 package at.fhooe.mc.server.Data;
 
-import javax.persistence.Entity;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
+@Table(name = "Weather")
 public class Weather implements Serializable {
+    @Id
+    @GeneratedValue
+    int id;
+    @NotBlank
     String location;
+    @NotBlank
     double temperature;
+    @NotBlank
     int pressure;
+    @NotBlank
     double temperature_max;
+    @NotBlank
     double temperature_min;
+    @NotBlank
     int clouds;
-    int sunrise;
-    int sunset;
+    @NotBlank
+    @Temporal(TemporalType.TIMESTAMP)
+    Date sunrise;
+    @NotBlank
+    @Temporal(TemporalType.TIMESTAMP)
+    Date sunset;
+    @NotBlank
     String light;
 
     public Weather() {
+        id = 0;
         location = "Hagenberg";
         temperature = 0.0;
         pressure = 0;
         temperature_max = 0.0;
         temperature_min = 0.0;
         clouds = 0;
-        sunrise = 0;
-        sunset = 0;
+        sunrise = new Date();
+        sunset = new Date();
         light = "light";
     }
+
 
     public String getLocation() {
         return location;
@@ -75,19 +95,19 @@ public class Weather implements Serializable {
         this.clouds = clouds;
     }
 
-    public int getSunrise() {
+    public Date getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(int sunrise) {
+    public void setSunrise(Date sunrise) {
         this.sunrise = sunrise;
     }
 
-    public int getSunset() {
+    public Date getSunset() {
         return sunset;
     }
 
-    public void setSunset(int sunset) {
+    public void setSunset(Date sunset) {
         this.sunset = sunset;
     }
 

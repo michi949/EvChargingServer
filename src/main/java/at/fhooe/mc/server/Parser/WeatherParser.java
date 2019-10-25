@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.nio.file.WatchEvent;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -59,8 +60,8 @@ public class WeatherParser {
      */
     private static Weather readSysValues(Weather weather, JsonNode subNode) {
 
-        weather.setSunrise(subNode.path("sunrise").asInt());
-        weather.setSunset(subNode.path("sunset").asInt());
+        weather.setSunrise(new Date(subNode.path("sunrise").asInt()));
+        weather.setSunset(new Date(subNode.path("sunset").asInt()));
 
         return weather;
     }
@@ -81,7 +82,7 @@ public class WeatherParser {
     /**
      * Takes weather sub tree vom Json and parse it.
      * Loop over an array of data.
-     * @param weather weathe data
+     * @param weather weather data
      * @param subNode sub tree
      * @return updated weather data
      */
