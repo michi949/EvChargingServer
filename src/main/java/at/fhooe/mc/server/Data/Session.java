@@ -1,6 +1,7 @@
 package at.fhooe.mc.server.Data;
 
 import javax.persistence.*;
+import javax.sound.sampled.Port;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class Session implements Serializable {
     int currentPercent;
     int power;
     Car car;
+    Port port;
 
     public Session() {
         id = 0;

@@ -16,6 +16,7 @@ public class Car implements Serializable {
     int count;
     Double capacity;
     Double maxPower;
+    User owner;
 
     public Car() {
         id = 0;
@@ -23,6 +24,7 @@ public class Car implements Serializable {
         count = 0;
         capacity = 56.0;
         maxPower = 100.0;
+        owner = new User();
     }
 
     public int getId() {

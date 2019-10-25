@@ -3,6 +3,7 @@ package at.fhooe.mc.server.Data;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -11,6 +12,7 @@ public class User implements Serializable {
     String name;
     String email;
     int card;
+    Set<Car> cars;
 
     public User() {
         id = 0;

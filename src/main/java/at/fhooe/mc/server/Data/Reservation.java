@@ -17,6 +17,7 @@ public class Reservation implements Serializable {
     Date endDate;
     int port;
     User user;
+    Car car;
 
     public Reservation() {
         id = 0;
@@ -24,6 +25,7 @@ public class Reservation implements Serializable {
         endDate = new Date();
         port = 0;
         user = new User();
+        car = new Car();
     }
 
     public int getId() {
