@@ -1,12 +1,24 @@
 package at.fhooe.mc.server.Data;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "loadingport")
 public class LoadingPort {
+    @Id
     int port;
     boolean occupied;
+
+    @OneToOne(mappedBy = "loadingport")
     Session session;
-    Set<Reservation> reservations;
+
+    @OneToMany(mappedBy = "loadingport", cascade = CascadeType.ALL)
+    Set<Reservation> reservation;
+
+    @ManyToOne
+    @JoinColumn
+    LoadingStation loadingstation;
 
     public LoadingPort() {
 
@@ -37,10 +49,10 @@ public class LoadingPort {
     }
 
     public Set<Reservation> getReservations() {
-        return reservations;
+        return reservation;
     }
 
     public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
+        this.reservation = reservations;
     }
 }

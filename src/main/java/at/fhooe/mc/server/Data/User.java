@@ -1,18 +1,24 @@
 package at.fhooe.mc.server.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User implements Serializable {
+    @Id
+    @GeneratedValue
     int id;
     String name;
     String email;
     int card;
-    Set<Car> cars;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<Car> car;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<Reservation> reservation;
 
     public User() {
         id = 0;
@@ -51,5 +57,21 @@ public class User implements Serializable {
 
     public void setCard(int card) {
         this.card = card;
+    }
+
+    public Set<Car> getCar() {
+        return car;
+    }
+
+    public void setCar(Set<Car> car) {
+        this.car = car;
+    }
+
+    public Set<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Set<Reservation> reservation) {
+        this.reservation = reservation;
     }
 }

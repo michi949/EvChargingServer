@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Weather")
+@Table(name = "weather")
 public class Weather implements Serializable {
     @Id
     @GeneratedValue
@@ -37,6 +37,13 @@ public class Weather implements Serializable {
         light = "light";
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLocation() {
         return location;

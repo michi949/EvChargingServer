@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Car")
+@Table(name = "car")
 public class Car implements Serializable {
     @Id
     @GeneratedValue
@@ -13,7 +13,13 @@ public class Car implements Serializable {
     int count;
     Double capacity;
     Double maxPower;
-    User owner;
+
+    @ManyToOne
+    @JoinColumn
+    User user;
+
+    @OneToOne(mappedBy = "car")
+    Session session;
 
     public Car() {
         id = 0;
@@ -21,7 +27,6 @@ public class Car implements Serializable {
         count = 0;
         capacity = 56.0;
         maxPower = 100.0;
-        owner = new User();
     }
 
     public int getId() {
@@ -62,5 +67,21 @@ public class Car implements Serializable {
 
     public void setMaxPower(Double maxPower) {
         this.maxPower = maxPower;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

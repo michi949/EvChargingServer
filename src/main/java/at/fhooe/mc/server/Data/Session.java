@@ -1,12 +1,11 @@
 package at.fhooe.mc.server.Data;
 
 import javax.persistence.*;
-import javax.sound.sampled.Port;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Session")
+@Table(name = "session")
 public class Session implements Serializable {
     @Id
     @GeneratedValue
@@ -17,8 +16,14 @@ public class Session implements Serializable {
     Date endDate;
     int currentPercent;
     int power;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
     Car car;
-    Port port;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
+    LoadingPort loadingport;
 
     public Session() {
         id = 0;
@@ -26,7 +31,6 @@ public class Session implements Serializable {
         endDate = new Date();
         currentPercent = 0;
         power = 0;
-        car = new Car();
     }
 
     public int getId() {
@@ -75,5 +79,13 @@ public class Session implements Serializable {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public LoadingPort getLoadingport() {
+        return loadingport;
+    }
+
+    public void setLoadingport(LoadingPort loadingport) {
+        this.loadingport = loadingport;
     }
 }

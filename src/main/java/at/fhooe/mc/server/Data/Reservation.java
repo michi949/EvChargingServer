@@ -1,31 +1,30 @@
 package at.fhooe.mc.server.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Reservation")
+@Table(name = "reservation")
 public class Reservation implements Serializable {
     @Id
     @GeneratedValue
     int id;
     Date startDate;
     Date endDate;
-    int port;
+
+    @ManyToOne
+    @JoinColumn
     User user;
-    Car car;
+
+    @ManyToOne
+    @JoinColumn
+    LoadingPort loadingport;
 
     public Reservation() {
         id = 0;
         startDate = new Date();
         endDate = new Date();
-        port = 0;
-        user = new User();
-        car = new Car();
     }
 
     public int getId() {
@@ -52,19 +51,19 @@ public class Reservation implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LoadingPort getLoadingport() {
+        return loadingport;
+    }
+
+    public void setLoadingport(LoadingPort loadingport) {
+        this.loadingport = loadingport;
     }
 }

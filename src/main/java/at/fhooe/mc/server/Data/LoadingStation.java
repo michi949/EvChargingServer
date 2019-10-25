@@ -1,12 +1,18 @@
 package at.fhooe.mc.server.Data;
 
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "loadingstation")
 public class LoadingStation {
+    @Id
     int stationNr;
     String owner;
-    Set<LoadingPort> ports;
+
+    @OneToMany(mappedBy = "loadingstation", cascade = CascadeType.ALL)
+    Set<LoadingPort> loadingport;
 
     public LoadingStation() {
         stationNr = 0;
@@ -29,11 +35,11 @@ public class LoadingStation {
         this.owner = owner;
     }
 
-    public Set<LoadingPort> getPorts() {
-        return ports;
+    public Set<LoadingPort> getLoadingport() {
+        return loadingport;
     }
 
-    public void setPorts(Set<LoadingPort> ports) {
-        this.ports = ports;
+    public void setLoadingport(Set<LoadingPort> loadingport) {
+        this.loadingport = loadingport;
     }
 }
