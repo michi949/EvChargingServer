@@ -21,7 +21,13 @@ public class LoadingPort {
     LoadingStation loadingstation;
 
     public LoadingPort() {
+    }
 
+    public LoadingPort(int port) {
+        this.port = port;
+        session = null;
+        reservation = null;
+        occupied = false;
     }
 
     public int getPort() {
@@ -54,5 +60,21 @@ public class LoadingPort {
 
     public void setReservations(Set<Reservation> reservations) {
         this.reservation = reservations;
+    }
+
+    public Set<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Set<Reservation> reservation) {
+        this.reservation = reservation;
+    }
+
+    public LoadingStation getLoadingstation() {
+        return loadingstation;
+    }
+
+    public void setLoadingstation(LoadingStation loadingstation) {
+        this.loadingstation = loadingstation;
     }
 }

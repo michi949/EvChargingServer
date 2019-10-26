@@ -17,9 +17,13 @@ public class WeatherController {
 
     @GetMapping(value = "/getCurrentWeather", produces = "application/json")
     public Weather getCurrentWeather() {
-        Weather weather = connector.peformRequest();
-        weatherRepository.save(weather);
-        return weather;
+        Weather weather = weatherRepository.findOne((int) weatherRepository.count());
+
+        if(weather != null) {
+            return weather;
+        }
+
+        return null;
     }
 
 

@@ -2,7 +2,12 @@ package at.fhooe.mc.server.Data;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "loadingstation")
@@ -17,6 +22,20 @@ public class LoadingStation {
     public LoadingStation() {
         stationNr = 0;
         owner = "undefiend";
+    }
+
+    /**
+     * Sets parameter.
+     * Revers sets the loadingstation on loading port.
+     * @param stationNr
+     * @param owner
+     * @param loadingport
+     */
+    public LoadingStation(int stationNr, String owner, List<LoadingPort> loadingport) {
+        this.stationNr = stationNr;
+        this.owner = owner;
+        this.loadingport =  new HashSet<LoadingPort>(loadingport);
+        this.loadingport.forEach(x -> x.setLoadingstation(this));
     }
 
     public int getStationNr() {
