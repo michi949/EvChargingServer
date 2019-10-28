@@ -2,6 +2,9 @@ package at.fhooe.mc.server.Controller;
 
 
 import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
+import at.fhooe.mc.server.Services.Optimizer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,9 +12,12 @@ import java.util.ArrayList;
 @RestController
 public class SessionController {
 
+    @Autowired
+    UpdateOptimizer updateOptimizer;
+
     @GetMapping(value = "/getSession", produces = "application/json")
     public Session getSession(@RequestParam(name="user") String user, @RequestParam(name="id") int id) {
-
+        updateOptimizer.addSession();
         return new Session();
     }
 

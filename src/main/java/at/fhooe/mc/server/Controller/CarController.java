@@ -20,11 +20,7 @@ public class CarController {
         return new Car();
     }
 
-    /**
-     *
-     * @param user
-     * @return
-     */
+
     @GetMapping(value = "/getCarFromUser", produces = "application/json")
     public ArrayList<Car> getCarsFormUser(@RequestParam(name="user") String user) {
 

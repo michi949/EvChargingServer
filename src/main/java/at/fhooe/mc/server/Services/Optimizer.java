@@ -1,12 +1,10 @@
 package at.fhooe.mc.server.Services;
 
 import at.fhooe.mc.server.Data.Weather;
-import at.fhooe.mc.server.Interfaces.UpdateWeather;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 
-@Service
-public class Optimizer implements Runnable, UpdateWeather {
+
+public class Optimizer implements Runnable, UpdateOptimizer {
 
 
     @Override
@@ -22,5 +20,10 @@ public class Optimizer implements Runnable, UpdateWeather {
     @Override
     public void updateForecastWeather(Weather weather) {
 
+    }
+
+    @Override
+    public void addSession() {
+        System.out.println("Works hell yeah!!!");
     }
 }

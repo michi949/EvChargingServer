@@ -3,26 +3,25 @@ package at.fhooe.mc.server.Services;
 
 import at.fhooe.mc.server.Connector.WeatherConnector;
 import at.fhooe.mc.server.Data.Weather;
-import at.fhooe.mc.server.Interfaces.UpdateWeather;
+import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Repository.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * Download the weather for ervery hour.
  */
 @Component
 public class WeatherService  {
-    UpdateWeather updateWeather;
+    UpdateOptimizer updateOptimizer;
     WeatherConnector weatherConnector;
 
     @Autowired
     WeatherRepository weatherRepository;
 
-    public WeatherService(UpdateWeather updateWeather) {
-        this.updateWeather = updateWeather;
+    public WeatherService(UpdateOptimizer updateOptimizer) {
+        this.updateOptimizer = updateOptimizer;
         weatherConnector = new WeatherConnector();
     }
 
@@ -33,7 +32,7 @@ public class WeatherService  {
 
         if (weather != null) {
             weatherRepository.save(weather);
-            updateWeather.updateCurrentWeather(weather);
+            updateOptimizer.updateCurrentWeather(weather);
         }
     }
 
