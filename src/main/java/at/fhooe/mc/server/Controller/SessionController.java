@@ -12,12 +12,10 @@ import java.util.ArrayList;
 @RestController
 public class SessionController {
 
-    @Autowired
-    UpdateOptimizer updateOptimizer;
 
     @GetMapping(value = "/getSession", produces = "application/json")
     public Session getSession(@RequestParam(name="user") String user, @RequestParam(name="id") int id) {
-        updateOptimizer.addSession();
+
         return new Session();
     }
 

@@ -6,7 +6,6 @@ import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 
 public class Optimizer implements Runnable, UpdateOptimizer {
 
-
     @Override
     public void run() {
         System.out.println("Optimizer Started!");
@@ -14,7 +13,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Override
     public void updateCurrentWeather(Weather weather) {
-        System.out.println("Weather Updated.");
+
     }
 
     @Override
@@ -24,6 +23,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Override
     public void addSession() {
-        System.out.println("Works hell yeah!!!");
+
     }
 }

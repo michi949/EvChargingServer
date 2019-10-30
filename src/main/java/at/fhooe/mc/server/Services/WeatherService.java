@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 /**
  * Download the weather for ervery hour.
  */
-@Component
 public class WeatherService  {
     UpdateOptimizer updateOptimizer;
     WeatherConnector weatherConnector;
@@ -20,12 +19,14 @@ public class WeatherService  {
     @Autowired
     WeatherRepository weatherRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public WeatherService(UpdateOptimizer updateOptimizer) {
         this.updateOptimizer = updateOptimizer;
         weatherConnector = new WeatherConnector();
     }
 
     // 0 0 */1 * * *  every hour.
+    //Cron Job, to get data from api.
     @Scheduled(cron = "0 0 */1 * * *")
     public void gatherData() {
         Weather weather = weatherConnector.peformRequest();
