@@ -1,8 +1,13 @@
 package at.fhooe.mc.server.Controller;
 
 
+import at.fhooe.mc.server.Data.Car;
 import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Data.User;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
+import at.fhooe.mc.server.Repository.CarRepository;
+import at.fhooe.mc.server.Repository.SessionRepository;
+import at.fhooe.mc.server.Repository.UserRepository;
 import at.fhooe.mc.server.Services.Optimizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +17,28 @@ import java.util.ArrayList;
 @RestController
 public class SessionController {
 
+    @Autowired
+    SessionRepository sessionRepository;
+
+    @Autowired
+    CarRepository carRepository;
 
     @GetMapping(value = "/getSession", produces = "application/json")
-    public Session getSession(@RequestParam(name="user") String user, @RequestParam(name="id") int id) {
-
-        return new Session();
+    public Session getSession(@RequestParam(name="id") int id) {
+        return sessionRepository.findOne(id);
     }
 
 
-    @GetMapping(value = "/getAllSession", produces = "application/json")
-    public ArrayList<Session> getAllSession(){
+    @GetMapping(value = "/getAllSessionFromCar", produces = "application/json")
+    public Session getAllSession(@RequestParam(name="id") int id){
 
-        return new ArrayList<Session>();
+        Car car = carRepository.findOne(id);
+
+        if(car == null) {
+            return null;
+        }
+
+        return car.getSession();
     }
 
 

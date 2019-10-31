@@ -1,7 +1,9 @@
 package at.fhooe.mc.server.Repository;
 
 import at.fhooe.mc.server.Data.Car;
+import at.fhooe.mc.server.Data.User;
 import at.fhooe.mc.server.Data.Weather;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**

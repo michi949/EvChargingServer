@@ -30,7 +30,6 @@ public class WeatherController {
     @GetMapping(value = "/getForecastWeather", produces = "application/json")
     public Weather getForecastWeather() {
 
-
         return new Weather();
     }
 }
