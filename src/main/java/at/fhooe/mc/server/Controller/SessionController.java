@@ -3,16 +3,11 @@ package at.fhooe.mc.server.Controller;
 
 import at.fhooe.mc.server.Data.Car;
 import at.fhooe.mc.server.Data.Session;
-import at.fhooe.mc.server.Data.User;
-import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Repository.CarRepository;
 import at.fhooe.mc.server.Repository.SessionRepository;
-import at.fhooe.mc.server.Repository.UserRepository;
-import at.fhooe.mc.server.Services.Optimizer;
+import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 public class SessionController {
@@ -22,6 +17,9 @@ public class SessionController {
 
     @Autowired
     CarRepository carRepository;
+
+    @Autowired
+    Optimizer optimizer;
 
     @GetMapping(value = "/getSession", produces = "application/json")
     public Session getSession(@RequestParam(name="id") int id) {

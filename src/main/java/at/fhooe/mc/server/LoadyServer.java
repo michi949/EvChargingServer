@@ -3,7 +3,7 @@ package at.fhooe.mc.server;
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
-import at.fhooe.mc.server.Services.Optimizer;
+import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import at.fhooe.mc.server.Services.WeatherService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

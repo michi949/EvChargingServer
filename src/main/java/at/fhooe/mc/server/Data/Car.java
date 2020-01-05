@@ -12,7 +12,6 @@ public class Car implements Serializable {
     String plate;
     int count;
     Double capacity;
-    Double maxPower;
 
     @ManyToOne
     @JoinColumn
@@ -26,7 +25,6 @@ public class Car implements Serializable {
         plate = "GM-WL456";
         count = 0;
         capacity = 56.0;
-        maxPower = 100.0;
     }
 
     public int getId() {
@@ -59,14 +57,6 @@ public class Car implements Serializable {
 
     public void setCapacity(Double capacity) {
         this.capacity = capacity;
-    }
-
-    public Double getMaxPower() {
-        return maxPower;
-    }
-
-    public void setMaxPower(Double maxPower) {
-        this.maxPower = maxPower;
     }
 
     public User getUser() {

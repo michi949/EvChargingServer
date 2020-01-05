@@ -21,9 +21,12 @@ public class WeatherController {
 
         if(weather != null) {
             return weather;
+        } else {
+            weatherRepository.save(connector.peformRequest());
+            weather = weatherRepository.findOne((int) weatherRepository.count());
         }
 
-        return null;
+        return weather;
     }
 
 

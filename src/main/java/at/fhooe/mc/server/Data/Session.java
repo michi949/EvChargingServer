@@ -14,8 +14,9 @@ public class Session implements Serializable {
     Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
-    int currentPercent;
     int power;
+    Double restCapacity;
+    Double endCapacity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
@@ -29,8 +30,9 @@ public class Session implements Serializable {
         id = 0;
         startDate = new Date();
         endDate = new Date();
-        currentPercent = 0;
         power = 0;
+        restCapacity = 0.0;
+        endCapacity = 0.0;
     }
 
     public int getId() {
@@ -57,14 +59,6 @@ public class Session implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getCurrentPercent() {
-        return currentPercent;
-    }
-
-    public void setCurrentPercent(int currentPercent) {
-        this.currentPercent = currentPercent;
-    }
-
     public int getPower() {
         return power;
     }
@@ -87,5 +81,21 @@ public class Session implements Serializable {
 
     public void setLoadingport(LoadingPort loadingport) {
         this.loadingport = loadingport;
+    }
+
+    public Double getRestCapacity() {
+        return restCapacity;
+    }
+
+    public void setRestCapacity(Double restCapacity) {
+        this.restCapacity = restCapacity;
+    }
+
+    public Double getEndCapacity() {
+        return endCapacity;
+    }
+
+    public void setEndCapacity(int capacityInPercent) {
+        this.endCapacity = car.getCapacity() * (capacityInPercent / 100);
     }
 }
