@@ -32,7 +32,6 @@ public class UserController {
 
     @PutMapping(value = "/updateUser", produces = "application/json")
     public String updateUser() {
-
         return "success";
     }
 

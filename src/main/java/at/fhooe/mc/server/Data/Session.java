@@ -15,8 +15,15 @@ public class Session implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
     int power;
+    Double rating;
     Double restCapacity;
     Double endCapacity;
+    Double optimizedPower;
+    Double minPower;
+    boolean isOptimized;
+    boolean isSlowMode;
+    boolean isFallBack;
+    long timeToEnd;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
@@ -27,12 +34,18 @@ public class Session implements Serializable {
     LoadingPort loadingport;
 
     public Session() {
+        rating = 0.0;
         id = 0;
         startDate = new Date();
         endDate = new Date();
-        power = 0;
         restCapacity = 0.0;
         endCapacity = 0.0;
+        minPower = 0.0;
+        optimizedPower = 0.0;
+        isOptimized = false;
+        isSlowMode = false;
+        isFallBack = false;
+        timeToEnd = 0;
     }
 
     public int getId() {
@@ -97,5 +110,61 @@ public class Session implements Serializable {
 
     public void setEndCapacity(int capacityInPercent) {
         this.endCapacity = car.getCapacity() * (capacityInPercent / 100);
+    }
+
+    public long getTimeToEnd() {
+        return timeToEnd;
+    }
+
+    public void setTimeToEnd(long timeToEnd) {
+        this.timeToEnd = timeToEnd;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Double getOptimizedPower() {
+        return optimizedPower;
+    }
+
+    public void setOptimizedPower(Double optimizedPower) {
+        this.optimizedPower = optimizedPower;
+    }
+
+    public Double getMinPower() {
+        return minPower;
+    }
+
+    public void setMinPower(Double minPower) {
+        this.minPower = minPower;
+    }
+
+    public boolean isOptimized() {
+        return isOptimized;
+    }
+
+    public void setOptimized(boolean optimized) {
+        isOptimized = optimized;
+    }
+
+    public boolean isSlowMode() {
+        return isSlowMode;
+    }
+
+    public void setSlowMode(boolean slowMode) {
+        isSlowMode = slowMode;
+    }
+
+    public boolean isFallBack() {
+        return isFallBack;
+    }
+
+    public void setFallBack(boolean fallBack) {
+        isFallBack = fallBack;
     }
 }

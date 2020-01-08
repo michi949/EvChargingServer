@@ -12,6 +12,7 @@ public class Car implements Serializable {
     String plate;
     int count;
     Double capacity;
+    boolean isOnePhase;
 
     @ManyToOne
     @JoinColumn
@@ -25,6 +26,7 @@ public class Car implements Serializable {
         plate = "GM-WL456";
         count = 0;
         capacity = 56.0;
+        isOnePhase = false;
     }
 
     public int getId() {
@@ -73,5 +75,13 @@ public class Car implements Serializable {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public boolean isOnePhase() {
+        return isOnePhase;
+    }
+
+    public void setOnePhase(boolean onePhase) {
+        isOnePhase = onePhase;
     }
 }
