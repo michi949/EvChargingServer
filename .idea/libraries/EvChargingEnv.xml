@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="EvChargingEnv">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../SimulationEnv/EvChargingEnv/out/artifacts/EvChargingEnv_jar/EvChargingEnv.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

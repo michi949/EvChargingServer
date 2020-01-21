@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Services.Optimizer;
 
+import Components.Battery;
+import Components.Vehicle;
 import at.fhooe.mc.server.Connector.ModbusConnector;
 import at.fhooe.mc.server.Data.Session;
 import at.fhooe.mc.server.Data.Weather;
