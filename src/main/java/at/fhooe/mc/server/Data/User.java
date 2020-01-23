@@ -20,11 +20,13 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     Set<Reservation> reservation;
 
-    public User() {
+    public User(){}
+
+    public User(String name, String email, int card) {
         id = 0;
-        name = "Michael";
-        email = "reder949@gmail.com";
-        card = 2131231412;
+        this.name = name;
+        this.email = email;
+        this.card = card;
     }
 
     public int getId() {
@@ -73,5 +75,16 @@ public class User implements Serializable {
 
     public void setReservation(Set<Reservation> reservation) {
         this.reservation = reservation;
+    }
+
+    public Car getCarFromUserWithID(int id){
+
+        for(Car car :  this.car){
+            if(car.id == id){
+                return car;
+            }
+        }
+
+        return null;
     }
 }

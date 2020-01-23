@@ -1,30 +1,28 @@
 package at.fhooe.mc.server.Services.Optimizer;
 
-import Components.Battery;
-import Components.Vehicle;
 import at.fhooe.mc.server.Connector.ModbusConnector;
 import at.fhooe.mc.server.Data.Session;
 import at.fhooe.mc.server.Data.Weather;
+import at.fhooe.mc.server.Interfaces.SimulationInterface;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Repository.LoadingPortRepository;
 import at.fhooe.mc.server.Repository.SessionRepository;
+import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 @Service
 public class Optimizer implements Runnable, UpdateOptimizer {
-    ModbusConnector modbusConnector = new ModbusConnector();
+    //ModbusConnector modbusConnector = new ModbusConnector();
     ArrayList<Session> sessions = new ArrayList<>();
     ArrayList<Weather> weathers = new ArrayList<>();
     Double availableSolarPower = 0.0;
+    public SimulationInterface simulationInterface;
 
     @Autowired
     SessionRepository sessionRepository;
@@ -230,7 +228,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     @Scheduled(initialDelay=120000, fixedRate=300000)
     private void monitorSessions(){
         for(Session session : sessions){
-            modbusConnector.checkSessions(session);
+            //modbusConnector.checkSessions(session);
         }
     }
 

@@ -12,7 +12,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface SessionRepository extends CrudRepository<Session, Integer> {
 
+    /**
     @Query("SELECT u FROM Session u WHERE u.card = ?1")
-    Session findUserByCard(int port);
+    Session findUserByCard(int port); */
 
 }

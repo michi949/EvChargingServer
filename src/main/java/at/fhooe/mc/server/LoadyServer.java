@@ -2,9 +2,11 @@ package at.fhooe.mc.server;
 
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
+import at.fhooe.mc.server.Interfaces.SimulationInterface;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import at.fhooe.mc.server.Services.WeatherService;
+import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -19,9 +21,10 @@ import java.util.List;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableScheduling
-public class LoadyServer {
+public class LoadyServer implements SimulationInterface {
     Optimizer optimizer;
     WeatherService weatherService;
+    Simulation simulation = new Simulation();
 
     @Autowired
     LoadingStationRepository loadingStationRepository;
@@ -39,6 +42,7 @@ public class LoadyServer {
      */
     private void startServices() {
         optimizer = new Optimizer();
+        optimizer.simulationInterface = this;
         optimizer.run();
 
         weatherService = new WeatherService(optimizer);
@@ -63,5 +67,10 @@ public class LoadyServer {
             loadingStationRepository.save(new LoadingStation(2, "FH-OOE", new ArrayList<LoadingPort>(List.of(port3, port4))));
             loadingStationRepository.save(new LoadingStation(3, "FH-OOE", new ArrayList<LoadingPort>(List.of(port5, port6))));
         };
+    }
+
+    @Override
+    public Simulation getSimulation() {
+        return this.simulation;
     }
 }

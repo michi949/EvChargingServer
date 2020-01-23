@@ -12,6 +12,12 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.card = ?1")
-    User findUserByCard(Integer card);
+    User findUserByCard(int card);
+
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    User findUserByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.id = ?1")
+    User findUserById(int id);
 
 }

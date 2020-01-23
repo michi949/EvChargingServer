@@ -10,9 +10,12 @@ public class Car implements Serializable {
     @GeneratedValue
     int id;
     String plate;
+    String type;
     int count;
     Double capacity;
     boolean isOnePhase;
+    int defaultPercent;
+    boolean defaultIsSlowMode;
 
     @ManyToOne
     @JoinColumn
@@ -21,12 +24,16 @@ public class Car implements Serializable {
     @OneToOne(mappedBy = "car")
     Session session;
 
-    public Car() {
-        id = 0;
-        plate = "GM-WL456";
-        count = 0;
-        capacity = 56.0;
-        isOnePhase = false;
+    public Car() {}
+
+    public Car(String plate, String type, Double capacity, boolean isOnePhase, int defaultPercent, boolean defaultIsSlowMode, User user) {
+        this.plate = plate;
+        this.type = type;
+        this.capacity = capacity;
+        this.isOnePhase = isOnePhase;
+        this.defaultPercent = defaultPercent;
+        this.defaultIsSlowMode = defaultIsSlowMode;
+        this.user = user;
     }
 
     public int getId() {
