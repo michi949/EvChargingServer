@@ -1,18 +1,13 @@
 package at.fhooe.mc.server.Connector;
 
 import at.fhooe.mc.server.Data.Weather;
-import at.fhooe.mc.server.Parser.WeatherParser;
+import at.fhooe.mc.server.Parser.WeatherForecastParser;
 import at.fhooe.mc.server.Utilitys;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +20,12 @@ import java.util.Map;
 public class WeatherConnector {
     private String path;
     private final RestTemplate restTemplate;
+    @Autowired
+    WeatherForecastParser weatherForecastParser;
 
     public WeatherConnector() {
         this.restTemplate = new RestTemplate();
-        this.path = "https://samples.openweathermap.org/data/2.5/weather?";
+        this.path = "https://api.openweathermap.org/data/2.5/forecast?";
     }
 
     /**
@@ -48,7 +45,7 @@ public class WeatherConnector {
 
         String jsonWeather =  this.restTemplate.getForObject(url, String.class);
 
-        return WeatherParser.parseWeather(jsonWeather);
+        return weatherForecastParser.parseWeather(jsonWeather);
     }
 
     /**
@@ -81,6 +78,7 @@ public class WeatherConnector {
 
         params.put("APPID", Utilitys.WEATHERAPI);
         params.put("q", "Hagenberg");
+        params.put("units", "metric");
 
         return params;
     }

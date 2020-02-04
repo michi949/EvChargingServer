@@ -23,7 +23,7 @@ public class Session implements Serializable {
     boolean isOptimized;
     boolean isSlowMode;
     boolean isFallBack;
-    long timeToEnd;
+    double timeToEnd;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
@@ -33,19 +33,14 @@ public class Session implements Serializable {
     @JoinColumn(unique = true)
     LoadingPort loadingport;
 
-    public Session() {
-        rating = 0.0;
-        id = 0;
-        startDate = new Date();
-        endDate = new Date();
-        restCapacity = 0.0;
-        endCapacity = 0.0;
-        minPower = 0.0;
-        optimizedPower = 0.0;
-        isOptimized = false;
-        isSlowMode = false;
-        isFallBack = false;
-        timeToEnd = 0;
+    public Session(){}
+
+    public Session(Date endDate, Double endCapacity, boolean isSlowMode, Car car, LoadingPort loadingport) {
+        this.endDate = endDate;
+        this.endCapacity = endCapacity;
+        this.isSlowMode = isSlowMode;
+        this.car = car;
+        this.loadingport = loadingport;
     }
 
     public int getId() {
@@ -112,11 +107,11 @@ public class Session implements Serializable {
         this.endCapacity = car.getCapacity() * (capacityInPercent / 100);
     }
 
-    public long getTimeToEnd() {
+    public double getTimeToEnd() {
         return timeToEnd;
     }
 
-    public void setTimeToEnd(long timeToEnd) {
+    public void setTimeToEnd(double timeToEnd) {
         this.timeToEnd = timeToEnd;
     }
 

@@ -2,7 +2,6 @@ package at.fhooe.mc.server;
 
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
-import at.fhooe.mc.server.Interfaces.SimulationInterface;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import at.fhooe.mc.server.Services.WeatherService;
@@ -21,10 +20,9 @@ import java.util.List;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableScheduling
-public class LoadyServer implements SimulationInterface {
+public class LoadyServer {
     Optimizer optimizer;
     WeatherService weatherService;
-    Simulation simulation = new Simulation();
 
     @Autowired
     LoadingStationRepository loadingStationRepository;
@@ -42,7 +40,6 @@ public class LoadyServer implements SimulationInterface {
      */
     private void startServices() {
         optimizer = new Optimizer();
-        optimizer.simulationInterface = this;
         optimizer.run();
 
         weatherService = new WeatherService(optimizer);
@@ -69,8 +66,5 @@ public class LoadyServer implements SimulationInterface {
         };
     }
 
-    @Override
-    public Simulation getSimulation() {
-        return this.simulation;
-    }
+
 }

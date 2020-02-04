@@ -7,7 +7,6 @@ import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Repository.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,7 +29,7 @@ public class WeatherService  {
     // 0 0 */1 * * *  every hour.
     //Cron Job, to get data from api.
     @Scheduled(cron = "0 0 */1 * * *")
-    public void gatherData() {
+    public void gatherWeatherDataForecast() {
         Weather weather = weatherConnector.peformRequest();
 
         if (weather != null) {

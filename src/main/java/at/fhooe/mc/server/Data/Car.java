@@ -91,4 +91,28 @@ public class Car implements Serializable {
     public void setOnePhase(boolean onePhase) {
         isOnePhase = onePhase;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getDefaultPercent() {
+        return defaultPercent;
+    }
+
+    public void setDefaultPercent(int defaultPercent) {
+        this.defaultPercent = defaultPercent;
+    }
+
+    public boolean isDefaultIsSlowMode() {
+        return defaultIsSlowMode;
+    }
+
+    public void setDefaultIsSlowMode(boolean defaultIsSlowMode) {
+        this.defaultIsSlowMode = defaultIsSlowMode;
+    }
 }

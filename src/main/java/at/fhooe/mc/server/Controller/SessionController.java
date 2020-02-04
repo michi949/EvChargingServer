@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 
 @RestController
 public class SessionController {
@@ -75,8 +76,8 @@ public class SessionController {
 
             int userID = userNode.get("id").asInt();
             int vehicleID = vehicleNode.get("id").asInt();
-            String sessionMode = sessionNode.get("mode").asText();
-            String endTime = sessionNode.get("endTime").asText();
+            boolean isSlowMode = sessionNode.get("isSlowMode").asBoolean();
+            long endTime = sessionNode.get("endTime").asLong();
             int endPercent = sessionNode.get("endPercent").asInt();
             int loadingPort = sessionNode.get("loadingPort").asInt();
 
@@ -93,7 +94,15 @@ public class SessionController {
                 return "{success: false}";
             }
 
-            Session session = new Session();
+            if(port.isOccupied()){
+                return "{success: false}";
+            }
+
+            Date endDate = new Date(endTime);
+
+            Session session = new Session(endDate, percentToDouble(endPercent, car), isSlowMode, car, port);
+            sessionRepository.save(session);
+            optimizer.addSession(session);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,5 +122,14 @@ public class SessionController {
     public String stopSession() {
 
         return "success";
+    }
+
+    private double percentToDouble(int percent, Car car){
+        double capacity = car.getCapacity();
+        double factor = percent/100.0;
+
+        double value = capacity * factor;
+
+        return value;
     }
 }

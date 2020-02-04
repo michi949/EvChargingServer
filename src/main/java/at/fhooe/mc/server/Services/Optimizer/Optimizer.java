@@ -1,11 +1,9 @@
 package at.fhooe.mc.server.Services.Optimizer;
 
-import at.fhooe.mc.server.Connector.ModbusConnector;
+import ChargingEnviroment.EvSimChargingPoint;
 import at.fhooe.mc.server.Data.Session;
 import at.fhooe.mc.server.Data.Weather;
-import at.fhooe.mc.server.Interfaces.SimulationInterface;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
-import at.fhooe.mc.server.Repository.LoadingPortRepository;
 import at.fhooe.mc.server.Repository.SessionRepository;
 import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     ArrayList<Session> sessions = new ArrayList<>();
     ArrayList<Weather> weathers = new ArrayList<>();
     Double availableSolarPower = 0.0;
-    public SimulationInterface simulationInterface;
+    Simulation simulation = new Simulation();
 
     @Autowired
     SessionRepository sessionRepository;
@@ -44,8 +42,21 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     @Override
-    public void addSession() {
-            System.out.println("");
+    public void addSession(Session session) {
+        this.sessions.add(session);
+        session.setStartDate(new Date());
+        simulation.setVehicleToChargingPoint(session);
+        simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
+        calculateRatingForAllSessions();
+    }
+
+    @Override
+    public void removeSession(Session session) {
+        this.sessions.remove(session);
+        sessionRepository.delete(session);
+        simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
+        simulation.getChargingPoint(session.getLoadingport().getPort()).removeVehicleFromPoint();
+        calculateRatingForAllSessions();
     }
 
     private void getRunningSessions(){
@@ -62,26 +73,27 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void adjustSessions(int pos, double availableSolarPower) {
-        Session session = sessions.get(pos);
 
-        if (session == null) {
+        if (sessions.size() <= pos) {
             if(availableSolarPower != 0.0){
                 adjustFallBackSessions(availableSolarPower);
             }
             return;
         }
 
+        Session session = sessions.get(pos);
+
         if(!session.isFallBack()){
-            if(availableSolarPower < 3.7){
+            if(availableSolarPower < 3700){
                 session.setOptimized(false);
                 applyToChargingPoint(session, session.getMinPower());
             } else {
-                if(session.getMinPower() > 21.0 && session.getMinPower() <= 22.0){
+                if(session.getMinPower() > 21000 && session.getMinPower() <= 22000){
                     session.setOptimized(true);
                     availableSolarPower -= session.getMinPower();
                     session.setOptimizedPower(session.getMinPower());
                     adjustSessions(pos += 1, availableSolarPower);
-                } else if (session.getMinPower() < 3.7 && session.isOptimized()) {
+                } else if (session.getMinPower() < 3700 && session.isOptimized()) {
                     session.setOptimized(false);
                     pauseChargingProcess();
                     adjustSessions(pos += 1, availableSolarPower);
@@ -94,7 +106,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                 }
             }
         } else {
-            applyToChargingPoint(session, 3.7);
+            applyToChargingPoint(session, 3700);
         }
     }
 
@@ -102,8 +114,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         double forSession = availableSolarPower * 0.65;
         double leftOverForOthers = 0.0;
 
-        if(forSession < 3.7){
+        if(forSession < 3700.0){
             forSession = availableSolarPower;
+        } else if(forSession > 22000.0){
+            forSession = 22000.0;
+            leftOverForOthers = availableSolarPower - forSession;
         } else {
             leftOverForOthers = availableSolarPower - forSession;
         }
@@ -116,7 +131,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void adjustFallBackSessions(double leftOverSolarPower){
        double solarPowerForEachSession = leftOverSolarPower / countFallBackSessions();
-       if(solarPowerForEachSession > 3.7){
+       if(solarPowerForEachSession > 3700){
            for(Session session : sessions){
                if(session.isFallBack()){
                    session.setOptimized(true);
@@ -142,7 +157,9 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void applyToChargingPoint(Session session, double power){
-
+        EvSimChargingPoint simulationPoint = simulation.getChargingPoint(session.getLoadingport().getPort());
+        simulationPoint.changeChargingSpeedOnPoint(power);
+        sessionRepository.save(session);
     }
 
     private void sortSessionsAfterRating(){
@@ -151,6 +168,8 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void calculateRatingForAllSessions(){
         for(Session session : sessions){
+            calculateLeftOverCapacity(session);
+            calculateLeftOverTime(session);
             calculateRatingForSession(session);
             calculateMinimumPower(session);
         }
@@ -170,7 +189,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void checkMinimumPower(Session session){
         if(session.getCar().isOnePhase()){
-            if (session.getMinPower() > 3.7) {
+            if (session.getMinPower() > 3700) {
                 notifyUser("Optimaztion not possible in given Time!");
                 moveSessionToFallBack(session);
             }
@@ -178,12 +197,12 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         }
 
         if(!session.isSlowMode()){
-            if(session.getMinPower() > 22){
+            if(session.getMinPower() > 22000){
                 notifyUser("Optimaztion not possible in given Time!");
                 moveSessionToFallBack(session);
             }
         } else {
-            if(session.getMinPower() > 11){
+            if(session.getMinPower() > 11000){
                 notifyUser("Optimaztion not possible in given Time!");
                 moveSessionToFallBack(session);
             }
@@ -196,25 +215,32 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void moveSessionToFallBack(Session session){
         session.setRating(0.0);
-        session.setMinPower(3.7);
+        session.setMinPower(3700.0);
         session.setFallBack(true);
     }
 
     private double getCurrentCapacityForSession(Session session){
-
-        return 0.0;
+        return simulation.getChargingPoint(session.getLoadingport().getPort()).getEvSimVehicle().getEvSimBattery().getCurrentCapacity();
     }
 
     private double getAvailableSolarPower(){
-
-        return 0.0;
+        return simulation.getSolar().hourOutput();
     }
 
-    private long calculateLeftOverTime(Session session){
-        Date dateWithPuffer = new Date(session.getEndDate().getTime() - TimeUnit.MINUTES.toMillis(30));
-        long diffInMillies = Math.abs(dateWithPuffer.getTime() - new Date().getTime());
-        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    private double calculateLeftOverTime(Session session){
+        long tmp = session.getEndDate().getTime() - new Date().getTime();
+        Date dateWithPuffer = new Date(tmp);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateWithPuffer);
+        int hours = cal.get(Calendar.HOUR_OF_DAY);
+        int minutes = cal.get(Calendar.MINUTE);
+        int seconds = cal.get(Calendar.SECOND);
+
+        String dateString = hours+"."+minutes+seconds;
+        double diff = Double.parseDouble(dateString);
         session.setTimeToEnd(diff);
+
         return diff;
     }
 
@@ -234,12 +260,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void validateSessions(int port, double capacity){
 
-    }
-
-    private Session getSessionToPort(){
-
-
-        return new Session();
     }
 
 }

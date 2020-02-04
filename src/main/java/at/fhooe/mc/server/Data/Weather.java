@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "weather")
@@ -13,28 +14,19 @@ public class Weather implements Serializable {
     @GeneratedValue
     int id;
     String location;
-    double temperature;
-    int pressure;
-    double temperature_max;
-    double temperature_min;
-    int clouds;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date day;
     @Temporal(TemporalType.TIMESTAMP)
     Date sunrise;
     @Temporal(TemporalType.TIMESTAMP)
     Date sunset;
-    String light;
+    long hourseOfSun;
+
+    @OneToMany(mappedBy = "weather", cascade = CascadeType.ALL)
+    Set<WeatherForecast> weatherForecasts;
+
 
     public Weather() {
-        id = 0;
-        location = "Hagenberg";
-        temperature = 0.0;
-        pressure = 0;
-        temperature_max = 0.0;
-        temperature_min = 0.0;
-        clouds = 0;
-        sunrise = new Date();
-        sunset = new Date();
-        light = "light";
     }
 
     public int getId() {
@@ -53,44 +45,12 @@ public class Weather implements Serializable {
         this.location = location;
     }
 
-    public double getTemperature() {
-        return temperature;
+    public Date getDay() {
+        return day;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
-    public int getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(int pressure) {
-        this.pressure = pressure;
-    }
-
-    public double getTemperature_max() {
-        return temperature_max;
-    }
-
-    public void setTemperature_max(double temperature_max) {
-        this.temperature_max = temperature_max;
-    }
-
-    public double getTemperature_min() {
-        return temperature_min;
-    }
-
-    public void setTemperature_min(double temperature_min) {
-        this.temperature_min = temperature_min;
-    }
-
-    public int getClouds() {
-        return clouds;
-    }
-
-    public void setClouds(int clouds) {
-        this.clouds = clouds;
+    public void setDay(Date day) {
+        this.day = day;
     }
 
     public Date getSunrise() {
@@ -109,11 +69,19 @@ public class Weather implements Serializable {
         this.sunset = sunset;
     }
 
-    public String getLight() {
-        return light;
+    public Set<WeatherForecast> getWeatherForecasts() {
+        return weatherForecasts;
     }
 
-    public void setLight(String light) {
-        this.light = light;
+    public void setWeatherForecasts(Set<WeatherForecast> weatherForecasts) {
+        this.weatherForecasts = weatherForecasts;
+    }
+
+    public long getHourseOfSun() {
+        return hourseOfSun;
+    }
+
+    public void setHourseOfSun(long hourseOfSun) {
+        this.hourseOfSun = hourseOfSun;
     }
 }
