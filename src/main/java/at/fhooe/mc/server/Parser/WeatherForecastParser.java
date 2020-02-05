@@ -1,20 +1,17 @@
 package at.fhooe.mc.server.Parser;
 
-import at.fhooe.mc.server.Data.Weather;
-import at.fhooe.mc.server.Data.WeatherForecast;
+import at.fhooe.mc.server.Data.DailyWeather;
+import at.fhooe.mc.server.Data.HourlyWeatherForecast;
 import at.fhooe.mc.server.Repository.WeatherForecastRepository;
 import at.fhooe.mc.server.Repository.WeatherRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.WatchEvent;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Parse the Data from JSON String.
@@ -22,7 +19,7 @@ import java.util.Map;
  */
 @Service
 public class WeatherForecastParser {
-    Weather weather;
+    DailyWeather dailyWeather;
 
     @Autowired
     WeatherForecastRepository weatherForecastRepository;
@@ -30,46 +27,42 @@ public class WeatherForecastParser {
     @Autowired
     WeatherRepository weatherRepository;
 
-    public  Weather parseWeather(String jsonWeather) {
+    public void parseWeather(String jsonWeather) {
 
-        Weather weather = new Weather();
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-
             JsonNode rootNode = mapper.readTree(jsonWeather);
             getOverallDataForTheDay(rootNode.get("city"));
             getWeatherForecastFromArray(rootNode.get("list"));
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new Weather();
         }
-
-        return weather;
     }
 
 
     private void getOverallDataForTheDay(JsonNode dayNode){
         Date currentDate = getDateWithoutTimeUsingCalendar();
 
-        weather = weatherRepository.findWeatherDataByDay(currentDate);
+        dailyWeather = weatherRepository.findWeatherDataByDay(currentDate);
 
-        if(weather != null){
+        if(dailyWeather != null){
+            weatherRepository.save(dailyWeather);
             return;
         }
 
-        weather = new Weather();
-        weather.setLocation(dayNode.get("name").asText());
+        dailyWeather = new DailyWeather();
+        dailyWeather.setLocation(dayNode.get("name").asText());
         long sunrise = dayNode.get("sunrise").asLong() * 1000;
         long sunset = dayNode.get("sunset").asLong() * 1000;
 
-        weather.setDay(currentDate);
-        weather.setSunrise(new Date(sunrise));
-        weather.setSunset(new Date(sunset));
+        dailyWeather.setDay(currentDate);
+        dailyWeather.setSunrise(new Date(sunrise));
+        dailyWeather.setSunset(new Date(sunset));
 
-        weather.setHourseOfSun(sunset - sunrise);
-        weatherRepository.save(weather);
+        dailyWeather.setHourseOfSun(sunset - sunrise);
+        weatherRepository.save(dailyWeather);
     }
 
 
@@ -80,7 +73,7 @@ public class WeatherForecastParser {
     }
 
     private void getWeatherForecast(JsonNode weatherForecast){
-        WeatherForecast forecast = new WeatherForecast();
+        HourlyWeatherForecast forecast = new HourlyWeatherForecast();
         forecast.setRequestTime(new Date());
         forecast.setTime(new Date(weatherForecast.get("dt").asLong() * 1000));
 
@@ -93,7 +86,7 @@ public class WeatherForecastParser {
         checkIfNextDay(forecast);
     }
 
-    private void checkIfNextDay(WeatherForecast forecast){
+    private void checkIfNextDay(HourlyWeatherForecast forecast){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -102,7 +95,7 @@ public class WeatherForecastParser {
         calendar.set(Calendar.MILLISECOND, 0);
 
         if(forecast.getTime().getTime() < calendar.getTime().getTime()){
-            forecast.setWeather(weather);
+            forecast.setDailyWeather(dailyWeather);
             weatherForecastRepository.save(forecast);
         }
     }

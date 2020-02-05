@@ -1,6 +1,6 @@
 package at.fhooe.mc.server.Connector;
 
-import at.fhooe.mc.server.Data.Weather;
+import at.fhooe.mc.server.Data.DailyWeather;
 import at.fhooe.mc.server.Parser.WeatherForecastParser;
 import at.fhooe.mc.server.Utilitys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Make an Request to an Weather Server and Store it in weather data.
- * @see at.fhooe.mc.server.Data.Weather
+ * @see DailyWeather
  */
 @Service
 public class WeatherConnector {
@@ -33,19 +33,19 @@ public class WeatherConnector {
      * @return Weather Data.
      * @throws UnsupportedEncodingException
      */
-    public Weather peformRequest() {
+    public void peformRequest() {
 
         String url = null;
         try {
             url = path + getParamsString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
+            return;
         }
 
         String jsonWeather =  this.restTemplate.getForObject(url, String.class);
 
-        return weatherForecastParser.parseWeather(jsonWeather);
+        weatherForecastParser.parseWeather(jsonWeather);
     }
 
     /**

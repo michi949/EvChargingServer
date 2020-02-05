@@ -1,7 +1,6 @@
 package at.fhooe.mc.server.Repository;
 
-import at.fhooe.mc.server.Data.LoadingPort;
-import at.fhooe.mc.server.Data.Weather;
+import at.fhooe.mc.server.Data.DailyWeather;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,9 +12,9 @@ import java.util.Date;
  * Possibility to add own methodes for the database.
  */
 @Repository
-public interface WeatherRepository extends CrudRepository<Weather, Integer> {
+public interface WeatherRepository extends CrudRepository<DailyWeather, Integer> {
 
-    @Query("SELECT u FROM Weather u WHERE u.day = ?1")
-    Weather findWeatherDataByDay(Date day);
+    @Query("SELECT u FROM DailyWeather u WHERE u.day = ?1")
+    DailyWeather findWeatherDataByDay(Date day);
 
 }

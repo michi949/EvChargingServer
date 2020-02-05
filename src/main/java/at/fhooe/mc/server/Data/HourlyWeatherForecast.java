@@ -8,8 +8,8 @@ import java.util.Date;
  * Forecast for the weather. 
  */
 @Entity
-@Table(name = "weatherForecast")
-public class WeatherForecast implements Serializable {
+@Table(name = "hourlyWeatherForecast")
+public class HourlyWeatherForecast implements Serializable {
     @Id
     @GeneratedValue
     int id;
@@ -22,12 +22,14 @@ public class WeatherForecast implements Serializable {
 
     double temp;
     int clouds;
+    double possiblePower;
 
     @ManyToOne
     @JoinColumn
-    Weather weather;
+    DailyWeather dailyWeather;
 
-    public WeatherForecast() {
+
+    public HourlyWeatherForecast() {
     }
 
     public int getId() {
@@ -62,12 +64,12 @@ public class WeatherForecast implements Serializable {
         this.clouds = clouds;
     }
 
-    public Weather getWeather() {
-        return weather;
+    public DailyWeather getDailyWeather() {
+        return dailyWeather;
     }
 
-    public void setWeather(Weather weather) {
-        this.weather = weather;
+    public void setDailyWeather(DailyWeather dailyWeather) {
+        this.dailyWeather = dailyWeather;
     }
 
     public Date getRequestTime() {
@@ -77,4 +79,13 @@ public class WeatherForecast implements Serializable {
     public void setRequestTime(Date requestTime) {
         this.requestTime = requestTime;
     }
+
+    public double getPossiblePower() {
+        return possiblePower;
+    }
+
+    public void setPossiblePower(double possiblePower) {
+        this.possiblePower = possiblePower;
+    }
+
 }

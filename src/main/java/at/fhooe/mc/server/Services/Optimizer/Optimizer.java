@@ -2,28 +2,32 @@ package at.fhooe.mc.server.Services.Optimizer;
 
 import ChargingEnviroment.EvSimChargingPoint;
 import at.fhooe.mc.server.Data.Session;
-import at.fhooe.mc.server.Data.Weather;
+import at.fhooe.mc.server.Data.DailyWeather;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Repository.SessionRepository;
+import at.fhooe.mc.server.Repository.WeatherForecastRepository;
+import at.fhooe.mc.server.Repository.WeatherRepository;
 import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 
 @Service
 public class Optimizer implements Runnable, UpdateOptimizer {
     //ModbusConnector modbusConnector = new ModbusConnector();
     ArrayList<Session> sessions = new ArrayList<>();
-    ArrayList<Weather> weathers = new ArrayList<>();
     Double availableSolarPower = 0.0;
     Simulation simulation = new Simulation();
 
     @Autowired
     SessionRepository sessionRepository;
+    @Autowired
+    WeatherForecastRepository weatherForecastRepository;
+    @Autowired
+    WeatherRepository weatherRepository;
 
     @Override
     public void run() {
@@ -32,13 +36,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
 
     @Override
-    public void updateCurrentWeather(Weather weather) {
-
-    }
-
-    @Override
-    public void updateForecastWeather(Weather weather) {
-
+    public void updateWeatherForecast() {
+            checkWeatherForecast();
+            estimateForecastSolarPower();
+            updateCurrentWeather();
+            calculateRatingForAllSessions();
     }
 
     @Override
@@ -59,9 +61,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         calculateRatingForAllSessions();
     }
 
-    private void getRunningSessions(){
-
-    }
 
     private void divideAvailableSolarPower(){
         availableSolarPower = getAvailableSolarPower();
@@ -95,7 +94,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                     adjustSessions(pos += 1, availableSolarPower);
                 } else if (session.getMinPower() < 3700 && session.isOptimized()) {
                     session.setOptimized(false);
-                    pauseChargingProcess();
+                    //pauseChargingProcess();
                     adjustSessions(pos += 1, availableSolarPower);
                 } else {
                     Map<Integer, Double> map = splitAvailableSolarPower(availableSolarPower);
@@ -150,10 +149,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
             }
         }
         return count;
-    }
-
-    private void pauseChargingProcess(){
-
     }
 
     private void applyToChargingPoint(Session session, double power){
@@ -261,5 +256,26 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void validateSessions(int port, double capacity){
 
     }
+
+    private void checkWeatherForecast(){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        DailyWeather dailyWeather = weatherRepository.findWeatherDataByDay(calendar.getTime());
+
+    }
+
+    private void estimateForecastSolarPower(){
+
+    }
+
+    private void updateCurrentWeather(){
+
+    }
+
 
 }

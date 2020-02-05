@@ -108,10 +108,10 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `weather`
+-- Tabellenstruktur für Tabelle `dailyWeather`
 --
 
-CREATE TABLE `weather` (
+CREATE TABLE `dailyWeather` (
   `id` int(11) NOT NULL,
   `clouds` int(11) NOT NULL,
   `light` varchar(255) NOT NULL,
@@ -171,9 +171,9 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `weather`
+-- Indizes für die Tabelle `dailyWeather`
 --
-ALTER TABLE `weather`
+ALTER TABLE `dailyWeather`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -205,9 +205,9 @@ ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `weather`
+-- AUTO_INCREMENT für Tabelle `dailyWeather`
 --
-ALTER TABLE `weather`
+ALTER TABLE `dailyWeather`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

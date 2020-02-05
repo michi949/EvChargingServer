@@ -1,15 +1,13 @@
 package at.fhooe.mc.server.Data;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "weather")
-public class Weather implements Serializable {
+@Table(name = "dailyWeather")
+public class DailyWeather implements Serializable {
     @Id
     @GeneratedValue
     int id;
@@ -22,11 +20,11 @@ public class Weather implements Serializable {
     Date sunset;
     long hourseOfSun;
 
-    @OneToMany(mappedBy = "weather", cascade = CascadeType.ALL)
-    Set<WeatherForecast> weatherForecasts;
+    @OneToMany(mappedBy = "dailyWeather", cascade = CascadeType.ALL)
+    Set<HourlyWeatherForecast> hourlyWeatherForecasts;
 
 
-    public Weather() {
+    public DailyWeather() {
     }
 
     public int getId() {
@@ -69,12 +67,12 @@ public class Weather implements Serializable {
         this.sunset = sunset;
     }
 
-    public Set<WeatherForecast> getWeatherForecasts() {
-        return weatherForecasts;
+    public Set<HourlyWeatherForecast> getHourlyWeatherForecasts() {
+        return hourlyWeatherForecasts;
     }
 
-    public void setWeatherForecasts(Set<WeatherForecast> weatherForecasts) {
-        this.weatherForecasts = weatherForecasts;
+    public void setHourlyWeatherForecasts(Set<HourlyWeatherForecast> hourlyWeatherForecasts) {
+        this.hourlyWeatherForecasts = hourlyWeatherForecasts;
     }
 
     public long getHourseOfSun() {
@@ -84,4 +82,5 @@ public class Weather implements Serializable {
     public void setHourseOfSun(long hourseOfSun) {
         this.hourseOfSun = hourseOfSun;
     }
+
 }
