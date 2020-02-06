@@ -1,6 +1,7 @@
 package at.fhooe.mc.server.Connector;
 
 import at.fhooe.mc.server.Data.DailyWeather;
+import at.fhooe.mc.server.Data.HourlyWeatherForecast;
 import at.fhooe.mc.server.Parser.WeatherForecastParser;
 import at.fhooe.mc.server.Utilitys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,19 +35,19 @@ public class WeatherConnector {
      * @return Weather Data.
      * @throws UnsupportedEncodingException
      */
-    public void peformRequest() {
+    public ArrayList<HourlyWeatherForecast> performRequest() {
 
         String url = null;
         try {
             url = path + getParamsString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return;
+            return new ArrayList<>();
         }
 
         String jsonWeather =  this.restTemplate.getForObject(url, String.class);
 
-        weatherForecastParser.parseWeather(jsonWeather);
+        return weatherForecastParser.parseWeather(jsonWeather);
     }
 
     /**

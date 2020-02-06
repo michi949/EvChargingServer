@@ -15,7 +15,6 @@ public class Session implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
     int power;
-    Double rating;
     Double restCapacity;
     Double endCapacity;
     Double optimizedPower;
@@ -24,6 +23,8 @@ public class Session implements Serializable {
     boolean isSlowMode;
     boolean isFallBack;
     double timeToEnd;
+    boolean isTemporaryPausedByUser = false;
+    boolean isTemporaryPausedBySystem = false;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
@@ -115,14 +116,6 @@ public class Session implements Serializable {
         this.timeToEnd = timeToEnd;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
     public Double getOptimizedPower() {
         return optimizedPower;
     }
@@ -161,5 +154,25 @@ public class Session implements Serializable {
 
     public void setFallBack(boolean fallBack) {
         isFallBack = fallBack;
+    }
+
+    public void setEndCapacity(Double endCapacity) {
+        this.endCapacity = endCapacity;
+    }
+
+    public boolean isTemporaryPausedByUser() {
+        return isTemporaryPausedByUser;
+    }
+
+    public void setTemporaryPausedByUser(boolean temporaryPausedByUser) {
+        isTemporaryPausedByUser = temporaryPausedByUser;
+    }
+
+    public boolean isTemporaryPausedBySystem() {
+        return isTemporaryPausedBySystem;
+    }
+
+    public void setTemporaryPausedBySystem(boolean temporaryPausedBySystem) {
+        isTemporaryPausedBySystem = temporaryPausedBySystem;
     }
 }

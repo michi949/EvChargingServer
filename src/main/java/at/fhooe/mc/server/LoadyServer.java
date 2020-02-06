@@ -2,7 +2,9 @@ package at.fhooe.mc.server;
 
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
+import at.fhooe.mc.server.Data.SolarPanels;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
+import at.fhooe.mc.server.Repository.SolarPanelsRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import at.fhooe.mc.server.Services.WeatherService;
 import at.fhooe.mc.server.Simulation.Simulation;
@@ -21,11 +23,15 @@ import java.util.List;
 @EnableJpaAuditing
 @EnableScheduling
 public class LoadyServer {
-    Optimizer optimizer;
     WeatherService weatherService;
 
     @Autowired
     LoadingStationRepository loadingStationRepository;
+
+    @Autowired
+    SolarPanelsRepository solarPanelsRepository;
+
+    Optimizer optimizer;
 
 
     public static void main(String[] args) {
@@ -41,7 +47,6 @@ public class LoadyServer {
     private void startServices() {
         optimizer = new Optimizer();
         optimizer.run();
-
         weatherService = new WeatherService(optimizer);
     }
 
@@ -63,8 +68,9 @@ public class LoadyServer {
             loadingStationRepository.save(new LoadingStation(1, "FH-OOE", new ArrayList<LoadingPort>(List.of(port1, port2))));
             loadingStationRepository.save(new LoadingStation(2, "FH-OOE", new ArrayList<LoadingPort>(List.of(port3, port4))));
             loadingStationRepository.save(new LoadingStation(3, "FH-OOE", new ArrayList<LoadingPort>(List.of(port5, port6))));
+
+            SolarPanels solarPanels = new SolarPanels();
+            solarPanelsRepository.save(solarPanels);
         };
     }
-
-
 }

@@ -115,4 +115,5 @@ public class Car implements Serializable {
     public void setDefaultIsSlowMode(boolean defaultIsSlowMode) {
         this.defaultIsSlowMode = defaultIsSlowMode;
     }
+
 }

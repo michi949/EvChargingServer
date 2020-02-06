@@ -28,6 +28,8 @@ public class HourlyWeatherForecast implements Serializable {
     @JoinColumn
     DailyWeather dailyWeather;
 
+    boolean isDuringDayLight = false;
+
 
     public HourlyWeatherForecast() {
     }
@@ -46,6 +48,7 @@ public class HourlyWeatherForecast implements Serializable {
 
     public void setTime(Date time) {
         this.time = time;
+        checkIfTimeIsDuringDayLight();
     }
 
     public double getTemp() {
@@ -70,6 +73,7 @@ public class HourlyWeatherForecast implements Serializable {
 
     public void setDailyWeather(DailyWeather dailyWeather) {
         this.dailyWeather = dailyWeather;
+        checkIfTimeIsDuringDayLight();
     }
 
     public Date getRequestTime() {
@@ -88,4 +92,34 @@ public class HourlyWeatherForecast implements Serializable {
         this.possiblePower = possiblePower;
     }
 
+    public boolean isDuringDayLight() {
+        return isDuringDayLight;
+    }
+
+    public void setDuringDayLight(boolean duringDayLight) {
+        isDuringDayLight = duringDayLight;
+    }
+
+    public HourlyWeatherForecast copyWeatherForecast(){
+        HourlyWeatherForecast weatherForecast = new HourlyWeatherForecast();
+        weatherForecast.setClouds(this.clouds);
+        weatherForecast.setDailyWeather(this.dailyWeather);
+        weatherForecast.setRequestTime(this.requestTime);
+        weatherForecast.setTemp(this.temp);
+        weatherForecast.setTime(this.time);
+        return weatherForecast;
+    }
+
+    public void checkIfTimeIsDuringDayLight(){
+            if(this.getTime() == null || this.getDailyWeather() == null){
+                this.setDuringDayLight(false);
+                return;
+            }
+
+            if (this.getDailyWeather().sunrise.compareTo(this.getTime()) * this.getTime().compareTo(this.getDailyWeather().sunset) > 0) {
+                this.setDuringDayLight(true);
+             } else {
+                this.setDuringDayLight(false);
+            }
+    }
 }

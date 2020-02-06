@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,6 +22,7 @@ import java.util.Date;
 @Service
 public class WeatherForecastParser {
     DailyWeather dailyWeather;
+    ArrayList<HourlyWeatherForecast> weatherForecasts = new ArrayList<>();
 
     @Autowired
     WeatherForecastRepository weatherForecastRepository;
@@ -27,8 +30,9 @@ public class WeatherForecastParser {
     @Autowired
     WeatherRepository weatherRepository;
 
-    public void parseWeather(String jsonWeather) {
+    public ArrayList<HourlyWeatherForecast> parseWeather(String jsonWeather) {
 
+        weatherForecasts = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -39,6 +43,8 @@ public class WeatherForecastParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return weatherForecasts;
     }
 
 
@@ -97,6 +103,7 @@ public class WeatherForecastParser {
         if(forecast.getTime().getTime() < calendar.getTime().getTime()){
             forecast.setDailyWeather(dailyWeather);
             weatherForecastRepository.save(forecast);
+            weatherForecasts.add(forecast);
         }
     }
 
