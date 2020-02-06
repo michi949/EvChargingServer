@@ -112,16 +112,79 @@ public class SessionController {
         return "{success: true}";
     }
 
-    @PutMapping(value = "/updateSession", produces = "application/json")
-    public String updateSession() {
+    @RequestMapping(value = "/pauseSession", method = RequestMethod.PUT, consumes = "application/json")
+    public String pauseSession(@RequestBody String payload) throws Exception {
 
-        return "success";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(payload);
+            JsonNode sessionNode = rootNode.get("session");
+
+            int sessionId = sessionNode.get("id").asInt();
+            Session session = sessionRepository.findSessionById(sessionId);
+
+            if(session == null){
+                return "{success: false}";
+            }
+
+            optimizer.pauseSession(session);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{success: false}";
+        }
+
+        return "{success: true}";
     }
 
-    @PutMapping(value = "/stopSession", produces = "application/json")
-    public String stopSession() {
+    @RequestMapping(value = "/stopSession", method = RequestMethod.DELETE, consumes = "application/json")
+    public String stopSession(@RequestBody String payload) throws Exception {
 
-        return "success";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(payload);
+            JsonNode sessionNode = rootNode.get("session");
+
+            int sessionId = sessionNode.get("id").asInt();
+            Session session = sessionRepository.findSessionById(sessionId);
+
+            if(session == null){
+                return "{success: false}";
+            }
+
+            optimizer.stopSession(session);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{success: false}";
+        }
+
+        return "{success: true}";
+    }
+
+    @RequestMapping(value = "/restartSession", method = RequestMethod.PUT, consumes = "application/json")
+    public String restartSession(@RequestBody String payload) throws Exception {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(payload);
+            JsonNode sessionNode = rootNode.get("session");
+
+            int sessionId = sessionNode.get("id").asInt();
+            Session session = sessionRepository.findSessionById(sessionId);
+
+            if(session == null){
+                return "{success: false}";
+            }
+
+            optimizer.restartSession(session);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{success: false}";
+        }
+
+        return "{success: true}";
     }
 
     private double percentToDouble(int percent, Car car){

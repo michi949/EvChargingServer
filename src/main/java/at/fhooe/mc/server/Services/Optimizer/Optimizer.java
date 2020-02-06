@@ -60,7 +60,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     @Override
-    public void removeSession(Session session) {
+    public void stopSession(Session session) {
         this.sessions.remove(session);
         sessionRepository.delete(session);
         simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
@@ -68,6 +68,17 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         optimizeAllSessions();
     }
 
+    @Override
+    public void pauseSession(Session session) {
+        pauseChargingProcessByUser(session);
+        optimizeAllSessions();
+    }
+
+    @Override
+    public void restartSession(Session session) {
+        session.setTemporaryPausedByUser(false);
+        optimizeAllSessions();
+    }
 
     /**
      * Starts the recursive function to divide the energie between the sessions.

@@ -12,5 +12,9 @@ public interface UpdateOptimizer {
 
      void addSession(Session session);
 
-     void removeSession(Session session);
+     void stopSession(Session session);
+
+     void pauseSession(Session session);
+
+     void restartSession(Session session);
 }
