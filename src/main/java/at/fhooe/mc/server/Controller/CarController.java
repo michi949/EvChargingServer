@@ -49,6 +49,62 @@ public class CarController {
         return new ArrayList<>(user.getCar());
     }
 
+    @RequestMapping(value = "/deleteCar", method = RequestMethod.DELETE, consumes = "application/json")
+    public String deleteCar(@RequestBody String payload) throws Exception{
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(payload);
+            JsonNode carNode = rootNode.get("vehicle");
+            int id = carNode.get("id").asInt();
+
+            Car car = carRepository.findCarById(id);
+            if(car == null){
+                return "{success: false}";
+            } else if (car.getSession() != null){
+                return "{success: false, message: \"Car is in Use.\"}";
+            }
+
+            carRepository.delete(car);
+
+            return "{success: true}";
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{success: false}";
+        }
+    }
+
+
+    @RequestMapping(value = "/updateCar", method = RequestMethod.PUT, consumes = "application/json")
+    public String updateCar(@RequestBody String payload) throws Exception{
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(payload);
+            JsonNode carNode = rootNode.get("vehicle");
+            int id = carNode.get("id").asInt();
+
+            Car car = carRepository.findCarById(id);
+            if(car == null){
+                return "{success: false}";
+            } else if (car.getSession() != null){
+                return "{success: false, message: \"Car is in Use.\"}";
+            }
+
+            car.setPlate(carNode.get("plate").asText());
+            car.setType(carNode.get("type").asText());
+            car.setCapacity(carNode.get("capacity").asDouble());
+            car.setOnePhase(carNode.get("isOnePhase").asBoolean());
+            car.setDefaultPercent(carNode.get("defaultPercent").asInt());
+            car.setDefaultIsSlowMode(carNode.get("defaultIsSlowMode").asBoolean());
+            carRepository.save(car);
+
+            return "{success: true}";
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{success: false}";
+        }
+    }
 
     /**
      * {"user":{"id":"1","card": "2131231412"}, "vehicle": {"plate":"GM-567FE", "type": "Tesla S", "capacity": "155748", "isOnePhase": "false", "defaultPercent": "80", "defaultIsSlowMode": "false"}}

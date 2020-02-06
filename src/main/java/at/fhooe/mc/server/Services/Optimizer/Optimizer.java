@@ -73,7 +73,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
      * Starts the recursive function to divide the energie between the sessions.
      */
     private void divideAvailableSolarPower() {
-        availableSolarPower = getAvailableSolarPower();
         sortSessionsAfterRating();
 
         if (!sessions.isEmpty()) {
@@ -118,11 +117,19 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                         pauseChargingProcessBySystem(session);
                         adjustSessions(pos += 1, availableSolarPower);
                     } else {
-                        Map<Integer, Double> map = splitAvailableSolarPower(availableSolarPower);
-                        session.setOptimized(true);
-                        session.setOptimizedPower(map.get(0));
-                        applyToChargingPoint(session, session.getOptimizedPower());
-                        adjustSessions(pos += 1, map.get(1));
+                        if(session.getMinPower() > availableSolarPower){
+                            availableSolarPower = 0;
+                            session.setOptimized(true);
+                            session.setOptimizedPower(session.getMinPower());
+                            applyToChargingPoint(session, session.getOptimizedPower());
+                            adjustSessions(pos += 1, availableSolarPower);
+                        } else {
+                            Map<Integer, Double> map = splitAvailableSolarPower(availableSolarPower);
+                            session.setOptimized(true);
+                            session.setOptimizedPower(map.get(0));
+                            applyToChargingPoint(session, session.getOptimizedPower());
+                            adjustSessions(pos += 1, map.get(1));
+                        }
                     }
                 }
             } else {
@@ -230,9 +237,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         return simulation.getChargingPoint(session.getLoadingport().getPort()).getEvSimVehicle().getEvSimBattery().getCurrentCapacity();
     }
 
-    private double getAvailableSolarPower() {
-        return simulation.getSolar().hourOutput();
-    }
 
     private double calculateLeftOverTime(Session session) {
         long tmp = session.getEndDate().getTime() - new Date().getTime();
@@ -258,16 +262,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         return diff;
     }
 
-    @Scheduled(initialDelay = 120000, fixedRate = 300000)
-    private void monitorSessions() {
-        for (Session session : sessions) {
-            //modbusConnector.checkSessions(session);
-        }
-    }
-
-    private void validateSessions(int port, double capacity) {
-
-    }
 
     private void checkWeatherForecast(ArrayList<HourlyWeatherForecast> weatherForecasts) {
         if (this.weatherForecasts.isEmpty()) {
@@ -334,7 +328,18 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
 
-    
+    @Scheduled(initialDelay = 120000, fixedRate = 300000)
+    private void monitorSessions() {
+        for (Session session : sessions) {
+            //modbusConnector.checkSessions(session);
+        }
+    }
+
+    @Scheduled(initialDelay = 2000, fixedRate = 300000)
+    private void updateSolarPower() {
+        this.availableSolarPower = 23000.0; //simulation.getSolar().hourOutput();
+    }
+
     private void pauseChargingProcessBySystem(Session session){
         session.setTemporaryPausedBySystem(true);
         simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
