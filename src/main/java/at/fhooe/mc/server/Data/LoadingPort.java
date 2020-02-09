@@ -77,4 +77,15 @@ public class LoadingPort {
     public void setLoadingstation(LoadingStation loadingstation) {
         this.loadingstation = loadingstation;
     }
+
+    @Override
+    public String toString() {
+        return "LoadingPort{" +
+                "port=" + port +
+                ", occupied=" + occupied +
+                ", session=" + session +
+                ", reservation=" + reservation +
+                ", loadingstation=" + loadingstation +
+                '}';
+    }
 }

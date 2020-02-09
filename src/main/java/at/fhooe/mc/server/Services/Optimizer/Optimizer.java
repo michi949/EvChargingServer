@@ -5,6 +5,7 @@ import at.fhooe.mc.server.Data.HourlyWeatherForecast;
 import at.fhooe.mc.server.Data.Session;
 import at.fhooe.mc.server.Data.SolarPanels;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
+import at.fhooe.mc.server.Logging.ActionLogger;
 import at.fhooe.mc.server.Repository.SessionRepository;
 import at.fhooe.mc.server.Repository.SolarPanelsRepository;
 import at.fhooe.mc.server.Repository.WeatherForecastRepository;
@@ -40,13 +41,14 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Override
     public void run() {
-        System.out.println("Optimizer Started!");
+        ActionLogger.writeLineToFile("Optimizer Started!");
     }
 
 
     @Override
     public void updateWeatherForecast(ArrayList<HourlyWeatherForecast> weatherForecasts) {
         checkWeatherForecast(weatherForecasts);
+        ActionLogger.writeLineToFile("New Weather Forecast was loaded!");
         optimizeAllSessions();
     }
 
@@ -56,6 +58,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         session.setStartDate(new Date());
         simulation.setVehicleToChargingPoint(session);
         simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
+        //ActionLogger.writeLineToFile("Session was added: " + session.toString());
         optimizeAllSessions();
     }
 
@@ -65,18 +68,21 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         sessionRepository.delete(session);
         simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
         simulation.getChargingPoint(session.getLoadingport().getPort()).removeVehicleFromPoint();
+        //ActionLogger.writeLineToFile("Session was stopped: " + session.toString());
         optimizeAllSessions();
     }
 
     @Override
     public void pauseSession(Session session) {
         pauseChargingProcessByUser(session);
+       // ActionLogger.writeLineToFile("Session was paused: " + session.toString());
         optimizeAllSessions();
     }
 
     @Override
     public void restartSession(Session session) {
         session.setTemporaryPausedByUser(false);
+        //ActionLogger.writeLineToFile("Session was restarted: " + session.toString());
         optimizeAllSessions();
     }
 
@@ -117,16 +123,19 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                 if (availableSolarPower < 3700) {
                     session.setOptimized(false);
                     applyToChargingPoint(session, session.getMinPower());
+                    //ActionLogger.writeLineToFile("Session was NOT optimized: " + session.toString());
                 } else {
                     if (session.getMinPower() > 21000 && session.getMinPower() <= 22000) {
                         session.setOptimized(true);
                         availableSolarPower -= session.getMinPower();
                         session.setOptimizedPower(session.getMinPower());
                         adjustSessions(pos += 1, availableSolarPower);
+                        //ActionLogger.writeLineToFile("Session was optimized: " + session.toString());
                     } else if (session.getMinPower() < 3700 && session.isOptimized()) {
                         session.setOptimized(false);
                         pauseChargingProcessBySystem(session);
                         adjustSessions(pos += 1, availableSolarPower);
+                        //ActionLogger.writeLineToFile("Session was NOT optimized: " + session.toString());
                     } else {
                         if(session.getMinPower() > availableSolarPower){
                             availableSolarPower = 0;
@@ -134,12 +143,14 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                             session.setOptimizedPower(session.getMinPower());
                             applyToChargingPoint(session, session.getOptimizedPower());
                             adjustSessions(pos += 1, availableSolarPower);
+                            //ActionLogger.writeLineToFile("Session was optimized: " + session.toString());
                         } else {
                             Map<Integer, Double> map = splitAvailableSolarPower(availableSolarPower);
                             session.setOptimized(true);
                             session.setOptimizedPower(map.get(0));
                             applyToChargingPoint(session, session.getOptimizedPower());
                             adjustSessions(pos += 1, map.get(1));
+                            //ActionLogger.writeLineToFile("Session was optimized: " + session.toString());
                         }
                     }
                 }
@@ -210,6 +221,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void checkMinimumPower(Session session) {
         if (session.getMinPower() < 0) {
             notifyUser("Vehicle is already optimal charged!");
+            //ActionLogger.writeLineToFile("Session is done: " + session.toString());
             this.sessions.remove(session);
             sessionRepository.delete(session);
         }
@@ -217,6 +229,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         if (session.getCar().isOnePhase()) {
             if (session.getMinPower() > 3700) {
                 notifyUser("Optimaztion not possible in given Time!");
+                //ActionLogger.writeLineToFile("Session is not able to full fill requirements and moved to fallback: " + session.toString());
                 moveSessionToFallBack(session);
             }
             return;
@@ -225,11 +238,13 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         if (!session.isSlowMode()) {
             if (session.getMinPower() > 22000) {
                 notifyUser("Optimaztion not possible in given Time!");
+                //ActionLogger.writeLineToFile("Session is not able to full fill requirements and moved to fallback: " + session.toString());
                 moveSessionToFallBack(session);
             }
         } else {
             if (session.getMinPower() > 11000) {
                 notifyUser("Optimaztion not possible in given Time!");
+                //ActionLogger.writeLineToFile("Session is not able to full fill requirements and moved to fallback: " + session.toString());
                 moveSessionToFallBack(session);
             }
         }

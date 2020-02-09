@@ -82,4 +82,14 @@ public class SolarPanels {
     public void setCellTemperature(double cellTemperature) {
         this.cellTemperature = cellTemperature;
     }
+
+    @Override
+    public String toString() {
+        return "SolarPanels{" +
+                "id=" + id +
+                ", wattPeak=" + wattPeak +
+                ", temperatureCoefficient=" + temperatureCoefficient +
+                ", cellTemperature=" + cellTemperature +
+                '}';
+    }
 }

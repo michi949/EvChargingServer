@@ -61,4 +61,13 @@ public class LoadingStation {
     public void setLoadingport(Set<LoadingPort> loadingport) {
         this.loadingport = loadingport;
     }
+
+    @Override
+    public String toString() {
+        return "LoadingStation{" +
+                "stationNr=" + stationNr +
+                ", owner='" + owner + '\'' +
+                ", loadingport=" + loadingport +
+                '}';
+    }
 }

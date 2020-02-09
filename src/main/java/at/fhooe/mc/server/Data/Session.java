@@ -175,4 +175,26 @@ public class Session implements Serializable {
     public void setTemporaryPausedBySystem(boolean temporaryPausedBySystem) {
         isTemporaryPausedBySystem = temporaryPausedBySystem;
     }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", power=" + power +
+                ", restCapacity=" + restCapacity +
+                ", endCapacity=" + endCapacity +
+                ", optimizedPower=" + optimizedPower +
+                ", minPower=" + minPower +
+                ", isOptimized=" + isOptimized +
+                ", isSlowMode=" + isSlowMode +
+                ", isFallBack=" + isFallBack +
+                ", timeToEnd=" + timeToEnd +
+                ", isTemporaryPausedByUser=" + isTemporaryPausedByUser +
+                ", isTemporaryPausedBySystem=" + isTemporaryPausedBySystem +
+                ", car=" + car +
+                ", loadingport=" + loadingport +
+                '}';
+    }
 }

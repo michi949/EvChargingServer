@@ -66,4 +66,15 @@ public class Reservation implements Serializable {
     public void setLoadingport(LoadingPort loadingport) {
         this.loadingport = loadingport;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", user=" + user +
+                ", loadingport=" + loadingport +
+                '}';
+    }
 }

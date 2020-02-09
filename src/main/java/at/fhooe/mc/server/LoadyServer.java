@@ -3,6 +3,7 @@ package at.fhooe.mc.server;
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
 import at.fhooe.mc.server.Data.SolarPanels;
+import at.fhooe.mc.server.Logging.ActionLogger;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
 import at.fhooe.mc.server.Repository.SolarPanelsRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
@@ -37,7 +38,8 @@ public class LoadyServer {
     public static void main(String[] args) {
         LoadyServer server =  new LoadyServer();
         SpringApplication.run(LoadyServer.class, args);
-        System.out.println("Rest API Started!");
+        ActionLogger.creatNewFile();
+        ActionLogger.writeLineToFile("Rest Api Started.");
         server.startServices();
     }
 

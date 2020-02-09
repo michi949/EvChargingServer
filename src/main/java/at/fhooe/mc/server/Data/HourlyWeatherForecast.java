@@ -122,4 +122,18 @@ public class HourlyWeatherForecast implements Serializable {
                 this.setDuringDayLight(false);
             }
     }
+
+    @Override
+    public String toString() {
+        return "HourlyWeatherForecast{" +
+                "id=" + id +
+                ", requestTime=" + requestTime +
+                ", time=" + time +
+                ", temp=" + temp +
+                ", clouds=" + clouds +
+                ", possiblePower=" + possiblePower +
+                ", dailyWeather=" + dailyWeather +
+                ", isDuringDayLight=" + isDuringDayLight +
+                '}';
+    }
 }

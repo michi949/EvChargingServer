@@ -83,4 +83,16 @@ public class DailyWeather implements Serializable {
         this.hourseOfSun = hourseOfSun;
     }
 
+    @Override
+    public String toString() {
+        return "DailyWeather{" +
+                "id=" + id +
+                ", location='" + location + '\'' +
+                ", day=" + day +
+                ", sunrise=" + sunrise +
+                ", sunset=" + sunset +
+                ", hourseOfSun=" + hourseOfSun +
+                ", hourlyWeatherForecasts=" + hourlyWeatherForecasts +
+                '}';
+    }
 }
