@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.WebView;
 
+import at.fhooe.mc.server.Services.Optimizer.Optimizer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +13,13 @@ public class WebViewController {
     @Value("${spring.application.name}")
     String appName;
 
+    @Autowired
+    Optimizer optimizer;
+
     @GetMapping("/")
     public String indexView(Model model) {
-        model.addAttribute("appName", appName);
-        return "home";
+        model.addAttribute("solarPanels", optimizer.getSolarPanels());
+        return "overview";
     }
 
 }

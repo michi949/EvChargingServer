@@ -1,2 +1,2 @@
-Logging File from Session Sun Feb 09 23:28:07 CET 2020.Sun Feb 09 23:28:07 CET 2020 -- : Rest Api Started.
-Sun Feb 09 23:28:07 CET 2020 -- : Optimizer Started!
+Logging File from Session Mon Feb 10 00:39:10 CET 2020.Mon Feb 10 00:39:10 CET 2020 -- : Rest Api Started.
+Mon Feb 10 00:39:10 CET 2020 -- : Optimizer Started!
