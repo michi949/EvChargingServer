@@ -39,14 +39,14 @@ public class SessionController {
 
     @GetMapping(value = "/getSession", produces = "application/json")
     public Session getSession(@RequestParam(name="id") int id) {
-        return sessionRepository.findOne(id);
+        return sessionRepository.findSessionById(id);
     }
 
 
     @GetMapping(value = "/getAllSessionFromCar", produces = "application/json")
     public Session getAllSession(@RequestParam(name="id") int id){
 
-        Car car = carRepository.findOne(id);
+        Car car = carRepository.findCarById(id);
 
         if(car == null) {
             return null;

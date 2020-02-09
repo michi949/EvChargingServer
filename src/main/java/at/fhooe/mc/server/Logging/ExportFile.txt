@@ -1,11 +1,3 @@
-Logging File from Session Fri Feb 07 10:35:05 CET 2020.Fri Feb 07 10:35:05 CET 2020 -- : Rest Api Started.
-Fri Feb 07 10:35:06 CET 2020 -- : Optimizer Started!
-Fri Feb 07 14:15:51 CET 2020 -- : New Weather Forecast was loaded!
-Fri Feb 07 15:00:01 CET 2020 -- : New Weather Forecast was loaded!
-Fri Feb 07 16:00:01 CET 2020 -- : New Weather Forecast was loaded!
-Fri Feb 07 17:01:38 CET 2020 -- : New Weather Forecast was loaded!
-Fri Feb 07 18:00:02 CET 2020 -- : New Weather Forecast was loaded!
-Sat Feb 08 15:07:09 CET 2020 -- : New Weather Forecast was loaded!
-Sun Feb 09 20:49:50 CET 2020 -- : New Weather Forecast was loaded!
-Sun Feb 09 21:00:01 CET 2020 -- : New Weather Forecast was loaded!
-Sun Feb 09 22:00:01 CET 2020 -- : New Weather Forecast was loaded!
+Logging File from Session Sun Feb 09 22:49:06 CET 2020.Sun Feb 09 22:49:06 CET 2020 -- : Rest Api Started.
+Sun Feb 09 22:49:06 CET 2020 -- : Optimizer Started!
+Sun Feb 09 22:49:24 CET 2020 -- : New Weather Forecast was loaded!

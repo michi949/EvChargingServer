@@ -30,13 +30,13 @@ public class ReservationController {
 
     @GetMapping(value = "/getReservation", produces = "application/json")
     public Reservation getReservation(@RequestParam(name="id") int id) {
-        return reservationRepository.findOne(id);
+        return reservationRepository.findReservationById(id);
     }
 
     @GetMapping(value = "/getAllReservationForUser", produces = "application/json")
     public ArrayList<Reservation> getAllReservation(@RequestParam(name="id") int id) {
 
-        User user = userRepository.findOne(id);
+        User user = userRepository.findUserById(id);
 
         if(user == null) {
             return null;

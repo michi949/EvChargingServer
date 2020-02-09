@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping(value = "/getUserFromID", produces = "application/json")
     public User getUserID(@RequestParam(name="id") int id) {
-        return userRepository.findOne(id);
+        return userRepository.findUserById(id);
     }
 
     @GetMapping(value = "/getUserFromCard", produces = "application/json")

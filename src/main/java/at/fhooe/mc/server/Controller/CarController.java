@@ -29,7 +29,7 @@ public class CarController {
      */
     @RequestMapping(value = "/getCarFromId", method = RequestMethod.GET, produces = "application/json")
     public Car getCarFromId(@RequestParam(name="id") Integer id) {
-        return carRepository.findOne(id);
+        return carRepository.findCarById(id);
     }
 
 
@@ -40,7 +40,7 @@ public class CarController {
      */
     @GetMapping(value = "/getCarFromUser", produces = "application/json")
     public ArrayList<Car> getCarsFormUser(@RequestParam(name="id") Integer id) {
-        User user = userRepository.findOne(id);
+        User user = userRepository.findUserById(id);
 
         if(user == null) {
             return null;

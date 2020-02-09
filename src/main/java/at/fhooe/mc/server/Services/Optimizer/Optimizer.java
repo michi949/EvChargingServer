@@ -330,7 +330,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void estimateForecastSolarPower() {
-        SolarPanels solarPanels = solarPanelsRepository.findOne(1);
+       SolarPanels solarPanels = solarPanelsRepository.findSolarPanelsById(1);
         for (HourlyWeatherForecast weatherForecast : weatherForecasts) {
             double possiblePower = solarPanels.getPossiblePowerForHour(weatherForecast.getTemp());
             if (weatherForecast.isDuringDayLight()) {
