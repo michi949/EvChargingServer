@@ -3,6 +3,7 @@ package at.fhooe.mc.server.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "session")
@@ -33,6 +34,9 @@ public class Session implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     LoadingPort loadingport;
+
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+    Set<SessionChanges> sessionChanges;
 
     public Session(){}
 

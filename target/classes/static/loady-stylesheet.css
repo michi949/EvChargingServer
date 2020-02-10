@@ -19,3 +19,7 @@
 .card-chart-sessions {
     margin-top: 20px;
 }
+
+.active {
+    background-color: #0096A6 !important;
+}
