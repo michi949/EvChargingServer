@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.Set;
+
 /**
  * Reservation connection to Database.
  * Possibility to add own methodes for the database.
@@ -16,4 +19,6 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
     @Query("SELECT u FROM Reservation u WHERE u.id = ?1")
     Reservation findReservationById(int id);
 
+    @Query("SELECT u FROM Reservation u WHERE u.startDate > ?1 AND u.endDate < ?2")
+    Set<Reservation> findReservationByDateRange(Date beginDate, Date endDate);
 }

@@ -38,8 +38,8 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Weather Forecast</h5>
-                                <p  th:if="${weatherForecast.size() == 0}" class="card-text">Sorry! But currently is no weather forecast possible.</p>
-                                <p  th:unless="${weatherForecast.size() == 0}" class="card-text"> The weather in the next hours has a temperature of  of clouds.</p>
+                                <p  th:if="${weatherForecast.size() == 0}" class="card-text">Currently is no weather forecast possible. Please check back later. </p>
+                                <p  th:unless="${weatherForecast.size() == 0}" class="card-text"> The weather in the next hours has a temperature of <span th:text="${weatherForecast[0].getTemp()}"></span> and <span th:text="${weatherForecast[0].getClouds()}"></span>% clouds.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -55,7 +55,8 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Current Sessions</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p  th:if="${sessions.size() == 0}" class="card-text">Currently there is no Session running. Please start one or wait!</p>
+                                <p  th:unless="${sessions.size() == 0}" class="card-text"> There are actual <span th:text="${sessions.size()}"></span> a current charging graph is shown on the bottom.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -71,7 +72,8 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Reservations</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p  th:if="${reservations.size() == 0}" class="card-text">Currently there is no Reservation for the next 24 hours. </p>
+                                <p  th:unless="${reservations.size() == 0}" class="card-text"> The weather in the next hours has a temperature of  of clouds.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
