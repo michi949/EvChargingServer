@@ -1,11 +1,10 @@
 package at.fhooe.mc.server.Connector;
 
-import at.fhooe.mc.server.Data.DailyWeather;
 import at.fhooe.mc.server.Data.HourlyWeatherForecast;
+import at.fhooe.mc.server.Parser.SolarDataManagerParser;
 import at.fhooe.mc.server.Parser.WeatherForecastParser;
 import at.fhooe.mc.server.Utilitys;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -14,40 +13,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Make an Request to an Weather Server and Store it in weather data.
- * @see DailyWeather
- */
-@Service
-public class WeatherConnector {
+public class SolarDataManagerConnector {
     private String path;
     private RestTemplate restTemplate;
-    @Autowired
-    WeatherForecastParser weatherForecastParser;
 
-    public WeatherConnector() {
+    @Autowired
+    SolarDataManagerParser solarDataManagerParser;
+
+    public SolarDataManagerConnector() {
         this.restTemplate = new RestTemplate();
-        this.path = "https://api.openweathermap.org/data/2.5/forecast?";
+        this.path = "https://193.170.124.83/solar_api/v1/GetInverterRealtimeData.cgi";
     }
 
-    /**
-     * Query the data from the Weather API and return a weather data.
-     * @return Weather Data.
-     * @throws UnsupportedEncodingException
-     */
-    public ArrayList<HourlyWeatherForecast> performRequest() {
+    public double performRequest() {
 
         String url = null;
         try {
             url = path + getParamsString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return 0.0;
         }
 
-        String jsonWeather =  this.restTemplate.getForObject(url, String.class);
+        String jsonDataManager =  this.restTemplate.getForObject(url, String.class);
 
-        return weatherForecastParser.parseWeather(jsonWeather);
+        return 0.0;
     }
 
     /**
@@ -71,19 +61,12 @@ public class WeatherConnector {
         return resultString.length() > 0 ? resultString.substring(0, resultString.length() - 1) : resultString;
     }
 
-    /**
-     * Setups the parametes for an request.
-     * @return HashMap with the parameters.
-     */
-    private Map<String, String> setupParameters() {
+
+    private Map<String, String> setupParameters(){
         Map<String, String> params = new HashMap<>();
 
-        params.put("APPID", Utilitys.WEATHERAPI);
-        params.put("q", "Hagenberg");
-        params.put("units", "metric");
+        //params.put("APPID", Utilitys.WEATHERAPI);
 
         return params;
     }
-
-
 }

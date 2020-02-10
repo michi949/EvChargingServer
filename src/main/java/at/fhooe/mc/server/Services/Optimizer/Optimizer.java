@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Service
@@ -45,6 +46,10 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         ActionLogger.writeLineToFile("Optimizer Started!");
     }
 
+    @PostConstruct
+    public void initialize() {
+        this.getSessionsInDatabase();
+    }
 
     @Override
     public void updateWeatherForecast(ArrayList<HourlyWeatherForecast> weatherForecasts) {
@@ -383,6 +388,15 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void createSessionChange(Session session){
         SessionChanges sessionChanges = new SessionChanges(session);
         session.getSessionChanges().add(sessionChanges);
+    }
+
+    /**
+     * Loads current running sessions and removes old ones.
+     */
+    private void getSessionsInDatabase(){
+        Date date = new Date();
+        this.sessions.addAll(sessionRepository.findAllSessionsCurrentRunning(date));
+        sessionRepository.deleteAll(sessionRepository.findAllSessionNotRunning(date));
     }
 
     public ArrayList<Session> getSessions() {

@@ -101,16 +101,28 @@
                 <button type="button" class="btn btn-success">Reload</button>
             </div>
 
-            <div th:each="sessionItem : ${sessions}">
+            <div th:each="sessionItem : ${sessions}" class="session-overview">
                 <div class="row">
                     <div class="col-md-8">
-
-
-
+                        <div class="session-chart" th:id="${sessionItem.getId()}" th:value="${sessionItem.getId()}">
+                        </div>
                     </div>
-                    <div class="col-md-4">
-
-
+                    <div class="col-auto session-text-box">
+                        <p> Vehicle:
+                            <span th:text="${sessionItem.getCar().getPlate()}"></span> &
+                            <span th:text="${sessionItem.getCar().getType()}"></span>
+                        </p>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header">
+                                Data:
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Current Capacity: <span th:text="${sessionItem.getCurrentCapacity()}"></span></li>
+                                <li class="list-group-item">Goal Capacity: <span th:text="${sessionItem.getEndCapacity()}"></span></li>
+                                <li class="list-group-item">Minimum Power: <span th:text="${sessionItem.getMinPower()}"></span></li>
+                                <li th:if="${sessionItem.getOptimizedPower() != null || sessionItem.getOptimizedPower() != 0}" class="list-group-item">Optimized Power: <span th:text="${sessionItem.getOptimizedPower()}"></span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
