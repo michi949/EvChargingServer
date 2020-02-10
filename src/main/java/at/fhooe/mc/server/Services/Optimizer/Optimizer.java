@@ -3,6 +3,7 @@ package at.fhooe.mc.server.Services.Optimizer;
 import ChargingEnviroment.EvSimChargingPoint;
 import at.fhooe.mc.server.Data.HourlyWeatherForecast;
 import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Data.SessionChanges;
 import at.fhooe.mc.server.Data.SolarPanels;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Logging.ActionLogger;
@@ -58,7 +59,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         session.setStartDate(new Date());
         simulation.setVehicleToChargingPoint(session);
         simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
-        //ActionLogger.writeLineToFile("Session was added: " + session.toString());
+        //createSessionChange(session);
         optimizeAllSessions();
     }
 
@@ -377,6 +378,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
         notifyUser("Charging Process successfully paused. ");
         sessionRepository.save(session);
+    }
+
+    private void createSessionChange(Session session){
+        SessionChanges sessionChanges = new SessionChanges(session);
+        session.getSessionChanges().add(sessionChanges);
     }
 
     public ArrayList<Session> getSessions() {

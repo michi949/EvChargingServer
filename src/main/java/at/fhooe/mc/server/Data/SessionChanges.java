@@ -24,6 +24,29 @@ public class SessionChanges {
     public SessionChanges() {
     }
 
+    public SessionChanges(Session session){
+        if(session.getCurrentCapacity() != null){
+            this.capacity = session.getCurrentCapacity();
+        } else {
+            this.capacity = 0;
+        }
+
+        if(session.getMinPower() != null){
+            this.minChargingPower = session.getMinPower();
+        } else {
+            this.minChargingPower = 0;
+        }
+
+        if(session.getOptimizedPower() != null){
+            this.optimizedPower = session.getOptimizedPower();
+        } else {
+            this.optimizedPower = 0;
+        }
+
+        this.timestamp = new Date();
+        this.session = session;
+    }
+
     public double getCapacity() {
         return capacity;
     }

@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc857224-7bcc-464e-95b4-ec0805e9fc20" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/SessionChangesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/google-chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/loady-charts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Session.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChanges.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChanges.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer$WeatherOptimizationModes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer$WeatherOptimizationModes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/overview.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +41,8 @@
         <option value="HTML File" />
         <option value="CSS File" />
         <option value="Class" />
-        <option value="JavaScript File" />
         <option value="Interface" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -163,7 +168,7 @@
       <workItem from="1579606472784" duration="13791000" />
       <workItem from="1579770330263" duration="13469000" />
       <workItem from="1580727316470" duration="69638000" />
-      <workItem from="1581328990446" duration="12968000" />
+      <workItem from="1581328990446" duration="17324000" />
     </task>
     <servers />
   </component>
@@ -192,11 +197,11 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="664" y="357" width="648" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1580818307273" />
-    <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1581345680177">
+    <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1581346882733">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state x="801" y="264" width="558" height="577" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1581033479911" />
-    <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/67.27.3773.1053@67.27.3773.1053" timestamp="1581345680176" />
+    <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/67.27.3773.1053@67.27.3773.1053" timestamp="1581346882733" />
     <state x="746" y="412" width="494" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1580830699419">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -213,66 +218,66 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="581" y="303" width="735" height="513" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1581031060015" />
-    <state width="1807" height="258" key="GridCell.Tab.0.bottom" timestamp="1581346039268">
+    <state width="1807" height="258" key="GridCell.Tab.0.bottom" timestamp="1581349505489">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852816" />
-    <state width="1807" height="258" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039268" />
-    <state width="1807" height="258" key="GridCell.Tab.0.center" timestamp="1581346039267">
+    <state width="1807" height="258" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505489" />
+    <state width="1807" height="258" key="GridCell.Tab.0.center" timestamp="1581349505489">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852814" />
-    <state width="1807" height="258" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039267" />
-    <state width="1807" height="258" key="GridCell.Tab.0.left" timestamp="1581346039267">
+    <state width="1807" height="258" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505489" />
+    <state width="1807" height="258" key="GridCell.Tab.0.left" timestamp="1581349505488">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852814" />
-    <state width="1807" height="258" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039267" />
-    <state width="1807" height="258" key="GridCell.Tab.0.right" timestamp="1581346039268">
+    <state width="1807" height="258" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505488" />
+    <state width="1807" height="258" key="GridCell.Tab.0.right" timestamp="1581349505489">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852815" />
-    <state width="1807" height="258" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039268" />
-    <state width="1807" height="258" key="GridCell.Tab.1.bottom" timestamp="1581346039269">
+    <state width="1807" height="258" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505489" />
+    <state width="1807" height="258" key="GridCell.Tab.1.bottom" timestamp="1581349505490">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852821" />
-    <state width="1807" height="258" key="GridCell.Tab.1.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039269" />
-    <state width="1807" height="258" key="GridCell.Tab.1.center" timestamp="1581346039268">
+    <state width="1807" height="258" key="GridCell.Tab.1.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505490" />
+    <state width="1807" height="258" key="GridCell.Tab.1.center" timestamp="1581349505490">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852819" />
-    <state width="1807" height="258" key="GridCell.Tab.1.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039268" />
-    <state width="1807" height="258" key="GridCell.Tab.1.left" timestamp="1581346039268">
+    <state width="1807" height="258" key="GridCell.Tab.1.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505490" />
+    <state width="1807" height="258" key="GridCell.Tab.1.left" timestamp="1581349505489">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852818" />
-    <state width="1807" height="258" key="GridCell.Tab.1.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039268" />
-    <state width="1807" height="258" key="GridCell.Tab.1.right" timestamp="1581346039269">
+    <state width="1807" height="258" key="GridCell.Tab.1.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505489" />
+    <state width="1807" height="258" key="GridCell.Tab.1.right" timestamp="1581349505490">
       <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="2" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852820" />
-    <state width="1807" height="258" key="GridCell.Tab.1.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581346039269" />
-    <state width="1807" height="225" key="GridCell.Tab.2.bottom" timestamp="1581340721421">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1807" height="258" key="GridCell.Tab.1.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581349505490" />
+    <state width="1807" height="225" key="GridCell.Tab.2.bottom" timestamp="1581349336757">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
-    <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581337040818" />
-    <state width="1807" height="225" key="GridCell.Tab.2.center" timestamp="1581340721421">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581349336757" />
+    <state width="1807" height="225" key="GridCell.Tab.2.center" timestamp="1581349336757">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
-    <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581337040817" />
-    <state width="1807" height="225" key="GridCell.Tab.2.left" timestamp="1581340721420">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581349336757" />
+    <state width="1807" height="225" key="GridCell.Tab.2.left" timestamp="1581349336756">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721420" />
-    <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581337040817" />
-    <state width="1807" height="225" key="GridCell.Tab.2.right" timestamp="1581340721421">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581349336756" />
+    <state width="1807" height="225" key="GridCell.Tab.2.right" timestamp="1581349336757">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
-    <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581337040818" />
+    <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581349336757" />
     <state x="442" y="137" width="1024" height="845" key="SettingsEditor" timestamp="1581031063278">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -290,6 +295,26 @@
           <line>33</line>
           <properties field="optimizer" class="at.fhooe.mc.server.Controller.SessionController" />
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java</url>
+          <line>383</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="106" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

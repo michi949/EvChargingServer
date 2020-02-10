@@ -18,6 +18,7 @@ public class Session implements Serializable {
     int power;
     Double restCapacity;
     Double endCapacity;
+    Double currentCapacity;
     Double optimizedPower;
     Double minPower;
     boolean isOptimized;
@@ -178,6 +179,22 @@ public class Session implements Serializable {
 
     public void setTemporaryPausedBySystem(boolean temporaryPausedBySystem) {
         isTemporaryPausedBySystem = temporaryPausedBySystem;
+    }
+
+    public Double getCurrentCapacity() {
+        return currentCapacity;
+    }
+
+    public void setCurrentCapacity(Double currentCapacity) {
+        this.currentCapacity = currentCapacity;
+    }
+
+    public Set<SessionChanges> getSessionChanges() {
+        return sessionChanges;
+    }
+
+    public void setSessionChanges(Set<SessionChanges> sessionChanges) {
+        this.sessionChanges = sessionChanges;
     }
 
     @Override

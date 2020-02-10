@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Weather Forecast</h5>
                                 <p  th:if="${weatherForecast.size() == 0}" class="card-text">Currently is no weather forecast possible. Please check back later. </p>
-                                <p  th:unless="${weatherForecast.size() == 0}" class="card-text"> The weather in the next hours has a temperature of <span th:text="${weatherForecast[0].getTemp()}"></span> and <span th:text="${weatherForecast[0].getClouds()}"></span>% clouds.</p>
+                                <p  th:unless="${weatherForecast.size() == 0}" class="card-text"> The weather in the next hours has a temperature of <span th:text="${weatherForecast[0].getTemp()}"></span>° and <span th:text="${weatherForecast[0].getClouds()}"></span>% of clouds.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Current Sessions</h5>
                                 <p  th:if="${sessions.size() == 0}" class="card-text">Currently there is no Session running. Please start one or wait!</p>
-                                <p  th:unless="${sessions.size() == 0}" class="card-text"> There are actual <span th:text="${sessions.size()}"></span> a current charging graph is shown on the bottom.</p>
+                                <p  th:unless="${sessions.size() == 0}" class="card-text"> There is actual <span th:text="${sessions.size()}"></span> current charging session and the graph is shown on the bottom.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -84,7 +84,6 @@
     <!-- End Cards Row -->
 
     <!-- Begin Chart List of Sessions -->
-
     <div class="card text-center card-chart-sessions">
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
@@ -97,7 +96,24 @@
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Todo</h5>
+            <div th:if="${sessions.isEmpty()}">
+                <p>There is currently no Session with Data. You can reload to fetch new Data.</p>
+                <button type="button" class="btn btn-success">Reload</button>
+            </div>
+
+            <div th:each="sessionItem : ${sessions}">
+                <div class="row">
+                    <div class="col-md-8">
+
+
+
+                    </div>
+                    <div class="col-md-4">
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End Chart List of Sessions -->
@@ -107,5 +123,7 @@
 <!-- Bootstrap & jQuery -->
 <script src="" th:href="@{/bootstrap.min.js}"></script>
 <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+<script src="" th:href="@{/google-chart.js}"></script>
+<script src="" th:href="@{/loady-charts.js}"></script>
 </body>
 </html>

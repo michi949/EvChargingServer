@@ -84,7 +84,6 @@
     <!-- End Cards Row -->
 
     <!-- Begin Chart List of Sessions -->
-
     <div class="card text-center card-chart-sessions">
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
@@ -97,7 +96,23 @@
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Todo</h5>
+            <div th:if="${sessions.isEmpty()}">
+                <p>There is currently no Session with Data. You can reload to fetch new Data.</p>
+                <button type="button" class="btn btn-success">Reload</button>
+            </div>
+
+            <div th:each="sessionItem : ${sessions}">
+                <div class="row">
+                    <div class="col-md-8">
+
+
+                    </div>
+                    <div class="col-md-4">
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End Chart List of Sessions -->
@@ -107,5 +122,7 @@
 <!-- Bootstrap & jQuery -->
 <script src="" th:href="@{/bootstrap.min.js}"></script>
 <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+<script src="" th:href="@{/google-chart.js}"></script>
+<script src="" th:href="@{/loady-charts.js}"></script>
 </body>
 </html>
