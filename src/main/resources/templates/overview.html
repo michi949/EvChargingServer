@@ -4,30 +4,102 @@
     <title>Home Page</title>
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light nav-color">
     <div class="container">
-        <a class="navbar-brand" href="#">Loady Overview</a>
+        <a class="navbar-brand" style="color: white"  href="#">Loady Overview</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Dashboard</a>
-                <a class="nav-item nav-link" href="#">Sessions</a>
-                <a class="nav-item nav-link" href="#">Settings</a>
+                <a class="nav-item nav-link " style="color: white" href="#">Dashboard</a>
+                <a class="nav-item nav-link " style="color: white" href="#">Sessions</a>
+                <a class="nav-item nav-link " style="color: white" href="#">Settings</a>
             </div>
         </div>
     </div>
 </nav>
 
 
-<div class="container">
-    <p>Welcome to <span th:text="${solarPanels.getCellTemperature()}"></span></p>
+<div class="container content-body">
+    <!-- Begin Cards Row -->
+        <div class="row">
+            <div class="col-auto">
+                <div class="card mb-3 card-top">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="../static/images/card-top-weather.jpg" th:src="@{/images/card-top-weather.jpg}" class="card-img card-img-top" alt="Solar Power Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Weather Forecast</h5>
+                                <p  th:if="${weatherForecast.size() == 0}" class="card-text">Sorry! But currently is no weather forecast possible.</p>
+                                <p  th:unless="${weatherForecast.size() == 0}" class="card-text"> The weather in the next hours has a temperature of  of clouds.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="card mb-3 card-top">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="../static/images/card-top-session.jpg" th:src="@{/images/card-top-session.jpg}" class="card-img card-img-top" alt="Session Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Current Sessions</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="card mb-3 card-top">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="../static/images/card-top-reservation.jpg" th:src="@{/images/card-top-reservation.jpg}" class="card-img card-img-top" alt="Reservation Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Reservations</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- End Cards Row -->
+
+    <!-- Begin Chart List of Sessions -->
+
+    <div class="card text-center card-chart-sessions">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Charts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Timetable</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Todo</h5>
+        </div>
+    </div>
+    <!-- End Chart List of Sessions -->
+
 </div>
 
 <!-- Bootstrap & jQuery -->

@@ -1,4 +1,21 @@
 .nav-color{
-    background-color: #86cfda;
+    background-color: #0096A6;
     color: #fefefe;
+}
+
+.content-body {
+    margin-top: 30px;
+}
+
+.card-top {
+    max-width: 540px;
+}
+
+.card-img-top{
+    width: 100%;
+    height: 100%;
+}
+
+.card-chart-sessions {
+    margin-top: 20px;
 }
