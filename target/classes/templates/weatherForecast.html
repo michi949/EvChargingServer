@@ -5,6 +5,10 @@
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="" th:href="@{/bootstrap.min.js}"></script>
+    <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -29,10 +33,37 @@
 
 
 
-<!-- Bootstrap & jQuery -->
-<script src="" th:href="@{/bootstrap.min.js}"></script>
-<script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
-<script src="" th:href="@{/google-chart.js}"></script>
-<script src="" th:href="@{/loady-charts.js}"></script>
+<div class="container content-body">
+    <div th:if="${weatherForecast.isEmpty()}" class="justify-content-center">
+        <h4>There is currently no Weather Forecast. The system will fetch new weather data check back later.</h4>
+    </div>
+
+    <h2 th:if="${!weatherForecast.isEmpty()}">There are <span th:text="${weatherForecast.size()}"></span> weather forecasts:</h2>
+    <div th:if="${!weatherForecast.isEmpty()}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Temperature</th>
+                <th scope="col">Clouds</th>
+                <th scope="col">Possible Power</th>
+                <th scope="col">Day Light</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="weatherData : ${weatherForecast}">
+                    <th scope="row">1</th>
+                    <td><span th:text="${weatherData.getTimestampAsStringForHtml()}"></span></td>
+                    <td><span th:text="${weatherData.getTemp()}"></span>°</td>
+                    <td><span th:text="${weatherData.getClouds()}"></span>%</td>
+                    <td><span th:text="${weatherData.getPossiblePower()}"></span>kW</td>
+                    <td th:if="${weatherData.isDuringDayLight()}">Yes</td>
+                    <td th:if="${!weatherData.isDuringDayLight()}">No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

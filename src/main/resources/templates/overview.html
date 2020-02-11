@@ -5,6 +5,10 @@
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="" th:href="@{/bootstrap.min.js}"></script>
+    <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -29,9 +33,9 @@
 
 <div class="container content-body">
     <!-- Begin Cards Row -->
-        <div class="row">
-            <div class="col-auto">
-                <a th:href="@{'/WeatherForecast'}" class="custom-card" >
+    <div class="row">
+        <div class="col-auto">
+            <a th:href="@{'/WeatherForecast'}" class="custom-card" >
                 <div class="card mb-3 card-top">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -47,10 +51,10 @@
                         </div>
                     </div>
                 </div>
-                </a>
-            </div>
-            <div class="col-auto">
-                <a th:href="@{'/Sessions'}" class="custom-card">
+            </a>
+        </div>
+        <div class="col-auto">
+            <a th:href="@{'/Sessions'}" class="custom-card">
                 <div class="card mb-3 card-top">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -66,10 +70,10 @@
                         </div>
                     </div>
                 </div>
-                </a>
-            </div>
-            <div class="col-auto">
-                <a th:href="@{'/Reservations'}" class="custom-card">
+            </a>
+        </div>
+        <div class="col-auto">
+            <a th:href="@{'/Reservations'}" class="custom-card">
                 <div class="card mb-3 card-top">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -85,9 +89,9 @@
                         </div>
                     </div>
                 </div>
-                </a>
-            </div>
+            </a>
         </div>
+    </div>
     <!-- End Cards Row -->
 
     <!-- Begin Chart List of Sessions -->
@@ -95,54 +99,80 @@
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Charts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Timetable</a>
+                    <a class="nav-link active" href="#">Chart</a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
-            <div th:if="${sessions.isEmpty()}">
-                <p>There is currently no Session with Data. You can reload to fetch new Data.</p>
-                <button type="button" class="btn btn-success">Reload</button>
-            </div>
-
-            <div th:each="sessionItem : ${sessions}" class="session-overview">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="session-chart" th:id="${sessionItem.getId()}" th:value="${sessionItem.getId()}">
-                        </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="session-chart" id="overall-chart" th:onload="'drawOverviewChart();'">
                     </div>
-                    <div class="col-auto session-text-box">
-                        <p> Vehicle:
-                            <span th:text="${sessionItem.getCar().getPlate()}"></span> &
-                            <span th:text="${sessionItem.getCar().getType()}"></span>
-                        </p>
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-header">
-                                Data:
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Current Capacity: <span th:text="${sessionItem.getCurrentCapacity()}"></span></li>
-                                <li class="list-group-item">Goal Capacity: <span th:text="${sessionItem.getEndCapacity()}"></span></li>
-                                <li class="list-group-item">Minimum Power: <span th:text="${sessionItem.getMinPower()}"></span></li>
-                                <li th:if="${sessionItem.getOptimizedPower() != null || sessionItem.getOptimizedPower() != 0}" class="list-group-item">Optimized Power: <span th:text="${sessionItem.getOptimizedPower()}"></span></li>
-                            </ul>
-                        </div>
-                    </div>
+                </div>
+                <div class="col-auto session-text-box">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Port</th>
+                            <th scope="col">Current Power</th>
+                        </tr>
+                        </thead>
+                        <tr th:each="sessionData : ${sessions}">
+                            <th scope="row"><span th:text="${sessionData.getLoadingport().getPort()}"></span></th>
+                            <td><span th:if="${sessionData.isOptimized()}" th:text="${sessionData.getOptimizedPower()}"></span>
+                                <span th:if="${!sessionData.isOptimized()}" th:text="${sessionData.getMinPower()}"></span>
+                                kW</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Chart List of Sessions -->
+
+    <script th:inline="javascript">
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawOverviewChart() {
+            alert("Works");
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'Dogs');
+
+            data.addRows([
+                [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+                [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+                [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+                [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+                [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+                [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+                [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+                [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+                [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+                [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+                [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+                [66, 70], [67, 72], [68, 75], [69, 80]
+            ]);
+
+            var options = {
+                hAxis: {
+                    title: 'Time'
+                },
+                vAxis: {
+                    title: 'Popularity'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('overall-chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
 
 </div>
 
-<!-- Bootstrap & jQuery -->
-<script src="" th:href="@{/bootstrap.min.js}"></script>
-<script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
-<script src="" th:href="@{/google-chart.js}"></script>
-<script src="" th:href="@{/loady-charts.js}"></script>
+
 </body>
 </html>

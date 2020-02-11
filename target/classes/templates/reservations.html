@@ -5,6 +5,10 @@
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="" th:href="@{/bootstrap.min.js}"></script>
+    <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -28,29 +32,26 @@
 </nav>
 
 
-<div class="container">
-    <div th:if="${reservations.isEmpty()}" class="justify-content-center" style="margin-top: 50px">
+<div class="container content-body">
+    <div th:if="${reservations.isEmpty()}" class="justify-content-center">
         <h4>There is currently no Reservation. Please create a reservation or check back later.</h4>
         <button type="button" class="btn btn-success">Reload</button>
     </div>
 
-    <div class="card-columns" th:if="${!reservations.isEmpty()}">
+    <h2 th:if="${!reservations.isEmpty()}">There are <span th:text="${reservations.size()}"></span> reservations:</h2>
+    <div class="card-deck" th:if="${!reservations.isEmpty()}">
         <div th:each="reservationItem : ${reservations}" class="">
-            <div class="card">
+            <div class="card mb-3" style="width: 340px">
                 <img src="../static/images/card-top-reservation.jpg" th:src="@{/images/card-top-reservation.jpg}" class="card-img card-img-top" alt="Reservation Image">
                 <div class="card-body">
-                    <h5 class="card-title"><span th:text="${reservationItem.getUser().getName()}"></span></h5>
-
+                    <h5 class="card-title"><span th:text="${reservationItem.getUser().getName()}"></span> - <span th:text="${reservationItem.getUser().getEmail()}"></span></h5>
+                    <p class="card-text">Reservation for port <span th:text="${reservationItem.getLoadingport().getPort()}"></span> from <span th:text="${reservationItem.getStartDateAsStringForHtml()}"></span> to <span th:text="${reservationItem.getEndDateAsStringForHtml()}"></span>.</p>
+                    <p class="card-text"><small class="text-muted">Created on: <span th:text="${reservationItem.getCreationDateAsStringForHtml()}"></span> </small></p>
                 </div>
             </div>
         </div>
     </div>
 
-<!-- Bootstrap & jQuery -->
-<script src="" th:href="@{/bootstrap.min.js}"></script>
-<script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
-<script src="" th:href="@{/google-chart.js}"></script>
-<script src="" th:href="@{/loady-charts.js}"></script>
 
 
 </body>

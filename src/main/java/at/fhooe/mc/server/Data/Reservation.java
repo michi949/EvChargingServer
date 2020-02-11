@@ -2,6 +2,7 @@ package at.fhooe.mc.server.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -79,14 +80,19 @@ public class Reservation implements Serializable {
         this.creationDate = creationDate;
     }
 
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "id=" + id +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", user=" + user +
-                ", loadingport=" + loadingport +
-                '}';
+    public String getStartDateAsStringForHtml(){
+        return convertDateToString(this.startDate);
+    }
+
+    public String getEndDateAsStringForHtml(){
+        return convertDateToString(this.endDate);
+    }
+
+    public String getCreationDateAsStringForHtml(){
+        return convertDateToString(this.creationDate);
+    }
+
+    private String convertDateToString(Date date){
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(date);
     }
 }

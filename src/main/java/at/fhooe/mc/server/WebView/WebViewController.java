@@ -1,8 +1,10 @@
 package at.fhooe.mc.server.WebView;
 
 import at.fhooe.mc.server.Data.HourlyWeatherForecast;
+import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.Reservation;
 import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Repository.LoadingPortRepository;
 import at.fhooe.mc.server.Repository.ReservationRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 @Controller
@@ -20,6 +23,9 @@ public class WebViewController {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    LoadingPortRepository loadingPortRepository;
 
     @Value("${spring.application.name}")
     String appName;
@@ -34,6 +40,9 @@ public class WebViewController {
 
         ArrayList<Session> sessions = optimizer.getSessions();
         model.addAttribute("sessions", sessions);
+
+        double aviableSolarPower = optimizer.getAvailableSolarPower();
+        model.addAttribute("aviableSolarPower", aviableSolarPower);
 
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);

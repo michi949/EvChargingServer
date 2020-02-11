@@ -5,6 +5,10 @@
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="" th:href="@{/bootstrap.min.js}"></script>
+    <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -27,12 +31,55 @@
     </div>
 </nav>
 
+<!-- Begin Chart List of Sessions -->
+<div class="container">
+<div class="card text-center card-chart-sessions">
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Charts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Timetable</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div th:if="${sessions.isEmpty()}">
+            <p>There is currently no Session with Data. You can reload to fetch new Data.</p>
+            <button type="button" class="btn btn-success">Reload</button>
+        </div>
+
+        <div th:each="sessionItem : ${sessions}" class="session-overview">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="session-chart" th:id="${sessionItem.getId()}" th:value="${sessionItem.getId()}">
+                    </div>
+                </div>
+                <div class="col-auto session-text-box">
+                    <p> Vehicle:
+                        <span th:text="${sessionItem.getCar().getPlate()}"></span> &
+                        <span th:text="${sessionItem.getCar().getType()}"></span>
+                    </p>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Data:
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Current Capacity: <span th:text="${sessionItem.getCurrentCapacity()}"></span></li>
+                            <li class="list-group-item">Goal Capacity: <span th:text="${sessionItem.getEndCapacity()}"></span></li>
+                            <li class="list-group-item">Minimum Power: <span th:text="${sessionItem.getMinPower()}"></span></li>
+                            <li th:if="${sessionItem.getOptimizedPower() != null || sessionItem.getOptimizedPower() != 0}" class="list-group-item">Optimized Power: <span th:text="${sessionItem.getOptimizedPower()}"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- End Chart List of Sessions -->
 
 
-<!-- Bootstrap & jQuery -->
-<script src="" th:href="@{/bootstrap.min.js}"></script>
-<script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
-<script src="" th:href="@{/google-chart.js}"></script>
-<script src="" th:href="@{/loady-charts.js}"></script>
 </body>
 </html>

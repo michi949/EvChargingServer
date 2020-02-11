@@ -447,4 +447,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         this.solarPanels = solarPanels;
     }
 
+    public Double getAvailableSolarPower() {
+        return availableSolarPower;
+    }
 }

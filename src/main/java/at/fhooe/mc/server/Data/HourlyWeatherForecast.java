@@ -2,6 +2,7 @@ package at.fhooe.mc.server.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -123,17 +124,11 @@ public class HourlyWeatherForecast implements Serializable {
             }
     }
 
-    @Override
-    public String toString() {
-        return "HourlyWeatherForecast{" +
-                "id=" + id +
-                ", requestTime=" + requestTime +
-                ", time=" + time +
-                ", temp=" + temp +
-                ", clouds=" + clouds +
-                ", possiblePower=" + possiblePower +
-                ", dailyWeather=" + dailyWeather +
-                ", isDuringDayLight=" + isDuringDayLight +
-                '}';
+    public String getTimestampAsStringForHtml(){
+        return convertDateToString(this.time);
+    }
+
+    private String convertDateToString(Date date){
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(date);
     }
 }
