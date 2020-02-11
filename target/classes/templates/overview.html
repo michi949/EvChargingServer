@@ -10,7 +10,7 @@
     <script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
-<body>
+<body th:onload="'drawAllCharts();'">
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light nav-color">
@@ -99,14 +99,30 @@
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Chart</a>
+                    <a class="nav-link active">Timetable</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="timetable-overview-chart" id="timetable-chart">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Begin Chart List of Sessions -->
+    <div class="card text-center card-chart-sessions">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link active">Chart</a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="session-chart" id="overall-chart" th:onload="'drawOverviewChart();'">
+                    <div class="session-overview-chart" id="overall-chart">
                     </div>
                 </div>
                 <div class="col-auto session-text-box">
@@ -132,10 +148,21 @@
 
     <script th:inline="javascript">
         google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawBasic);
+        google.charts.load('current', {packages:['timeline']});
+
+        /*<![CDATA[*/
+
+        var sessionItem = /*[[${sessions}]]*/ [];
+        console.log(sessionItem);
+
+        /*]]>*/
+
+        function drawAllCharts() {
+            drawTimelineChart();
+            drawOverviewChart();
+        }
 
         function drawOverviewChart() {
-            alert("Works");
 
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'X');
@@ -161,13 +188,32 @@
                     title: 'Time'
                 },
                 vAxis: {
-                    title: 'Popularity'
+                    title: 'kW'
                 }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('overall-chart'));
 
             chart.draw(data, options);
+        }
+
+
+        function drawTimelineChart() {
+            //google.charts.setOnLoadCallback(drawChart);
+            var container = document.getElementById('timetable-chart');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'President' });
+            dataTable.addColumn({ type: 'date', id: 'Start' });
+            dataTable.addColumn({ type: 'date', id: 'End' });
+            dataTable.addRows([
+                [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+                [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+                [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+
+
+            chart.draw(dataTable);
         }
     </script>
 

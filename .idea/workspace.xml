@@ -2,32 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc857224-7bcc-464e-95b4-ec0805e9fc20" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/DailyWeather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/DailyWeather.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/HourlyWeatherForecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/HourlyWeatherForecast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/LoadingPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/LoadingPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/LoadingStation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/LoadingStation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/google-chart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/loady-charts.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/reservations.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/reservations.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sessions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sessionsDetailView.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sessionsDetailView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/settings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/weatherForecast.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/weatherForecast.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/HourlyWeatherForecast.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/HourlyWeatherForecast.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Reservation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Reservation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChanges.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChanges.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/loady-charts.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/loady-charts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/reservations.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/reservations.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sessions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/weatherForecast.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/weatherForecast.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +180,7 @@
       <workItem from="1579770330263" duration="13469000" />
       <workItem from="1580727316470" duration="69638000" />
       <workItem from="1581328990446" duration="27040000" />
-      <workItem from="1581418790998" duration="22173000" />
+      <workItem from="1581418790998" duration="29740000" />
     </task>
     <servers />
   </component>
@@ -235,52 +233,52 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="581" y="303" width="735" height="513" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1581031060015" />
-    <state width="1807" height="207" key="GridCell.Tab.0.bottom" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.0.bottom" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674824" />
-    <state width="1807" height="207" key="GridCell.Tab.0.center" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.0.center" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.0.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.0.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674822" />
-    <state width="1807" height="207" key="GridCell.Tab.0.left" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.0.left" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.0.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.0.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659434" />
     <state width="1807" height="225" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674821" />
-    <state width="1807" height="207" key="GridCell.Tab.0.right" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.0.right" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674823" />
-    <state width="1807" height="207" key="GridCell.Tab.1.bottom" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.1.bottom" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.1.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.1.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
-    <state width="1807" height="207" key="GridCell.Tab.1.center" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.1.center" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.1.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.1.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
-    <state width="1807" height="207" key="GridCell.Tab.1.left" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.1.left" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.1.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.1.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.1.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679365" />
-    <state width="1807" height="207" key="GridCell.Tab.1.right" timestamp="1581443095644">
+    <state width="1807" height="207" key="GridCell.Tab.1.right" timestamp="1581455203810">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="207" key="GridCell.Tab.1.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581443095644" />
+    <state width="1807" height="207" key="GridCell.Tab.1.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581455203810" />
     <state width="1807" height="225" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
     <state width="1807" height="225" key="GridCell.Tab.2.bottom" timestamp="1581442295047">
@@ -327,17 +325,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
-          <line>42</line>
+          <line>45</line>
           <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
-          <line>36</line>
+          <line>39</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChanges.java</url>
-          <line>30</line>
+          <line>33</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

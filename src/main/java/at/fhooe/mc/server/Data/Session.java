@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,13 +32,15 @@ public class Session implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
+    @JsonIgnore
     Car car;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
+    @JsonIgnore
     LoadingPort loadingport;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Set<SessionChanges> sessionChanges;
 
     public Session(){}

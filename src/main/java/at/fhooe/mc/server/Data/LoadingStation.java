@@ -1,6 +1,8 @@
 package at.fhooe.mc.server.Data;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;

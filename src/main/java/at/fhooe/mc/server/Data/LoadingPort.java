@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ public class LoadingPort {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     LoadingStation loadingstation;
 
     public LoadingPort() {

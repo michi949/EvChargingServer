@@ -53,7 +53,7 @@
         <div th:each="sessionItem : ${sessions}" class="session-overview">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="session-chart" th:id="${sessionItem.getId()}" th:value="${sessionItem.getId()}">
+                    <div class="session-overview-chart" th:id="${sessionItem.getId()}" th:value="${sessionItem.getId()}">
                     </div>
                 </div>
                 <div class="col-auto session-text-box">

@@ -33,6 +33,17 @@
 
 }
 
+.timetable-overview-chart{
+    min-height: 250px;
+    width: 100%;
+}
+
+.session-overview-chart{
+    min-height: 400px;
+    max-height: 600px;
+    width: 100%;
+}
+
 a.custom-card,
 a.custom-card:hover {
     color: inherit;

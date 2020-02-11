@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,6 +21,7 @@ public class SessionChanges {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     Session session;
 
     public SessionChanges() {

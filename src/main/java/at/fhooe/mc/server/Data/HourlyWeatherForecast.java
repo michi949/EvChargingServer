@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class HourlyWeatherForecast implements Serializable {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     DailyWeather dailyWeather;
 
     boolean isDuringDayLight = false;

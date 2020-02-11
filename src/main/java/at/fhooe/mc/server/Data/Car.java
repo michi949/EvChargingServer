@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -19,6 +21,7 @@ public class Car implements Serializable {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     User user;
 
     @OneToOne(mappedBy = "car")

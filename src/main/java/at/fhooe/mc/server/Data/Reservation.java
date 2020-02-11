@@ -1,5 +1,7 @@
 package at.fhooe.mc.server.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -20,10 +22,12 @@ public class Reservation implements Serializable {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     User user;
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     LoadingPort loadingport;
 
     public Reservation() {

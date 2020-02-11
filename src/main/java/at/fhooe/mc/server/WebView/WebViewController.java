@@ -44,6 +44,7 @@ public class WebViewController {
         double aviableSolarPower = optimizer.getAvailableSolarPower();
         model.addAttribute("aviableSolarPower", aviableSolarPower);
 
+
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
         ArrayList<Reservation> reservations = new ArrayList<>(reservationRepository.findReservationByDateRange(new Date(), c.getTime()));
