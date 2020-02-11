@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home Page</title>
+    <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <link href="../static/loady-stylesheet.css" rel="stylesheet" th:href="@{/loady-stylesheet.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light nav-color">
+    <div class="container">
+        <a class="navbar-brand" style="color: white"  href="#">Loady Overview</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a th:href="@{'/'}" class="nav-item nav-link " style="color: white" href="#">Dashboard</a>
+                <a th:href="@{'/Sessions'}" class="nav-item nav-link " style="color: white" href="#">Sessions</a>
+                <a th:href="@{'/Reservations'}" class="nav-item nav-link " style="color: white" href="#">Reservations</a>
+                <a th:href="@{'/Settings'}" class="nav-item nav-link " style="color: white" href="#">Settings</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- Bootstrap & jQuery -->
+<script src="" th:href="@{/bootstrap.min.js}"></script>
+<script src="" th:href="@{/jquery-3.4.1.min.js}"></script>
+<script src="" th:href="@{/google-chart.js}"></script>
+<script src="" th:href="@{/loady-charts.js}"></script>
+</body>
+</html>

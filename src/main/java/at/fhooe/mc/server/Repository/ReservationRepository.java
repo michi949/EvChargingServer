@@ -21,4 +21,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
 
     @Query("SELECT u FROM Reservation u WHERE u.startDate > ?1 AND u.endDate < ?2")
     Set<Reservation> findReservationByDateRange(Date beginDate, Date endDate);
+
+    @Query("SELECT u FROM Reservation u WHERE u.startDate > ?1")
+    Set<Reservation> findAllReservationsFromNowOn(Date date);
 }

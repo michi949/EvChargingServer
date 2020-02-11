@@ -1,6 +1,3 @@
-Logging File from Session Mon Feb 10 19:35:20 CET 2020.Mon Feb 10 19:35:20 CET 2020 -- : Rest Api Started.
-Mon Feb 10 19:35:20 CET 2020 -- : Optimizer Started!
-Mon Feb 10 20:00:02 CET 2020 -- : New Weather Forecast was loaded!
-Mon Feb 10 21:00:00 CET 2020 -- : New Weather Forecast was loaded!
-Mon Feb 10 22:00:00 CET 2020 -- : New Weather Forecast was loaded!
-Mon Feb 10 23:00:00 CET 2020 -- : New Weather Forecast was loaded!
+Logging File from Session Tue Feb 11 14:41:17 CET 2020.Tue Feb 11 14:41:17 CET 2020 -- : Rest Api Started.
+Tue Feb 11 14:41:17 CET 2020 -- : Optimizer Started!
+Tue Feb 11 14:45:01 CET 2020 -- : New Weather Forecast was loaded!

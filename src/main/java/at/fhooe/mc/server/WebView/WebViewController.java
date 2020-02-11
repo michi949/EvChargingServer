@@ -42,5 +42,42 @@ public class WebViewController {
         return "overview";
     }
 
+    @GetMapping("/WeatherForecast")
+    public String WeatherForecastView(Model model) {
+        ArrayList<HourlyWeatherForecast> weatherForecast = optimizer.getWeatherForecasts();
+        model.addAttribute("weatherForecast", weatherForecast);
+
+        return "weatherForecast";
+    }
+
+    @GetMapping("/Reservations")
+    public String ReservationsView(Model model) {
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationRepository.findAllReservationsFromNowOn(new Date()));
+        model.addAttribute("reservations", reservations);
+
+        return "reservations";
+    }
+
+    @GetMapping("/Sessions")
+    public String SessionsView(Model model) {
+        ArrayList<Session> sessions = optimizer.getSessions();
+        model.addAttribute("sessions", sessions);
+
+        return "sessions";
+    }
+
+    @GetMapping("/SessionsID")
+    public String SessionsDetailView(Model model) {
+        ArrayList<Session> sessions = optimizer.getSessions();
+        model.addAttribute("sessions", sessions);
+
+        return "sessionsDetailView";
+    }
+
+    @GetMapping("/Settings")
+    public String SettingsView(Model model) {
+
+        return "settings";
+    }
 
 }

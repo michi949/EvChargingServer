@@ -14,5 +14,7 @@ public interface WeatherForecastRepository extends CrudRepository<HourlyWeatherF
     @Query("SELECT u FROM HourlyWeatherForecast u WHERE u.time = ?1")
     Set<HourlyWeatherForecast> findWeatherForecastByTime(Date time);
 
+    @Query("SELECT u FROM HourlyWeatherForecast u WHERE u.time > ?1 AND u.time < ?2")
+    Set<HourlyWeatherForecast> findNextWeatherForecasts(Date startTime, Date endTime);
 
 }

@@ -69,7 +69,7 @@ public class ReservationController {
                 return "{success: false}";
             }
 
-            int userId = userNode.get("user").asInt();
+            int userId = userNode.get("id").asInt();
             User user = userRepository.findUserById(userId);
 
             if(user == null){
@@ -81,6 +81,7 @@ public class ReservationController {
             reservation.setEndDate(endDate);
             reservation.setLoadingport(port);
             reservation.setUser(user);
+            reservation.setCreationDate(new Date());
 
             reservationRepository.save(reservation);
 
@@ -119,9 +120,9 @@ public class ReservationController {
     private boolean checkIfPortAlreadyHasReservation(LoadingPort port, Date startDate, Date endDate){
         for(Reservation reservation : port.getReservations()){
             if(startDate.getTime() <= reservation.getEndDate().getTime() && reservation.getStartDate().getTime() <= endDate.getTime()){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

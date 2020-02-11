@@ -10,8 +10,12 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue
     int id;
+    @Temporal(TemporalType.TIMESTAMP)
     Date startDate;
+    @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date creationDate;
 
     @ManyToOne
     @JoinColumn
@@ -65,6 +69,14 @@ public class Reservation implements Serializable {
 
     public void setLoadingport(LoadingPort loadingport) {
         this.loadingport = loadingport;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

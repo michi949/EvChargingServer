@@ -116,19 +116,4 @@ public class Car implements Serializable {
         this.defaultIsSlowMode = defaultIsSlowMode;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", plate='" + plate + '\'' +
-                ", type='" + type + '\'' +
-                ", count=" + count +
-                ", capacity=" + capacity +
-                ", isOnePhase=" + isOnePhase +
-                ", defaultPercent=" + defaultPercent +
-                ", defaultIsSlowMode=" + defaultIsSlowMode +
-                ", user=" + user +
-                ", session=" + session +
-                '}';
-    }
 }

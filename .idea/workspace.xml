@@ -2,19 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc857224-7bcc-464e-95b4-ec0805e9fc20" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Connector/SolarDataManagerConnector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Parser/SolarDataManagerParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/reservations.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/sessions.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/sessionsDetailView.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/settings.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/weatherForecast.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Connector/WeatherConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Connector/WeatherConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/SessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/SessionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/WeatherForecastRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/WeatherForecastRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/WeatherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Simulation/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Simulation/Simulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/loady-stylesheet.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/overview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/SessionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/SessionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer$WeatherOptimizationModes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer$WeatherOptimizationModes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Connector/WeatherConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Connector/WeatherConnector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Controller/ReservationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Controller/ReservationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/ReservationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/ReservationRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/WeatherForecastRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/WeatherForecastRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer$WeatherOptimizationModes.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/loady-stylesheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/WeatherService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/WeatherService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Simulation/Simulation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Simulation/Simulation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/overview.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,11 +53,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -169,7 +183,8 @@
       <workItem from="1579606472784" duration="13791000" />
       <workItem from="1579770330263" duration="13469000" />
       <workItem from="1580727316470" duration="69638000" />
-      <workItem from="1581328990446" duration="26387000" />
+      <workItem from="1581328990446" duration="27040000" />
+      <workItem from="1581418790998" duration="9053000" />
     </task>
     <servers />
   </component>
@@ -198,9 +213,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="664" y="357" width="648" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1580818307273" />
-    <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1581346882733">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state x="977" y="264" width="319" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1581426677639">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
+    <state x="977" y="264" width="319" height="626" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581426677639" />
     <state x="801" y="264" width="558" height="577" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1581033479911" />
     <state x="1920" y="264" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/67.27.3773.1053@67.27.3773.1053" timestamp="1581346882733" />
     <state x="746" y="412" width="494" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1580830699419">
@@ -219,65 +235,77 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="581" y="303" width="735" height="513" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1581031060015" />
-    <state width="1807" height="225" key="GridCell.Tab.0.bottom" timestamp="1581359674824">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.0.bottom" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852816" />
+    <state width="1807" height="207" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674824" />
-    <state width="1807" height="225" key="GridCell.Tab.0.center" timestamp="1581359674822">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.0.center" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852814" />
+    <state width="1807" height="207" key="GridCell.Tab.0.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674822" />
-    <state width="1807" height="225" key="GridCell.Tab.0.left" timestamp="1581359674821">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.0.left" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852814" />
+    <state width="1807" height="207" key="GridCell.Tab.0.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659434" />
     <state width="1807" height="225" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674821" />
-    <state width="1807" height="225" key="GridCell.Tab.0.right" timestamp="1581359674823">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.0.right" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852815" />
+    <state width="1807" height="207" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674823" />
-    <state width="1807" height="225" key="GridCell.Tab.1.bottom" timestamp="1581359679366">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.1.bottom" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852821" />
+    <state width="1807" height="207" key="GridCell.Tab.1.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
-    <state width="1807" height="225" key="GridCell.Tab.1.center" timestamp="1581359679366">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.1.center" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852819" />
+    <state width="1807" height="207" key="GridCell.Tab.1.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
-    <state width="1807" height="225" key="GridCell.Tab.1.left" timestamp="1581359679365">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.1.left" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852818" />
+    <state width="1807" height="207" key="GridCell.Tab.1.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659435" />
     <state width="1807" height="225" key="GridCell.Tab.1.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679365" />
-    <state width="1807" height="225" key="GridCell.Tab.1.right" timestamp="1581359679366">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="207" key="GridCell.Tab.1.right" timestamp="1581428473378">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="2" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340852820" />
+    <state width="1807" height="207" key="GridCell.Tab.1.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581428473378" />
+    <state width="1807" height="225" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.1.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581359679366" />
-    <state width="1807" height="225" key="GridCell.Tab.2.bottom" timestamp="1581359674627">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.bottom" timestamp="1581427487688">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
+    <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581427487688" />
+    <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659437" />
     <state width="1807" height="225" key="GridCell.Tab.2.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674627" />
-    <state width="1807" height="225" key="GridCell.Tab.2.center" timestamp="1581359674626">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.center" timestamp="1581427487687">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
+    <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581427487687" />
+    <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.2.center/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674626" />
-    <state width="1807" height="225" key="GridCell.Tab.2.left" timestamp="1581359674626">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.left" timestamp="1581427487687">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721420" />
+    <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581427487687" />
+    <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.2.left/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674626" />
-    <state width="1807" height="225" key="GridCell.Tab.2.right" timestamp="1581359674627">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="225" key="GridCell.Tab.2.right" timestamp="1581427487687">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581340721421" />
+    <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1581427487687" />
+    <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581375659436" />
     <state width="1807" height="225" key="GridCell.Tab.2.right/67.27.3773.1053@67.27.3773.1053" timestamp="1581359674627" />
     <state x="442" y="137" width="1024" height="845" key="SettingsEditor" timestamp="1581031063278">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -313,14 +341,24 @@
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java</url>
-          <line>398</line>
-          <option name="timeStamp" value="112" />
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/SessionController.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java</url>
-          <line>397</line>
-          <option name="timeStamp" value="113" />
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/SessionController.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/ReservationController.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/ReservationController.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="123" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

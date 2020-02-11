@@ -62,7 +62,13 @@ public class Simulation {
             return;
         }
 
-        double currentCapacity = Math.random() * (car.getCapacity() - 3700.0D + 1.0D) + 3700.0D;
+        double currentCapacity = 0;
+        if(session.getCurrentCapacity() ==  null || session.getCurrentCapacity() == 0) {
+             currentCapacity = Math.random() * (car.getCapacity() - 3700.0D + 1.0D) + 3700.0D;
+        } else {
+             currentCapacity = session.getCurrentCapacity();
+        }
+        session.setCurrentCapacity(currentCapacity);
         EvSimVehicle simulationVehicle =  new EvSimVehicle(new EvSimBattery(currentCapacity, car.getCapacity()), car.getType(), EvSimChargingType.AC);
 
 

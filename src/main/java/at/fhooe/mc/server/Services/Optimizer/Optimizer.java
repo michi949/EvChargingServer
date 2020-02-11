@@ -11,12 +11,14 @@ import at.fhooe.mc.server.Repository.SessionRepository;
 import at.fhooe.mc.server.Repository.SolarPanelsRepository;
 import at.fhooe.mc.server.Repository.WeatherForecastRepository;
 import at.fhooe.mc.server.Repository.WeatherRepository;
+import at.fhooe.mc.server.Services.WeatherService;
 import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.xml.crypto.Data;
 import java.util.*;
 
 @Service
@@ -27,10 +29,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     Double availableSolarPower = 0.0;
     Simulation simulation = new Simulation();
     SolarPanels solarPanels;
-    enum WeatherOptimizationModes{
-        Normal, Morning, GoodForecast
-    }
-    WeatherOptimizationModes weatherOptimizationMode = WeatherOptimizationModes.Normal;
 
     @Autowired
     SolarPanelsRepository solarPanelsRepository;
@@ -48,6 +46,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @PostConstruct
     public void initialize() {
+        this.getLastWeatherDataInDatabase();
         this.getSessionsInDatabase();
     }
 
@@ -397,6 +396,19 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         Date date = new Date();
         this.sessions.addAll(sessionRepository.findAllSessionsCurrentRunning(date));
         sessionRepository.deleteAll(sessionRepository.findAllSessionNotRunning(date));
+
+        for(Session session : sessions){
+            simulation.setVehicleToChargingPoint(session);
+            simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
+        }
+
+        optimizeAllSessions();
+    }
+
+    private void getLastWeatherDataInDatabase(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.HOUR_OF_DAY, 6);
+        this.weatherForecasts = new ArrayList(weatherForecastRepository.findNextWeatherForecasts(new Date(), c.getTime()));
     }
 
     public ArrayList<Session> getSessions() {
