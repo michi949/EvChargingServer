@@ -11,7 +11,10 @@ import java.util.Set;
 @Table(name = "dailyWeather")
 public class DailyWeather implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
     String location;
     @Temporal(TemporalType.TIMESTAMP)

@@ -13,9 +13,11 @@ public class LoadingPort {
     boolean occupied;
 
     @OneToOne(mappedBy = "loadingport")
+    @JsonIgnore
     Session session;
 
-    @OneToMany(mappedBy = "loadingport", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "loadingport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     Set<Reservation> reservation;
 
     @ManyToOne
@@ -57,20 +59,13 @@ public class LoadingPort {
         this.session = session;
     }
 
+    @JsonIgnore
     public Set<Reservation> getReservations() {
         return reservation;
     }
 
     public void setReservations(Set<Reservation> reservations) {
         this.reservation = reservations;
-    }
-
-    public Set<Reservation> getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Set<Reservation> reservation) {
-        this.reservation = reservation;
     }
 
     public LoadingStation getLoadingstation() {
@@ -81,14 +76,4 @@ public class LoadingPort {
         this.loadingstation = loadingstation;
     }
 
-    @Override
-    public String toString() {
-        return "LoadingPort{" +
-                "port=" + port +
-                ", occupied=" + occupied +
-                ", session=" + session +
-                ", reservation=" + reservation +
-                ", loadingstation=" + loadingstation +
-                '}';
-    }
 }

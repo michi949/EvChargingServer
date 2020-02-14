@@ -10,7 +10,10 @@ import java.util.Set;
 @Table(name = "user")
 public class User implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
     String name;
     String email;

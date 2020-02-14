@@ -11,7 +11,10 @@ import java.util.Date;
 @Table(name = "reservation")
 public class Reservation implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
     @Temporal(TemporalType.TIMESTAMP)
     Date startDate;

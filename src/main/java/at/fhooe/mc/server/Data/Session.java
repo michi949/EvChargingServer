@@ -11,7 +11,10 @@ import java.util.Set;
 @Table(name = "session")
 public class Session implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
     @Temporal(TemporalType.TIMESTAMP)
     Date startDate;
@@ -35,9 +38,8 @@ public class Session implements Serializable {
     @JsonIgnore
     Car car;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
-    @JsonIgnore
     LoadingPort loadingport;
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -199,27 +201,5 @@ public class Session implements Serializable {
 
     public void setSessionChanges(Set<SessionChanges> sessionChanges) {
         this.sessionChanges = sessionChanges;
-    }
-
-    @Override
-    public String toString() {
-        return "Session{" +
-                "id=" + id +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", power=" + power +
-                ", restCapacity=" + restCapacity +
-                ", endCapacity=" + endCapacity +
-                ", optimizedPower=" + optimizedPower +
-                ", minPower=" + minPower +
-                ", isOptimized=" + isOptimized +
-                ", isSlowMode=" + isSlowMode +
-                ", isFallBack=" + isFallBack +
-                ", timeToEnd=" + timeToEnd +
-                ", isTemporaryPausedByUser=" + isTemporaryPausedByUser +
-                ", isTemporaryPausedBySystem=" + isTemporaryPausedBySystem +
-                ", car=" + car +
-                ", loadingport=" + loadingport +
-                '}';
     }
 }

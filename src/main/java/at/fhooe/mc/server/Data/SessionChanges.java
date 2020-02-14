@@ -9,7 +9,10 @@ import java.util.Date;
 @Table(name = "sessionchanges")
 public class SessionChanges {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
 
     @Temporal(TemporalType.TIMESTAMP)

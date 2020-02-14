@@ -14,7 +14,10 @@ import java.util.Date;
 @Table(name = "hourlyWeatherForecast")
 public class HourlyWeatherForecast implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
 
     @Temporal(TemporalType.TIMESTAMP)
