@@ -21,6 +21,7 @@ public class SessionChanges {
     double capacity;
     double minChargingPower;
     double optimizedPower;
+    double chargingPower;
 
     @ManyToOne
     @JoinColumn
@@ -47,6 +48,12 @@ public class SessionChanges {
             this.optimizedPower = session.getOptimizedPower();
         } else {
             this.optimizedPower = 0;
+        }
+
+        if(session.getChargingPower() != null){
+            this.chargingPower = session.getChargingPower();
+        } else {
+            this.chargingPower = 0;
         }
 
         this.timestamp = new Date();

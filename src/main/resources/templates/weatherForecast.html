@@ -43,7 +43,6 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Timestamp</th>
                 <th scope="col">Temperature</th>
                 <th scope="col">Clouds</th>
@@ -53,7 +52,6 @@
             </thead>
             <tbody>
                 <tr th:each="weatherData : ${weatherForecast}">
-                    <th scope="row">1</th>
                     <td><span th:text="${weatherData.getTimestampAsStringForHtml()}"></span></td>
                     <td><span th:text="${weatherData.getTemp()}"></span>°</td>
                     <td><span th:text="${weatherData.getClouds()}"></span>%</td>

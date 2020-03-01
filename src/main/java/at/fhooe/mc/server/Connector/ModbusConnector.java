@@ -1,7 +1,7 @@
 package at.fhooe.mc.server.Connector;
 
-import at.fhooe.mc.server.Data.Session;
 import com.intelligt.modbus.jlibmodbus.Modbus;
+import com.intelligt.modbus.jlibmodbus.data.ModbusHoldingRegisters;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusNumberException;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusProtocolException;
@@ -9,90 +9,112 @@ import com.intelligt.modbus.jlibmodbus.master.ModbusMaster;
 import com.intelligt.modbus.jlibmodbus.master.ModbusMasterFactory;
 import com.intelligt.modbus.jlibmodbus.msg.request.ReadHoldingRegistersRequest;
 import com.intelligt.modbus.jlibmodbus.msg.response.ReadHoldingRegistersResponse;
+import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
+import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveTCP;
 import com.intelligt.modbus.jlibmodbus.tcp.TcpParameters;
+import com.intelligt.modbus.jlibmodbus.utils.*;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Observer;
 
-public class ModbusConnector {
+public class ModbusConnector{
 
+    static public void main(String[] argv) {
 
-    public ModbusConnector() {
-
+        //
         try {
+            Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
             TcpParameters tcpParameters = new TcpParameters();
-
-            //tcp parameters have already set by default as in example
-            tcpParameters.setHost(InetAddress.getLocalHost());
-            tcpParameters.setKeepAlive(true);
+            //listening on localhost
+            InetAddress addr = InetAddress.getByName("10.23.99.24");
+            tcpParameters.setHost(addr);
             tcpParameters.setPort(Modbus.TCP_PORT);
+            tcpParameters.setKeepAlive(true);
 
-            //if you would like to set connection parameters separately,
-            // you should use another method: createModbusMasterTCP(String host, int port, boolean keepAlive);
-            ModbusMaster m = ModbusMasterFactory.createModbusMasterTCP(tcpParameters);
+            ModbusSlaveTCP slave = (ModbusSlaveTCP) ModbusSlaveFactory.createModbusSlaveTCP(tcpParameters);
+            ModbusMaster master = ModbusMasterFactory.createModbusMasterTCP(tcpParameters);
+
+
+            master.setResponseTimeout(1000);
+            slave.setServerAddress(Modbus.TCP_DEFAULT_ID);
+            slave.setBroadcastEnabled(true);
+            slave.setReadTimeout(1000);
+
+            FrameEventListener listener = new FrameEventListener() {
+                @Override
+                public void frameSentEvent(FrameEvent event) {
+                    System.out.println("frame sent " + DataUtils.toAscii(event.getBytes()));
+                }
+
+                @Override
+                public void frameReceivedEvent(FrameEvent event) {
+                    System.out.println("frame recv " + DataUtils.toAscii(event.getBytes()));
+                }
+            };
+
+            master.addListener(listener);
+            slave.addListener(listener);
+            Observer o = new ModbusSlaveTcpObserver() {
+                @Override
+                public void clientAccepted(TcpClientInfo info) {
+                    System.out.println("Client connected " + info.getTcpParameters().getHost());
+                }
+
+                @Override
+                public void clientDisconnected(TcpClientInfo info) {
+                    System.out.println("Client disconnected " + info.getTcpParameters().getHost());
+                }
+            };
+            slave.addObserver(o);
+
+            ModbusHoldingRegisters holdingRegisters = new ModbusHoldingRegisters(1000);
+
+            for (int i = 0; i < holdingRegisters.getQuantity(); i++) {
+                //fill
+                holdingRegisters.set(i, i + 1);
+            }
+
+            //place the number PI at offset 0
+            holdingRegisters.setFloat64At(0, Math.PI);
+
+            slave.getDataHolder().setHoldingRegisters(holdingRegisters);
+
             Modbus.setAutoIncrementTransactionId(true);
 
-            int slaveId = 1;
-            int offset = 0;
-            int quantity = 10;
+            slave.listen();
 
-            try {
-                // since 1.2.8
-                if (!m.isConnected()) {
-                    m.connect();
-                }
+            //master.connect();
 
-                // at next string we receive ten registers from a slave with id of 1 at offset of 0.
-                int[] registerValues = m.readHoldingRegisters(slaveId, offset, quantity);
+            //prepare request
+            ReadHoldingRegistersRequest request = new ReadHoldingRegistersRequest();
+            request.setServerAddress(Modbus.TCP_DEFAULT_ID);
+            request.setStartAddress(0);
+            request.setQuantity(10);
+            ReadHoldingRegistersResponse response = (ReadHoldingRegistersResponse) request.getResponse();
 
-                for (int value : registerValues) {
-                    System.out.println("Address: " + offset++ + ", Value: " + value);
-                }
-                // also since 1.2.8.4 you can create your own request and process it with the master
-                offset = 0;
-                ReadHoldingRegistersRequest request = new ReadHoldingRegistersRequest();
-                request.setServerAddress(1);
-                request.setStartAddress(offset);
-                request.setTransactionId(0);
-                ReadHoldingRegistersResponse response = (ReadHoldingRegistersResponse) m.processRequest(request);
-                // you can get either int[] containing register values or byte[] containing raw bytes.
-                for (int value : response.getRegisters()) {
-                    System.out.println("Address: " + offset++ + ", Value: " + value);
-                }
-            } catch (ModbusProtocolException | ModbusNumberException | ModbusIOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    m.disconnect();
-                } catch (ModbusIOException e) {
-                    e.printStackTrace();
-                }
+            /**
+            master.processRequest(request);
+            ModbusHoldingRegisters registers = response.getHoldingRegisters();
+            for (int r : registers) {
+                System.out.println(r);
             }
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
+            //get float
+            System.out.println("PI is approximately equal to " + registers.getFloat64At(0));
+            System.out.println();
+
+            master.disconnect(); */
+
+            slave.shutdown();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (ModbusProtocolException e) {
+            e.printStackTrace();
+        } catch (ModbusIOException e) {
+            e.printStackTrace();
+        } catch (ModbusNumberException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void stopSessionModBus(Session session){
-
-    }
-
-    public void adjustSessionModBus(Session session){
-
-    }
-
-    public void pauseSessionModBus(Session session){
-
-    }
-
-    public void readCardReader(Session session){
-
-    }
-
-    public void checkSessions(Session session){
-
     }
 
 }

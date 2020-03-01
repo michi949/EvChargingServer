@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +56,7 @@ public class WebViewController {
     @GetMapping("/WeatherForecast")
     public String WeatherForecastView(Model model) {
         ArrayList<HourlyWeatherForecast> weatherForecast = optimizer.getWeatherForecasts();
+        weatherForecast.sort((HourlyWeatherForecast p1, HourlyWeatherForecast p2) -> p1.getTime().compareTo(p2.getTime()));
         model.addAttribute("weatherForecast", weatherForecast);
 
         return "weatherForecast";
@@ -64,7 +66,6 @@ public class WebViewController {
     public String ReservationsView(Model model) {
         ArrayList<Reservation> reservations = new ArrayList<>(reservationRepository.findAllReservationsFromNowOn(new Date()));
         model.addAttribute("reservations", reservations);
-
         return "reservations";
     }
 
@@ -77,9 +78,15 @@ public class WebViewController {
     }
 
     @GetMapping("/SessionsID")
-    public String SessionsDetailView(Model model) {
+    public String SessionsDetailView(@RequestParam(value = "id", required = true) Integer id, Model model) {
         ArrayList<Session> sessions = optimizer.getSessions();
-        model.addAttribute("sessions", sessions);
+
+        for(Session session : sessions) {
+            if(session.getId() == id){
+                model.addAttribute("sessionItem", session);
+                 return "sessionsDetailView";
+            }
+        }
 
         return "sessionsDetailView";
     }

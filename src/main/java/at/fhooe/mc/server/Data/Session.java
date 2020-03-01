@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "session")
@@ -20,12 +19,12 @@ public class Session implements Serializable {
     Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     Date endDate;
-    int power;
     Double restCapacity;
     Double endCapacity;
     Double currentCapacity;
-    Double optimizedPower;
-    Double minPower;
+    Double optimizedPower; //The amount of energie which is optimized from the charging power.
+    Double minPower; //The rating and the minimum power
+    Double chargingPower; //Power applied to the station
     boolean isOptimized;
     boolean isSlowMode;
     boolean isFallBack;
@@ -43,7 +42,7 @@ public class Session implements Serializable {
     LoadingPort loadingport;
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Set<SessionChanges> sessionChanges;
+    Set<SessionChanges> sessionChanges = new HashSet<>();
 
     public Session(){}
 
@@ -79,12 +78,12 @@ public class Session implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getPower() {
-        return power;
+    public Double getChargingPower() {
+        return chargingPower;
     }
 
-    public void setPower(int power) {
-        this.power = power;
+    public void setChargingPower(Double chargingPower) {
+        this.chargingPower = chargingPower;
     }
 
     public Car getCar() {

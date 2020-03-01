@@ -22,7 +22,7 @@ public class Simulation {
 
     public Simulation() {
         chargingStations = HagenbergSimulationFactory.setupEnvironmentHagenberg();
-        solar = new EvSimSolar(560000, 0.45, 26.0);
+        solar = new EvSimSolar(560000, 0.45, 26.0, true);
     }
 
     public ArrayList<EvSimChargingStation> getChargingStations() {

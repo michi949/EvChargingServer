@@ -38,6 +38,8 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     WeatherForecastRepository weatherForecastRepository;
     @Autowired
     WeatherRepository weatherRepository;
+    @Autowired
+    WeatherService weatherService;
 
     @Override
     public void run() {
@@ -47,6 +49,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     @PostConstruct
     public void initialize() {
         this.getLastWeatherDataInDatabase();
+        this.updateSolarPower();
         this.getSessionsInDatabase();
     }
 
@@ -63,7 +66,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         session.setStartDate(new Date());
         simulation.setVehicleToChargingPoint(session);
         simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
-        //createSessionChange(session);
+        createSessionChange(session);
         optimizeAllSessions();
     }
 
@@ -97,6 +100,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void divideAvailableSolarPower() {
         sortSessionsAfterRating();
 
+        coverBasicSupply();
         if (!sessions.isEmpty()) {
             adjustSessions(0, availableSolarPower);
         }
@@ -112,6 +116,46 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         divideAvailableSolarPower();
     }
 
+    /**
+     * The aviable solar power will supply every session with the minimum power supply. When solar energy is not aviable any more the session will recive theire minimum power
+     */
+    private void coverBasicSupply(){
+        for(Session session : sessions){
+            if(!session.isTemporaryPausedBySystem() && !session.isTemporaryPausedByUser()){
+                if(availableSolarPower != 0.0) {
+                if(session.getMinPower() > availableSolarPower){
+                    setOptimizedChargingSettingsOnSession(session, session.getMinPower(), availableSolarPower);
+                    availableSolarPower = 0.0;
+                    return;
+                } else {
+                    setOptimizedChargingSettingsOnSession(session, session.getMinPower(), session.getMinPower());
+                    availableSolarPower -= session.getMinPower();
+                }
+                } else {
+                    setNonOptimizedChargingSettingsOnSession(session, session.getMinPower());
+                }
+            }
+        }
+    }
+
+    private void setOptimizedChargingSettingsOnSession(Session session, double chargingPower, double optimizedPower){
+        session.setChargingPower(chargingPower);
+        session.setOptimizedPower(optimizedPower);
+        session.setOptimized(true);
+        sessionRepository.save(session);
+    }
+
+    private void setNonOptimizedChargingSettingsOnSession(Session session, double chargingPower){
+        session.setChargingPower(chargingPower);
+        session.setOptimized(false);
+        sessionRepository.save(session);
+    }
+
+    /**
+     * Here the rest of the aviable solar power will get devided to the sessions and then adjust those sessions.
+     * @param pos
+     * @param availableSolarPower
+     */
     private void adjustSessions(int pos, double availableSolarPower) {
 
         if (sessions.size() <= pos) {
@@ -124,6 +168,18 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         Session session = sessions.get(pos);
 
         if (!session.isTemporaryPausedBySystem() && !session.isTemporaryPausedByUser()) {
+            if(!session.isFallBack()){
+                if(!session.isSlowMode() && !session.getCar().isOnePhase()){ //Session is normal and has 3 phase
+
+                } else if(session.isSlowMode() && !session.getCar().isOnePhase()){ //Session is slow mode and has 3 phase
+
+                } else if(session.getCar().isOnePhase()){ //Session is one phase
+
+                }
+            }
+
+
+            /*
             if (!session.isFallBack()) {
                 if (availableSolarPower < 3700) {
                     session.setOptimized(false);
@@ -161,7 +217,10 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                 }
             } else {
                 applyToChargingPoint(session, 3700);
-            }
+            } */
+
+            applyToChargingPoint(session, session.getChargingPower());
+            createSessionChange(session);
             sessionRepository.save(session);
         }
     }
@@ -260,8 +319,9 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void moveSessionToFallBack(Session session) {
-        session.setMinPower(3700.0);
         session.setFallBack(true);
+        session.setMinPower(3700.0);
+        setNonOptimizedChargingSettingsOnSession(session, session.getMinPower());
     }
 
     private double getCurrentCapacityForSession(Session session) {
@@ -297,7 +357,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void checkWeatherForecast(ArrayList<HourlyWeatherForecast> weatherForecasts) {
         if (this.weatherForecasts.isEmpty()) {
             this.weatherForecasts = weatherForecasts;
-            return;
         } else {
             deleteOldWeatherData();
             this.weatherForecasts = weatherForecasts;
@@ -324,6 +383,23 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                 tmpWeatherForecasts.add(tmpWeatherForecast);
             }
         }
+
+        long currentDateTime = new Date().getTime();
+        long firstWeatherForecastTime = this.weatherForecasts.get(0).getTime().getTime();
+        long diff = firstWeatherForecastTime - currentDateTime;
+        int diffHours = (int) diff / (60 * 60 * 1000) % 24;
+
+        for(int i = 1; i <= diffHours+1; i++){
+            HourlyWeatherForecast tmpWeatherForecast = this.weatherForecasts.get(0).copyWeatherForecast();
+            Date time = tmpWeatherForecast.getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(time);
+            calendar.add(Calendar.HOUR_OF_DAY, -i);
+            tmpWeatherForecast.setTime(calendar.getTime());
+            weatherForecastRepository.save(tmpWeatherForecast);
+            tmpWeatherForecasts.add(tmpWeatherForecast);
+        }
+
         weatherForecasts.addAll(tmpWeatherForecasts);
         weatherForecasts.sort((HourlyWeatherForecast p1, HourlyWeatherForecast p2) -> p1.getTime().compareTo(p2.getTime()));
     }
@@ -337,7 +413,9 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void estimateForecastSolarPower() {
        SolarPanels solarPanels = solarPanelsRepository.findSolarPanelsById(1);
         for (HourlyWeatherForecast weatherForecast : weatherForecasts) {
-            double possiblePower = solarPanels.getPossiblePowerForHour(weatherForecast.getTemp());
+            double possiblePowerPlain = solarPanels.getPossiblePowerForHour(weatherForecast.getTemp());
+            double onePercent = possiblePowerPlain / 100;
+            double possiblePower =  onePercent  * (100 - weatherForecast.getClouds());
             if (weatherForecast.isDuringDayLight()) {
                 weatherForecast.setPossiblePower(possiblePower);
             } else {
@@ -368,7 +446,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Scheduled(initialDelay = 2000, fixedRate = 300000)
     private void updateSolarPower() {
-        this.availableSolarPower = 23000.0; //simulation.getSolar().hourOutput();
+        this.availableSolarPower = simulation.getSolar().hourOutput();
     }
 
     private void pauseChargingProcessBySystem(Session session){
@@ -409,6 +487,10 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.HOUR_OF_DAY, 6);
         this.weatherForecasts = new ArrayList(weatherForecastRepository.findNextWeatherForecasts(new Date(), c.getTime()));
+
+        if(this.weatherForecasts.isEmpty()){
+            this.weatherService.gatherWeatherDataForecast();
+        }
     }
 
     public ArrayList<Session> getSessions() {
