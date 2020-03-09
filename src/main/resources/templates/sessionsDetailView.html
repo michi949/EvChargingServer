@@ -53,10 +53,11 @@
                         Data:
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Current Capacity: <span th:text="${sessionItem.getCurrentCapacity()}"></span></li>
-                        <li class="list-group-item">Goal Capacity: <span th:text="${sessionItem.getEndCapacity()}"></span></li>
-                        <li class="list-group-item">Minimum Power: <span th:text="${sessionItem.getMinPower()}"></span></li>
-                        <li th:if="${sessionItem.getOptimizedPower() != null || sessionItem.getOptimizedPower() != 0}" class="list-group-item">Optimized Power: <span th:text="${sessionItem.getOptimizedPower()}"></span></li>
+                        <li class="list-group-item">Current Capacity: <span th:text="${sessionItem.getCurrentCapacityForHTML()}"> </span> Wh</li>
+                        <li class="list-group-item">Goal Capacity: <span th:text="${sessionItem.getGoalCapacityForHTML()}"></span> Wh</li>
+                        <li class="list-group-item">Minimum Power / Rating: <span th:text="${sessionItem.getMinPowerForHTML()}"></span> W</li>
+                        <li th:if="${sessionItem.getOptimizedPowerForHTML()  != null || sessionItem.getOptimizedPowerForHTML() != 0}" class="list-group-item">Optimized Power: <span th:text="${sessionItem.getOptimizedPowerForHTML()}"></span> W</li>
+                        <li class="list-group-item">Charging Power: <span th:text="${sessionItem.getChargingPowerForHTML()}"> </span> W</li>
                     </ul>
                 </div>
             </div>
@@ -66,7 +67,7 @@
         <div class="col-sm-5" style="margin-right: 15px">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Capacity Chart</h5>
+                    <h5 class="card-title">Changes in Power</h5>
                     <div class="session-overview-chart" th:id="session-chargingpower-chart">
                     </div>
                 </div>
@@ -75,7 +76,7 @@
         <div class="col-sm-5" style="margin-left: 0px">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Capacity Chart</h5>
+                    <h5 class="card-title">Solar Power</h5>
                     <div class="session-overview-chart" th:id="session-changes-chart">
                     </div>
                 </div>

@@ -60,12 +60,12 @@ public class LoadyServer {
     @Bean
     InitializingBean sendDatabase() {
         return () -> {
-            LoadingPort port1 = new LoadingPort(1);
-            LoadingPort port2 = new LoadingPort(2);
-            LoadingPort port3 = new LoadingPort(3);
-            LoadingPort port4 = new LoadingPort(4);
-            LoadingPort port5 = new LoadingPort(5);
-            LoadingPort port6 = new LoadingPort(6);
+            LoadingPort port1 = new LoadingPort(1, "10.23.99.21");
+            LoadingPort port2 = new LoadingPort(2, "10.23.99.22");
+            LoadingPort port3 = new LoadingPort(3, "10.23.99.23");
+            LoadingPort port4 = new LoadingPort(4, "10.23.99.24");
+            LoadingPort port5 = new LoadingPort(5, "10.23.99.25");
+            LoadingPort port6 = new LoadingPort(6, "10.23.99.26");
 
             loadingStationRepository.save(new LoadingStation(1, "FH-OOE", new ArrayList<LoadingPort>(List.of(port1, port2))));
             loadingStationRepository.save(new LoadingStation(2, "FH-OOE", new ArrayList<LoadingPort>(List.of(port3, port4))));

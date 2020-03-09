@@ -55,7 +55,7 @@
                     <td><span th:text="${weatherData.getTimestampAsStringForHtml()}"></span></td>
                     <td><span th:text="${weatherData.getTemp()}"></span>°</td>
                     <td><span th:text="${weatherData.getClouds()}"></span>%</td>
-                    <td><span th:text="${weatherData.getPossiblePower()}"></span>kW</td>
+                    <td><span th:text="${weatherData.getPossiblePower()}"></span>W</td>
                     <td th:if="${weatherData.isDuringDayLight()}">Yes</td>
                     <td th:if="${!weatherData.isDuringDayLight()}">No</td>
                 </tr>

@@ -5,6 +5,7 @@ import at.fhooe.mc.server.Parser.SolarDataManagerParser;
 import at.fhooe.mc.server.Parser.WeatherForecastParser;
 import at.fhooe.mc.server.Utilitys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class SolarDataManagerConnector {
     private String path;
     private RestTemplate restTemplate;
@@ -22,7 +24,7 @@ public class SolarDataManagerConnector {
 
     public SolarDataManagerConnector() {
         this.restTemplate = new RestTemplate();
-        this.path = "https://193.170.124.83/solar_api/v1/GetInverterRealtimeData.cgi";
+        this.path = "https://10.23.3.201/solar_api/v1/GetInverterRealtimeData.cgi";
     }
 
     public double performRequest() {
@@ -37,10 +39,11 @@ public class SolarDataManagerConnector {
 
         String jsonDataManager =  this.restTemplate.getForObject(url, String.class);
 
+
         return 0.0;
     }
 
-    /**
+    /**"130
      * Build the request String.
      * @return GET Request String for WeatherAPI
      * @throws UnsupportedEncodingException
@@ -65,7 +68,7 @@ public class SolarDataManagerConnector {
     private Map<String, String> setupParameters(){
         Map<String, String> params = new HashMap<>();
 
-        //params.put("APPID", Utilitys.WEATHERAPI);
+        params.put("APPID", Utilitys.WEATHERAPI);
 
         return params;
     }

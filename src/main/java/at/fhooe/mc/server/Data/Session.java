@@ -201,4 +201,33 @@ public class Session implements Serializable {
     public void setSessionChanges(Set<SessionChanges> sessionChanges) {
         this.sessionChanges = sessionChanges;
     }
+
+    public double getCurrentCapacityForHTML(){
+        return round(currentCapacity, 2);
+    }
+
+    public double getGoalCapacityForHTML(){
+        return round(endCapacity, 2);
+    }
+
+    public double getMinPowerForHTML(){
+        return round(minPower, 2);
+    }
+
+    public double getOptimizedPowerForHTML(){
+        return round(optimizedPower, 2);
+    }
+
+    public double getChargingPowerForHTML(){
+        return round(chargingPower, 2);
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 }

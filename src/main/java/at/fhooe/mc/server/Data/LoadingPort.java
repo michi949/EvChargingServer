@@ -11,6 +11,7 @@ public class LoadingPort {
     @Id
     int port;
     boolean occupied;
+    String ip;
 
     @OneToOne(mappedBy = "loadingport")
     @JsonIgnore
@@ -33,6 +34,15 @@ public class LoadingPort {
         session = null;
         reservation = null;
         occupied = false;
+        ip = "";
+    }
+
+    public LoadingPort(int port, String ip) {
+        this.port = port;
+        session = null;
+        reservation = null;
+        occupied = false;
+        this.ip = ip;
     }
 
     public int getPort() {
@@ -76,4 +86,11 @@ public class LoadingPort {
         this.loadingstation = loadingstation;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 }

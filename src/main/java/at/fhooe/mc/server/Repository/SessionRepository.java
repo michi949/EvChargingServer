@@ -22,6 +22,6 @@ public interface SessionRepository extends CrudRepository<Session, Integer> {
     @Query("SELECT u FROM Session u WHERE u.startDate < ?1 AND u.endDate > ?1")
     Set<Session> findAllSessionsCurrentRunning(Date currentDate);
 
-    @Query("SELECT u FROM Session u WHERE u.startDate > ?1 AND u.endDate < ?1")
+    @Query("SELECT u FROM Session u WHERE u.endDate < ?1")
     Set<Session> findAllSessionNotRunning(Date currentDate);
 }

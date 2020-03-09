@@ -1,2 +1,5 @@
-Logging File from Session Sun Mar 01 16:47:17 CET 2020.Sun Mar 01 16:47:17 CET 2020 -- : Rest Api Started.
-Sun Mar 01 16:47:17 CET 2020 -- : Optimizer Started!
+Logging File from Session Mon Mar 09 12:54:32 CET 2020.Mon Mar 09 12:54:32 CET 2020 -- : Rest Api Started.
+Mon Mar 09 12:54:33 CET 2020 -- : Optimizer Started!
+Mon Mar 09 13:00:04 CET 2020 -- : New Weather Forecast was loaded!
+Mon Mar 09 13:15:01 CET 2020 -- : New Weather Forecast was loaded!
+Mon Mar 09 13:30:01 CET 2020 -- : New Weather Forecast was loaded!

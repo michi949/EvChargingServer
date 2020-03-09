@@ -9,7 +9,10 @@ import java.io.Serializable;
 @Table(name = "car")
 public class Car implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
     int id;
     String plate;
     String type;
