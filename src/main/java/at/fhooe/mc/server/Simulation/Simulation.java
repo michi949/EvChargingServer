@@ -9,9 +9,11 @@ import ChargingEnviroment.EvSimVehicle;
 import EnergySources.EvSimSolar;
 import Factory.HagenbergSimulationFactory;
 import at.fhooe.mc.server.Data.*;
-import at.fhooe.mc.server.Repository.WeatherForecastRepository;
-import at.fhooe.mc.server.Repository.WeatherRepository;
+import at.fhooe.mc.server.Repository.*;
+import at.fhooe.mc.server.Services.Optimizer.Optimizer;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,21 @@ public class Simulation {
 
     @Autowired
     WeatherRepository weatherRepository;
+
+    @Autowired
+    SessionRepository sessionRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    Optimizer optimizer;
+
+    @Autowired
+    LoadingPortRepository loadingPortRepository;
+
+    @Autowired
+    CarRepository carRepository;
 
     public Simulation() {
         chargingStations = HagenbergSimulationFactory.setupEnvironmentHagenberg();
@@ -62,7 +79,7 @@ public class Simulation {
     }
 
     public void setVehicleToChargingPoint(Session session){
-        LoadingPort port = session.getLoadingport();
+        LoadingPort port = session.getLoadingPort();
         Car car = session.getCar();
 
         EvSimChargingPoint simulationPoint = getChargingPoint(port.getPort());
@@ -84,55 +101,92 @@ public class Simulation {
         simulationPoint.addVehicleToPoint(simulationVehicle);
     }
 
-    public void setupWeatherExample(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 01);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 00);
-        Date startDay = calendar.getTime();
+    /**
+     * Commend out when in produktiv use.
+     */
+    @Scheduled(cron = "0 6 8 * * ?")
+    private void addFirstSession() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 16);
+        c.set(Calendar.MINUTE, 45);
 
-        calendar.set(Calendar.HOUR_OF_DAY, 24);
-        Date endDay = calendar.getTime();
+        LoadingPort loadingPort = loadingPortRepository.findLoadingPortById(1);
+        User user = userRepository.findUserById(21);
 
-        ArrayList<HourlyWeatherForecast> weatherForecasts = new ArrayList<>(weatherForecastRepository.findNextWeatherForecasts(startDay, endDay));
-        deleteCurrentWeatherForecast(weatherForecasts);
+        Car car = new Car("GM-456WL", "Nissan Leaf", HagenbergSimulationFactory.setupNissanLeaf().getEvSimBattery().getCapacity(), false, 80, false, user);
+        carRepository.save(car);
 
+        Session session = new Session(c.getTime(), percentToDouble(80, car), false, car, loadingPort);
+        sessionRepository.save(session);
+        optimizer.addSession(session);
     }
 
-    public void setupGoodCaseWeahter(){
-        DailyWeather dailyWeather = new DailyWeather();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+    @Scheduled(cron = "0 10 8 * * ?")
+    private void addSecondSession() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 16);
+        c.set(Calendar.MINUTE, 45);
 
-        dailyWeather.setDay(calendar.getTime());
-        dailyWeather.setLocation("Hagengberg");
-
-        calendar.set(Calendar.HOUR_OF_DAY, 7);
-        calendar.set(Calendar.MINUTE, 24);
-        calendar.set(Calendar.SECOND, 56);
-        Date sunrise = calendar.getTime();
-
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-        calendar.set(Calendar.MINUTE, 42);
-        calendar.set(Calendar.SECOND, 01);
-        Date sunset = calendar.getTime();
-
-        dailyWeather.setSunrise(sunrise);
-        dailyWeather.setSunset(sunset);
-        dailyWeather.setHourseOfSun(sunset.getTime() - sunrise.getTime());
-
-        weatherRepository.save(dailyWeather);
+        LoadingPort loadingPort = loadingPortRepository.findLoadingPortById(2);
+        User user = userRepository.findUserById(21);
+        Car car = new Car("GM-456WL", "Nissan Leaf", HagenbergSimulationFactory.setupNissanLeaf().getEvSimBattery().getCapacity(), false, 80, false, user);
+        carRepository.save(car);
+        Session session = new Session(c.getTime(), percentToDouble(80, car), false, car, loadingPort);
+        sessionRepository.save(session);
+        optimizer.addSession(session);
     }
 
-    public void deleteCurrentWeatherForecast(ArrayList<HourlyWeatherForecast> weatherForecasts){
-        DailyWeather dailyWeather = weatherForecasts.get(0).getDailyWeather();
-        for(HourlyWeatherForecast weatherForecast: weatherForecasts){
-            weatherForecastRepository.delete(weatherForecast);
-        }
-        weatherRepository.delete(dailyWeather);
+    @Scheduled(cron = "0 44 8 * * ?")
+    private void addThirdSession() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 15);
+        c.set(Calendar.MINUTE, 30);
+
+        LoadingPort loadingPort = loadingPortRepository.findLoadingPortById(3);
+        User user = userRepository.findUserById(21);
+        Car car = new Car("GM-456WL", "Audio Etron", HagenbergSimulationFactory.setupAudiETron().getEvSimBattery().getCapacity(), false, 80, false, user);
+        carRepository.save(car);
+        Session session = new Session(c.getTime(), percentToDouble(75, car), false, car, loadingPort);
+        sessionRepository.save(session);
+        optimizer.addSession(session);
+    }
+
+    @Scheduled(cron = "0 33 10 * * ?")
+    private void addFourthSession() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 13);
+        c.set(Calendar.MINUTE, 33);
+
+        LoadingPort loadingPort = loadingPortRepository.findLoadingPortById(4);
+        User user = userRepository.findUserById(21);
+        Car car = new Car("GM-456WL", "BMW i3", HagenbergSimulationFactory.setupBMWi3().getEvSimBattery().getCapacity(), true, 80, false, user);
+        carRepository.save(car);
+        Session session = new Session(c.getTime(), percentToDouble(60, car), false, car, loadingPort);
+        sessionRepository.save(session);
+        optimizer.addSession(session);
+    }
+
+    @Scheduled(cron = "0 8 12 * * ?")
+    private void addFifthSession() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 15);
+        c.set(Calendar.MINUTE, 24);
+
+        LoadingPort loadingPort = loadingPortRepository.findLoadingPortById(5);
+        User user = userRepository.findUserById(21);
+        Car car = new Car("GM-456WL", "E Golf", HagenbergSimulationFactory.setupVwEGolf().getEvSimBattery().getCapacity(), false, 80, false, user);
+        carRepository.save(car);
+        Session session = new Session(c.getTime(), percentToDouble(60, car), false, car, loadingPort);
+        sessionRepository.save(session);
+        optimizer.addSession(session);
+    }
+
+    private double percentToDouble(int percent, Car car){
+        double capacity = car.getCapacity();
+        double factor = percent/100.0;
+
+        double value = capacity * factor;
+
+        return value;
     }
 }

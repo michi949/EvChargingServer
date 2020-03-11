@@ -1,25 +1,21 @@
 package at.fhooe.mc.server.Data;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
-@Table(name = "loadingstation")
-public class LoadingStation {
+@Table(name = "loadingStation")
+public class LoadingStation implements Serializable {
     @Id
     int stationNr;
     String owner;
 
-    @OneToMany(mappedBy = "loadingstation", cascade = CascadeType.ALL)
-    Set<LoadingPort> loadingport;
+    @OneToMany(mappedBy = "loadingStation", cascade = CascadeType.ALL)
+    Set<LoadingPort> loadingPort;
 
     public LoadingStation() {
         stationNr = 0;
@@ -31,13 +27,13 @@ public class LoadingStation {
      * Revers sets the loadingstation on loading port.
      * @param stationNr
      * @param owner
-     * @param loadingport
+     * @param loadingPort
      */
-    public LoadingStation(int stationNr, String owner, List<LoadingPort> loadingport) {
+    public LoadingStation(int stationNr, String owner, List<LoadingPort> loadingPort) {
         this.stationNr = stationNr;
         this.owner = owner;
-        this.loadingport =  new HashSet<LoadingPort>(loadingport);
-        this.loadingport.forEach(x -> x.setLoadingstation(this));
+        this.loadingPort =  new HashSet<LoadingPort>(loadingPort);
+        this.loadingPort.forEach(x -> x.setLoadingStation(this));
     }
 
     public int getStationNr() {
@@ -56,12 +52,12 @@ public class LoadingStation {
         this.owner = owner;
     }
 
-    public Set<LoadingPort> getLoadingport() {
-        return loadingport;
+    public Set<LoadingPort> getLoadingPort() {
+        return loadingPort;
     }
 
-    public void setLoadingport(Set<LoadingPort> loadingport) {
-        this.loadingport = loadingport;
+    public void setLoadingPort(Set<LoadingPort> loadingport) {
+        this.loadingPort = loadingport;
     }
 
     @Override
@@ -69,7 +65,7 @@ public class LoadingStation {
         return "LoadingStation{" +
                 "stationNr=" + stationNr +
                 ", owner='" + owner + '\'' +
-                ", loadingport=" + loadingport +
+                ", loadingport=" + loadingPort +
                 '}';
     }
 }

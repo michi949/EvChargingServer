@@ -152,7 +152,7 @@ public class SessionController {
                 return "{success: false}";
             }
 
-            optimizer.stopSession(session);
+            optimizer.stopSession(session, true);
 
         } catch (IOException e) {
             e.printStackTrace();

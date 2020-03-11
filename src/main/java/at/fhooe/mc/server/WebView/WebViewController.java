@@ -1,11 +1,9 @@
 package at.fhooe.mc.server.WebView;
 
-import at.fhooe.mc.server.Data.HourlyWeatherForecast;
-import at.fhooe.mc.server.Data.LoadingPort;
-import at.fhooe.mc.server.Data.Reservation;
-import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Data.*;
 import at.fhooe.mc.server.Repository.LoadingPortRepository;
 import at.fhooe.mc.server.Repository.ReservationRepository;
+import at.fhooe.mc.server.Repository.SystemReportRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +26,9 @@ public class WebViewController {
     @Autowired
     LoadingPortRepository loadingPortRepository;
 
+    @Autowired
+    SystemReportRepository systemReportRepository;
+
     @Value("${spring.application.name}")
     String appName;
 
@@ -45,8 +46,18 @@ public class WebViewController {
         double aviableSolarPower = optimizer.getAvailableSolarPower();
         model.addAttribute("aviableSolarPower", aviableSolarPower);
 
-
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 1);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        Date startDate = c.getTime();
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        Date endDate = c.getTime();
+        ArrayList<SystemReport> systemReports = new ArrayList<>(systemReportRepository.findAllReportsInAllRange(startDate));
+        model.addAttribute("systemReports", systemReports);
+
+        c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
         ArrayList<Reservation> reservations = new ArrayList<>(reservationRepository.findReservationByDateRange(new Date(), c.getTime()));
         model.addAttribute("reservations", reservations);

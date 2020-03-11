@@ -32,26 +32,26 @@ public class Session implements Serializable {
     boolean isTemporaryPausedByUser = false;
     boolean isTemporaryPausedBySystem = false;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(unique = true)
     @JsonIgnore
     Car car;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
-    LoadingPort loadingport;
+    LoadingPort loadingPort;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Set<SessionChanges> sessionChanges = new HashSet<>();
+    @OneToMany(mappedBy = "session", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    Set<SessionChange> sessionChanges = new HashSet<>();
 
     public Session(){}
 
-    public Session(Date endDate, Double endCapacity, boolean isSlowMode, Car car, LoadingPort loadingport) {
+    public Session(Date endDate, Double endCapacity, boolean isSlowMode, Car car, LoadingPort loadingPort) {
         this.endDate = endDate;
         this.endCapacity = endCapacity;
         this.isSlowMode = isSlowMode;
         this.car = car;
-        this.loadingport = loadingport;
+        this.loadingPort = loadingPort;
     }
 
     public int getId() {
@@ -94,12 +94,12 @@ public class Session implements Serializable {
         this.car = car;
     }
 
-    public LoadingPort getLoadingport() {
-        return loadingport;
+    public LoadingPort getLoadingPort() {
+        return loadingPort;
     }
 
-    public void setLoadingport(LoadingPort loadingport) {
-        this.loadingport = loadingport;
+    public void setLoadingPort(LoadingPort loadingport) {
+        this.loadingPort = loadingport;
     }
 
     public Double getRestCapacity() {
@@ -194,11 +194,11 @@ public class Session implements Serializable {
         this.currentCapacity = currentCapacity;
     }
 
-    public Set<SessionChanges> getSessionChanges() {
+    public Set<SessionChange> getSessionChanges() {
         return sessionChanges;
     }
 
-    public void setSessionChanges(Set<SessionChanges> sessionChanges) {
+    public void setSessionChanges(Set<SessionChange> sessionChanges) {
         this.sessionChanges = sessionChanges;
     }
 

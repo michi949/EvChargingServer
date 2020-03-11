@@ -1,5 +1,4 @@
 package at.fhooe.mc.server.Controller;
-import at.fhooe.mc.server.Data.DailyWeather;
 import at.fhooe.mc.server.Data.HourlyWeatherForecast;
 import at.fhooe.mc.server.Repository.WeatherForecastRepository;
 import at.fhooe.mc.server.Repository.WeatherRepository;
@@ -24,7 +23,7 @@ public class WeatherController {
 
     @RequestMapping(value = "/updateWeatherForecast", method = RequestMethod.GET)
     public String updateWeatherForecast(@RequestBody String payload) throws Exception {
-        weatherService.gatherWeatherDataForecast();
+        weatherService.gatherWeatherDataForecastAndCurrentSolarData();
         return "{success:true}";
     }
 

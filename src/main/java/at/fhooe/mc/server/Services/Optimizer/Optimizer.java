@@ -4,13 +4,9 @@ import ChargingEnviroment.EvSimChargingPoint;
 import at.fhooe.mc.server.Data.*;
 import at.fhooe.mc.server.Interfaces.UpdateOptimizer;
 import at.fhooe.mc.server.Logging.ActionLogger;
-import at.fhooe.mc.server.Repository.SessionRepository;
-import at.fhooe.mc.server.Repository.SolarPanelsRepository;
-import at.fhooe.mc.server.Repository.WeatherForecastRepository;
-import at.fhooe.mc.server.Repository.WeatherRepository;
+import at.fhooe.mc.server.Repository.*;
 import at.fhooe.mc.server.Services.WeatherService;
 import at.fhooe.mc.server.Simulation.Simulation;
-import org.hibernate.dialect.function.StandardJDBCEscapeFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -36,6 +32,8 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     @Autowired
     WeatherRepository weatherRepository;
     @Autowired
+    SystemReportRepository systemReportRepository;
+    @Autowired
     WeatherService weatherService;
 
     @Override
@@ -46,7 +44,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     @PostConstruct
     public void initialize() {
         this.getLastWeatherDataInDatabase();
-        this.updateSolarPower();
+        this.updateAviableSolarPower();
         this.getSessionsInDatabase();
     }
 
@@ -62,18 +60,20 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         this.sessions.add(session);
         session.setStartDate(new Date());
         simulation.setVehicleToChargingPoint(session);
-        simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
-        createSessionChange(session);
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).startCharging();
         optimizeAllSessions();
     }
 
     @Override
-    public void stopSession(Session session) {
-        this.sessions.remove(session);
-        sessionRepository.delete(session);
-        simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
-        simulation.getChargingPoint(session.getLoadingport().getPort()).removeVehicleFromPoint();
-        optimizeAllSessions();
+    public void stopSession(Session session, boolean reOptimize) {
+        //this.sessions.remove(session);
+        //sessionRepository.delete(session);
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).removeVehicleFromPoint();
+
+        if(reOptimize){
+            optimizeAllSessions();
+        }
     }
 
     @Override
@@ -86,6 +86,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     public void restartSession(Session session) {
         session.setTemporaryPausedByUser(false);
         optimizeAllSessions();
+    }
+
+    @Override
+    public void updateAviableSolarPower() {
+        this.availableSolarPower = simulation.getSolar().hourOutput();
     }
 
     /**
@@ -108,6 +113,12 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         }
         pauseSessionsAccordingToWeatherAndSolar();
         divideAvailableSolarPower();
+        createSystemReport();
+    }
+
+    private void createSystemReport(){
+        SystemReport report = new SystemReport(sessions, availableSolarPower);
+        systemReportRepository.save(report);
     }
 
     /**
@@ -194,7 +205,6 @@ public class Optimizer implements Runnable, UpdateOptimizer {
             }
 
             applyToChargingPoint(session, session.getChargingPower());
-            createSessionChange(session);
             sessionRepository.save(session);
             adjustSessions(pos += 1, solarPowerForTheNextSession);
         }
@@ -244,7 +254,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void applyToChargingPoint(Session session, double power) {
-        EvSimChargingPoint simulationPoint = simulation.getChargingPoint(session.getLoadingport().getPort());
+        EvSimChargingPoint simulationPoint = simulation.getChargingPoint(session.getLoadingPort().getPort());
         simulationPoint.changeChargingSpeedOnPoint(power);
     }
 
@@ -253,6 +263,12 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void calculateMinimumPower(Session session) {
+        if(session.getCurrentCapacity() >= session.getEndCapacity()){
+            notifyUser("Vehicle is already optimal charged!");
+            stopSession(session, false);
+            return;
+        }
+
         Double minPower = session.getRestCapacity() / session.getTimeToEnd();
         session.setMinPower(minPower);
         checkMinimumPower(session);
@@ -261,8 +277,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private void checkMinimumPower(Session session) {
         if (session.getMinPower() < 0) {
             notifyUser("Vehicle is already optimal charged!");
-            this.sessions.remove(session);
-            sessionRepository.delete(session);
+            stopSession(session, false);
             return;
         }
 
@@ -301,7 +316,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private double getCurrentCapacityForSession(Session session) {
-        return simulation.getChargingPoint(session.getLoadingport().getPort()).getEvSimVehicle().getEvSimBattery().getCurrentCapacity();
+        return simulation.getChargingPoint(session.getLoadingPort().getPort()).getEvSimVehicle().getEvSimBattery().getCurrentCapacity();
     }
 
     private double calculateLeftOverTime(Session session) {
@@ -345,6 +360,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
      * Fills the time between the downloaded hours. The Api changed their plan so only for every 3 hours data is available.
      */
     protected void fillTimeBetweenHours() {
+        if(this.weatherForecasts.isEmpty()){return;}
         ArrayList<HourlyWeatherForecast> tmpWeatherForecasts = new ArrayList<>();
         for (HourlyWeatherForecast weatherForecast : this.weatherForecasts) {
             for (int i = 1; i <= 2; i++) {
@@ -478,27 +494,17 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         }
     }
 
-    @Scheduled(initialDelay = 2000, fixedRate = 300000)
-    private void updateSolarPower() {
-        this.availableSolarPower = simulation.getSolar().hourOutput();
-    }
-
     private void pauseChargingProcessBySystem(Session session) {
         session.setTemporaryPausedBySystem(true);
-        simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
         sessionRepository.save(session);
     }
 
     private void pauseChargingProcessByUser(Session session) {
         session.setTemporaryPausedByUser(true);
-        simulation.getChargingPoint(session.getLoadingport().getPort()).stopCharging();
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
         notifyUser("Charging Process successfully paused. ");
         sessionRepository.save(session);
-    }
-
-    private void createSessionChange(Session session) {
-        SessionChanges sessionChanges = new SessionChanges(session);
-        session.getSessionChanges().add(sessionChanges);
     }
 
     /**
@@ -512,7 +518,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
         for (Session session : sessions) {
             simulation.setVehicleToChargingPoint(session);
-            simulation.getChargingPoint(session.getLoadingport().getPort()).startCharging();
+            simulation.getChargingPoint(session.getLoadingPort().getPort()).startCharging();
         }
 
         optimizeAllSessions();
@@ -524,7 +530,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         this.weatherForecasts = new ArrayList(weatherForecastRepository.findNextWeatherForecasts(new Date(), c.getTime()));
 
         if (this.weatherForecasts.isEmpty()) {
-            this.weatherService.gatherWeatherDataForecast();
+            this.weatherService.gatherWeatherDataForecastAndCurrentSolarData();
         }
     }
 

@@ -3,9 +3,11 @@ package at.fhooe.mc.server;
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.LoadingStation;
 import at.fhooe.mc.server.Data.SolarPanels;
+import at.fhooe.mc.server.Data.User;
 import at.fhooe.mc.server.Logging.ActionLogger;
 import at.fhooe.mc.server.Repository.LoadingStationRepository;
 import at.fhooe.mc.server.Repository.SolarPanelsRepository;
+import at.fhooe.mc.server.Repository.UserRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import at.fhooe.mc.server.Services.WeatherService;
 import at.fhooe.mc.server.Simulation.Simulation;
@@ -28,6 +30,9 @@ public class LoadyServer {
 
     @Autowired
     LoadingStationRepository loadingStationRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     SolarPanelsRepository solarPanelsRepository;
@@ -70,6 +75,9 @@ public class LoadyServer {
             loadingStationRepository.save(new LoadingStation(1, "FH-OOE", new ArrayList<LoadingPort>(List.of(port1, port2))));
             loadingStationRepository.save(new LoadingStation(2, "FH-OOE", new ArrayList<LoadingPort>(List.of(port3, port4))));
             loadingStationRepository.save(new LoadingStation(3, "FH-OOE", new ArrayList<LoadingPort>(List.of(port5, port6))));
+
+            User user = new User("Michael Reder", "reder949@gmail.com", 123456789);
+            userRepository.save(user);
 
             SolarPanels solarPanels = new SolarPanels();
             solarPanelsRepository.save(solarPanels);

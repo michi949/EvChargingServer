@@ -1,6 +1,5 @@
 package at.fhooe.mc.server.Controller;
 
-import at.fhooe.mc.server.Data.Car;
 import at.fhooe.mc.server.Data.LoadingPort;
 import at.fhooe.mc.server.Data.Reservation;
 import at.fhooe.mc.server.Data.User;
@@ -79,7 +78,7 @@ public class ReservationController {
             Reservation reservation = new Reservation();
             reservation.setStartDate(startDate);
             reservation.setEndDate(endDate);
-            reservation.setLoadingport(port);
+            reservation.setLoadingPort(port);
             reservation.setUser(user);
             reservation.setCreationDate(new Date());
 

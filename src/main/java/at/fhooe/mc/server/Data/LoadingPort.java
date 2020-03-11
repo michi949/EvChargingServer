@@ -3,28 +3,29 @@ package at.fhooe.mc.server.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "loadingport")
-public class LoadingPort {
+@Table(name = "loadingPort")
+public class LoadingPort implements Serializable {
     @Id
     int port;
     boolean occupied;
     String ip;
 
-    @OneToOne(mappedBy = "loadingport")
+    @OneToOne(mappedBy = "loadingPort")
     @JsonIgnore
     Session session;
 
-    @OneToMany(mappedBy = "loadingport", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "loadingPort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Reservation> reservation;
 
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    LoadingStation loadingstation;
+    LoadingStation loadingStation;
 
     public LoadingPort() {
     }
@@ -78,12 +79,12 @@ public class LoadingPort {
         this.reservation = reservations;
     }
 
-    public LoadingStation getLoadingstation() {
-        return loadingstation;
+    public LoadingStation getLoadingStation() {
+        return loadingStation;
     }
 
-    public void setLoadingstation(LoadingStation loadingstation) {
-        this.loadingstation = loadingstation;
+    public void setLoadingStation(LoadingStation loadingstation) {
+        this.loadingStation = loadingstation;
     }
 
     public String getIp() {

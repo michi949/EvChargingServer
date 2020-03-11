@@ -3,11 +3,12 @@ package at.fhooe.mc.server.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "sessionchanges")
-public class SessionChanges {
+@Table(name = "sessionChange")
+public class SessionChange implements Serializable {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -28,10 +29,15 @@ public class SessionChanges {
     @JsonIgnore
     Session session;
 
-    public SessionChanges() {
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    SystemReport systemReport;
+
+    public SessionChange() {
     }
 
-    public SessionChanges(Session session){
+    public SessionChange(Session session){
         if(session.getCurrentCapacity() != null){
             this.capacity = session.getCurrentCapacity();
         } else {
@@ -98,5 +104,21 @@ public class SessionChanges {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public double getChargingPower() {
+        return chargingPower;
+    }
+
+    public void setChargingPower(double chargingPower) {
+        this.chargingPower = chargingPower;
+    }
+
+    public SystemReport getSystemReport() {
+        return systemReport;
+    }
+
+    public void setSystemReport(SystemReport systemReport) {
+        this.systemReport = systemReport;
     }
 }

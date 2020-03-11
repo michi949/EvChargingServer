@@ -31,7 +31,7 @@ public class Reservation implements Serializable {
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    LoadingPort loadingport;
+    LoadingPort loadingPort;
 
     public Reservation() {
         id = 0;
@@ -71,12 +71,12 @@ public class Reservation implements Serializable {
         this.user = user;
     }
 
-    public LoadingPort getLoadingport() {
-        return loadingport;
+    public LoadingPort getLoadingPort() {
+        return loadingPort;
     }
 
-    public void setLoadingport(LoadingPort loadingport) {
-        this.loadingport = loadingport;
+    public void setLoadingPort(LoadingPort loadingport) {
+        this.loadingPort = loadingport;
     }
 
     public Date getCreationDate() {

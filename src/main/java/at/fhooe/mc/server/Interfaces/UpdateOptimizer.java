@@ -12,9 +12,11 @@ public interface UpdateOptimizer {
 
      void addSession(Session session);
 
-     void stopSession(Session session);
+     void stopSession(Session session, boolean reOptimize);
 
      void pauseSession(Session session);
 
      void restartSession(Session session);
+
+    void updateAviableSolarPower();
 }

@@ -45,7 +45,7 @@
                 <img src="../static/images/card-top-reservation.jpg" th:src="@{/images/card-top-reservation.jpg}" class="card-img card-img-top" alt="Reservation Image">
                 <div class="card-body">
                     <h5 class="card-title"><span th:text="${reservationItem.getUser().getName()}"></span> - <span th:text="${reservationItem.getUser().getEmail()}"></span></h5>
-                    <p class="card-text">Reservation for port <span th:text="${reservationItem.getLoadingport().getPort()}"></span> from <span th:text="${reservationItem.getStartDateAsStringForHtml()}"></span> to <span th:text="${reservationItem.getEndDateAsStringForHtml()}"></span>.</p>
+                    <p class="card-text">Reservation for port <span th:text="${reservationItem.getLoadingPort().getPort()}"></span> from <span th:text="${reservationItem.getStartDateAsStringForHtml()}"></span> to <span th:text="${reservationItem.getEndDateAsStringForHtml()}"></span>.</p>
                     <p class="card-text"><small class="text-muted">Created on: <span th:text="${reservationItem.getCreationDateAsStringForHtml()}"></span> </small></p>
                 </div>
             </div>

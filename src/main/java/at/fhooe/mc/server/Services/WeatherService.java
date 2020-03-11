@@ -31,8 +31,9 @@ public class WeatherService  {
     // 0 0 */1 * * *  every hour.
     //Cron Job, to get data from api.
     @Scheduled(cron = "0 0/15 * * * *")
-    public void gatherWeatherDataForecast() {
+    public void gatherWeatherDataForecastAndCurrentSolarData() {
         ArrayList<HourlyWeatherForecast> weatherForecasts = weatherConnector.performRequest();
+        updateOptimizer.updateAviableSolarPower();
         updateOptimizer.updateWeatherForecast(weatherForecasts);
     }
 

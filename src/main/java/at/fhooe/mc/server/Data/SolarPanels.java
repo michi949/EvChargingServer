@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Entity
-@Table(name = "solarpanels")
-public class SolarPanels {
+@Table(name = "solarPanels")
+public class SolarPanels implements Serializable {
     @Id
     int id;
 
