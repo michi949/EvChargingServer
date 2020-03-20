@@ -15,8 +15,7 @@ import java.util.Set;
 public class SystemReport implements Serializable {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     int id;
 
@@ -40,7 +39,7 @@ public class SystemReport implements Serializable {
 
     private void generateSessionChanges(ArrayList<Session> sessions){
         for(Session session : sessions){
-            SessionChange changes = new SessionChange(session);
+            SessionChange changes = new SessionChange(session, this);
             this.sessionChanges.add(changes);
             neededPower += session.getChargingPower();
         }

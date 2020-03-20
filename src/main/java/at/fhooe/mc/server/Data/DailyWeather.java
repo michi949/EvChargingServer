@@ -12,8 +12,7 @@ import java.util.Set;
 public class DailyWeather implements Serializable {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     int id;
     String location;

@@ -134,13 +134,30 @@
                         </tr>
                         </thead>
                         <tr th:each="sessionData : ${sessions}">
-                            <th scope="row"><span th:text="${sessionData.getLoadingPort().getPort()}"></span></th>
-                            <td><span th:if="${sessionData.isOptimized()}" th:text="${sessionData.getOptimizedPower()}"></span>
-                                <span th:if="${!sessionData.isOptimized()}" th:text="${sessionData.getMinPower()}"></span>
-                                kW</td>
+                            <th th:if="${!sessionData.isOld()}" scope="row"><span th:text="${sessionData.getLoadingPort().getPort()}"></span></th>
+                            <td th:if="${!sessionData.isOld()}"> <span th:text="${sessionData.getChargingPowerForHTML()}"></span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center card-chart-sessions">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link active">Chart</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="session-overview-chart" id="overall-nonOpt-chart">
+                    </div>
                 </div>
             </div>
         </div>
@@ -163,6 +180,7 @@
         function drawAllCharts() {
             drawTimelineChart();
             drawOverviewChart();
+            drawOverviewChartNonOpt();
         }
 
         function drawOverviewChart() {
@@ -172,108 +190,44 @@
             data.addColumn('number', 'Solar Power');
             data.addColumn('number', 'Total Power');
 
-
+            var ports = [];
             for(var i = 0; i < sessionItem.length; i++) {
                 var item = sessionItem[i];
                 var port = item["loadingPort"];
-                data.addColumn('number', port['port']);
+                if(port !== null){
+                    ports.push(port['port']);
+                    data.addColumn('number', 'Port' + port['port']);
+                }
             }
 
 
             for (var i = 0; i < systemReportItem.length; i++){
-                var item = systemReportItem[i];
-                var changes = item["sessionChanges"];
+                var report = systemReportItem[i];
+                var changes = report["sessionChanges"];
                 var arr = [];
-                arr.push(new Date(Date.parse(item["timestamp"])));
-                arr.push(item["solarPower"]);
-                arr.push(item["neededPower"]);
+                arr.push(new Date(Date.parse(report["timestamp"])));
+                arr.push(report["solarPower"]);
+                arr.push(report["neededPower"]);
 
-                var paddingVal = sessionItem.length - changes.length;
-                if(paddingVal === 0) {
-                    for(var r = 0; r < changes.length; r++){
-                        arr.push(item["chargingPower"]);
+
+
+                for(var r = 0; r < ports.length; r++){
+                    var currentPort = ports[r];
+                    var found = false;
+                    for(var l = 0; l < changes.length && !found; l++){
+                        var change = changes[l];
+                        if(currentPort === change["portId"]){
+                            arr.push(change["chargingPower"]);
+                            found = true
+                        }
+                    }
+                    if(found === false){
+                        arr.push(0);
                     }
                 }
 
                 data.addRow(arr);
             }
-
-            /*
-            data.addRows([    [new Date(1583478900000), 3.8, 0, 0, 0],
-                [new Date(1583480794000), 5.7, 10.7, 0, 0],
-                [new Date(1583481600000), 9.53, 10.7, 0, 0],
-                [new Date(1583482500000), 12.98, 12.89, 0, 0],
-                [new Date(1583483400000), 20.45, 9.6, 11.04, 0],
-                [new Date(1583484300000), 26.23, 11.43, 14.80, 0],
-                [new Date(1583485200000), 32.89, 14.44, 18.45, 0],
-                [new Date(1583486100000), 30.35, 13.01, 17.34, 0],
-                [new Date(1583487000000), 29.66, 12.77, 16.89, 0],
-                [new Date(1583487900000), 32.50, 14.3, 18.20, 0],
-                [new Date(1583488800000), 26.45, 12.56, 14.89, 0],
-                [new Date(1583489700000), 24.98, 11.53, 13.45, 0],
-                [new Date(1583490263000), 24.02, 7.56, 8.43, 16.45],
-                [new Date(1583490600000), 25.43, 7.56, 8.43, 16.45],
-                [new Date(1583491500000), 24.12, 7.56, 8.43, 16.45],
-                [new Date(1583492400000), 19.23, 7.56, 8.43, 16.45],
-                [new Date(1583493300000), 17.67, 7.56, 8.43, 16.45],
-                [new Date(1583494200000), 18.55, 7.56, 8.43, 16.45],
-                [new Date(1583495100000), 20.56, 7.56, 8.43, 16.45],
-                [new Date(1583496000000), 23.93, 7.56, 8.43, 16.45],
-                [new Date(1583496900000), 25.89, 7.56, 8.43, 16.45],
-                [new Date(1583497800000), 28.67, 7.56, 8.43, 16.45],
-                [new Date(1583498700000), 28.34, 7.56, 8.43, 16.45],
-                [new Date(1583499600000), 30.40, 7.56, 8.43, 16.45],
-                [new Date(1583500500000), 33.21, 7.56, 8.43, 17.20],
-                [new Date(1583501400000), 36.93, 7.56, 8.43, 16.45],
-                [new Date(1583502300000), 23.93, 7.56, 8.43, 16.45],]); */
-
-            /*
-            data.addRows([
-                [new Date(1583733600000), 0, 0, 0, 0, 0, 0, 0], //07:00
-                [new Date(1583734500000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583733600000), 0, 0, 0, 0, 0, 0, 0], //Port 1
-                [new Date(1583735400000), 4.2, 3.8, 3.8, 0, 0, 0, 0],
-                [new Date(1583736300000), 4.5, 3.8, 3.8, 0, 0, 0, 0],
-                [new Date(1583737131000), 4.6, 6.3, 0, 6.3, 0, 0, 0],
-                [new Date(1583737200000), 5.4, 6.3, 0, 6.3, 0, 0, 0], //08:00 Uhr
-                [new Date(1583738100000), 6.2, 6.3, 0, 6.3, 0, 0, 0],
-                [new Date(1583739000000), 12.8, 12.8, 5.21, 7.5, 0, 0, 0],
-                [new Date(1583739891000), 13,1, 12.8, 4.60, 6.2, 3.7, 0, 0],
-                [new Date(1583739900000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583740800000), 0, 0, 0, 0, 0, 0, 0], //09:00
-                [new Date(1583741700000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583742600000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583743500000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583744400000), 0, 0, 0, 0, 0, 0, 0], //10:00
-                [new Date(1583745300000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583746200000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583747100000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583748000000), 0, 0, 0, 0, 0, 0, 0], //11:00
-                [new Date(1583748900000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583749800000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583750700000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583751600000), 0, 0, 0, 0, 0, 0, 0], //12:00
-                [new Date(1583752500000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583753400000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583754300000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583755200000), 0, 0, 0, 0, 0, 0, 0], //13:00
-                [new Date(1583756100000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583757000000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583757900000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583758800000), 0, 0, 0, 0, 0, 0, 0], //14:00
-                [new Date(1583759700000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583760600000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583761500000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583762400000), 0, 0, 0, 0, 0, 0, 0], //15:00
-                [new Date(1583763300000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583764200000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583765100000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583766000000), 0, 0, 0, 0, 0, 0, 0], //16:00
-                [new Date(1583766900000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583767800000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583768700000), 0, 0, 0, 0, 0, 0, 0],
-                [new Date(1583769600000), 0, 0, 0, 0, 0, 0, 0], //17:00
-            ]); */
 
             var options = {
                 hAxis: {
@@ -289,6 +243,29 @@
             chart.draw(data, options);
         }
 
+        function drawOverviewChartNonOpt() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Time of Day');
+            data.addColumn('number', 'Solar Power');
+            data.addColumn('number', 'Total Power');
+
+
+
+            var options = {
+                hAxis: {
+                    title: 'Time'
+                },
+                vAxis: {
+                    title: 'W'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('overall-nonOpt-chart'));
+
+            chart.draw(data, options);
+        }
+
 
         function drawTimelineChart() {
             //google.charts.setOnLoadCallback(drawChart);
@@ -300,21 +277,15 @@
             dataTable.addColumn({ type: 'date', id: 'Start' });
             dataTable.addColumn({ type: 'date', id: 'End' });
 
-            dataTable.addRows([['Port 1',  new Date(1583735091000), new Date(1583768751000)],
-                ['Port 2', new Date(1583737131000), new Date(1583764251000)],
-                ['Port 3', new Date(1583739891000), new Date(1583757231000)],
-                ['Port 4', new Date(1583746431000), new Date(1583766771000)],
-                ['Port 5', new Date(1583752131000), new Date(1583763891000)],]
-            );
-
-            /**
             for (var i = 0; i < sessionItem.length; i++){
                 var item = sessionItem[i];
                 var port = item["loadingPort"];
-                var endDate = new Date(Date.parse(item["endDate"]));
-                var startDate =  new Date(Date.parse(item["startDate"]));
-                dataTable.addRow(['Port ' + port['port'], startDate, endDate]);
-            } */
+                if(port !== null){
+                    var endDate = new Date(Date.parse(item["endDate"]));
+                    var startDate =  new Date(Date.parse(item["startDate"]));
+                    dataTable.addRow(['Port ' + port['port'], startDate, endDate]);
+                }
+            }
 
             chart.draw(dataTable);
         }

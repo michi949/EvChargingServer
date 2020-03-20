@@ -8,7 +8,6 @@ import at.fhooe.mc.server.Repository.*;
 import at.fhooe.mc.server.Services.WeatherService;
 import at.fhooe.mc.server.Simulation.Simulation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +19,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     ArrayList<Session> sessions = new ArrayList<>();
     ArrayList<HourlyWeatherForecast> weatherForecasts = new ArrayList<>();
     Double availableSolarPower = 0.0;
+    Double availableSolarPowerForReport = 0.0;
     Simulation simulation = new Simulation();
     SolarPanels solarPanels;
 
@@ -66,10 +66,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Override
     public void stopSession(Session session, boolean reOptimize) {
-        //this.sessions.remove(session);
-        //sessionRepository.delete(session);
+        session.setChargingPower(0.0);
+        session.setOld(true);
         simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
         simulation.getChargingPoint(session.getLoadingPort().getPort()).removeVehicleFromPoint();
+        this.sessions.remove(session);
 
         if(reOptimize){
             optimizeAllSessions();
@@ -90,7 +91,8 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     @Override
     public void updateAviableSolarPower() {
-        this.availableSolarPower = simulation.getSolar().hourOutput();
+        this.availableSolarPower = simulation.getFakeSolar();//simulation.getSolar().hourOutput();
+        this.availableSolarPowerForReport = availableSolarPower;
     }
 
     /**
@@ -106,19 +108,22 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void optimizeAllSessions() {
-        for (Session session : sessions) {
+        for (int i = 0; i < sessions.size(); i++) {
+            Session session = sessions.get(i);
             calculateLeftOverCapacity(session);
             calculateLeftOverTime(session);
             calculateMinimumPower(session);
         }
         pauseSessionsAccordingToWeatherAndSolar();
         divideAvailableSolarPower();
-        createSystemReport();
+        creatSystemReport();
     }
 
-    private void createSystemReport(){
-        SystemReport report = new SystemReport(sessions, availableSolarPower);
-        systemReportRepository.save(report);
+    private void creatSystemReport(){
+        if(!sessions.isEmpty()){
+            SystemReport report = new SystemReport(sessions, availableSolarPowerForReport);
+            systemReportRepository.save(report);
+        }
     }
 
     /**
@@ -152,6 +157,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void setNonOptimizedChargingSettingsOnSession(Session session, double chargingPower) {
         session.setChargingPower(chargingPower);
+        session.setChargingPower(0.0);
         session.setOptimized(false);
         sessionRepository.save(session);
     }
@@ -177,7 +183,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         if (!session.isTemporaryPausedBySystem() && !session.isTemporaryPausedByUser()) {
             if (!session.isFallBack()) {
                 if (!session.isSlowMode() && !session.getCar().isOnePhase()) { //Session is normal and has 3 phase
-                    Map<Integer, Double> map = splitAvailableSolarPower(22000.0, availableSolarPower);
+                    Map<Integer, Double> map = splitAvailableSolarPower(22000.0, availableSolarPower, session.getChargingPower());
 
                     if(map.get(0) == 22000.0){
                         setOptimizedChargingSettingsOnSession(session, 22000.0, 22000.0);
@@ -186,7 +192,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                     }
                     solarPowerForTheNextSession = map.get(1);
                 } else if (session.isSlowMode() && !session.getCar().isOnePhase()) { //Session is slow mode and has 3 phase
-                    Map<Integer, Double> map = splitAvailableSolarPower(11000.0, availableSolarPower);
+                    Map<Integer, Double> map = splitAvailableSolarPower(11000.0, availableSolarPower, session.getChargingPower());
                     if(map.get(0) == 11000.0){
                         setOptimizedChargingSettingsOnSession(session, 11000.0, 11000.0);
                     } else {
@@ -194,7 +200,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                     }
                     solarPowerForTheNextSession = map.get(1);
                 } else if (session.getCar().isOnePhase()) { //Session is one phase
-                    Map<Integer, Double> map = splitAvailableSolarPower(3700.0, availableSolarPower);
+                    Map<Integer, Double> map = splitAvailableSolarPower(3700.0, availableSolarPower, session.getChargingPower());
                     if(map.get(0) == 3700.0){
                         setOptimizedChargingSettingsOnSession(session, 3700.0, 3700.0);
                     } else {
@@ -205,20 +211,21 @@ public class Optimizer implements Runnable, UpdateOptimizer {
             }
 
             applyToChargingPoint(session, session.getChargingPower());
-            sessionRepository.save(session);
             adjustSessions(pos += 1, solarPowerForTheNextSession);
         }
+
+        sessionRepository.save(session);
     }
 
-    private Map<Integer, Double> splitAvailableSolarPower(double maximumPower, double availableSolarPower) {
+    private Map<Integer, Double> splitAvailableSolarPower(double maximumPower, double availableSolarPower, double currentChargingPower) {
         double forSession = availableSolarPower * 0.65;
         double leftOverForOthers = 0.0;
 
         if (forSession < 3700.0) {
             forSession = availableSolarPower;
-        } else if (forSession > maximumPower) {
+        } else if (forSession + currentChargingPower > maximumPower) {
             forSession = maximumPower;
-            leftOverForOthers = availableSolarPower - forSession;
+            leftOverForOthers = availableSolarPower - (forSession - currentChargingPower);
         } else {
             leftOverForOthers = availableSolarPower - forSession;
         }
@@ -259,7 +266,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private void sortSessionsAfterRating() {
-        sessions.sort((Session p1, Session p2) -> p1.getMinPower().compareTo(p2.getMinPower()));
+        sessions.sort((Session p1, Session p2) -> p2.getMinPower().compareTo(p1.getMinPower()));
     }
 
     private void calculateMinimumPower(Session session) {
@@ -286,7 +293,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
                 notifyUser("Optimaztion not possible in given Time!");
                 moveSessionToFallBack(session);
             }
-            sessionRepository.save(session);
+            //sessionRepository.save(session);
             return;
         }
 
@@ -302,7 +309,7 @@ public class Optimizer implements Runnable, UpdateOptimizer {
             }
         }
 
-        sessionRepository.save(session);
+        //sessionRepository.save(session);
     }
 
     private void notifyUser(String msg) {
@@ -320,18 +327,31 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     }
 
     private double calculateLeftOverTime(Session session) {
-        long tmp = session.getEndDate().getTime() - new Date().getTime();
+        if(session.getEndDate().getTime() < new Date().getTime()){
+            notifyUser("Time is over!");
+            stopSession(session, true);
+            return 0.0;
+        }
+
+        long tmp = session.getEndDate().getTime() - (new Date().getTime() - 600000);
         Date dateWithPuffer = new Date(tmp);
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateWithPuffer);
-        int hours = cal.get(Calendar.HOUR_OF_DAY);
+        int hours = cal.get(Calendar.HOUR_OF_DAY) - 1;
         int minutes = cal.get(Calendar.MINUTE);
         int seconds = cal.get(Calendar.SECOND);
 
-        String dateString = hours + "." + minutes + seconds;
+        String dateString = "";
+        if(minutes < 9){
+             dateString = hours + ".0" + minutes + seconds;
+        } else {
+             dateString = hours + "." + minutes + seconds;
+        }
+
         double diff = Double.parseDouble(dateString);
         session.setTimeToEnd(diff);
+        //sessionRepository.save(session);
 
         return diff;
     }
@@ -339,7 +359,9 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private double calculateLeftOverCapacity(Session session) {
         Double currentCapacity = getCurrentCapacityForSession(session);
         Double diff = session.getEndCapacity() - currentCapacity;
+        session.setCurrentCapacity(currentCapacity);
         session.setRestCapacity(diff);
+        //sessionRepository.save(session);
         return diff;
     }
 
@@ -403,6 +425,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
 
     private void estimateForecastSolarPower() {
         SolarPanels solarPanels = solarPanelsRepository.findSolarPanelsById(1);
+
+        if(solarPanels == null){
+            return;
+        }
+
         for (HourlyWeatherForecast weatherForecast : weatherForecasts) {
             double possiblePowerPlain = solarPanels.getPossiblePowerForHour(weatherForecast.getTemp());
             double onePercent = possiblePowerPlain / 100;
@@ -424,9 +451,15 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         double neededSolarPower = getNeededSolarPower(sessions);
         if(availableSolarPower < neededSolarPower){
             ArrayList<Session> possibleSessionsToPause = getPossibleSessionsToPause();
-            possibleSessionsToPause.sort((Session p1, Session p2) -> p1.getMinPower().compareTo(p2.getMinPower()));
+            possibleSessionsToPause.sort((Session p1, Session p2) -> p2.getMinPower().compareTo(p1.getMinPower()));
             checkNeededPowerAndSolarRange(possibleSessionsToPause);
+        } else {
+            for (Session session: sessions) {
+                session.setTemporaryPausedBySystem(false);
+            }
         }
+
+        sessionRepository.saveAll(sessions);
     }
 
     private void checkNeededPowerAndSolarRange(ArrayList<Session> sessions){
@@ -481,28 +514,26 @@ public class Optimizer implements Runnable, UpdateOptimizer {
     private double getNeededSolarPower(ArrayList<Session> sessions){
         double neededSolarPower = 0.0;
         for(Session session: sessions){
-            neededSolarPower += session.getMinPower();
+            if(session.getMinPower() != null){
+                neededSolarPower += session.getMinPower();
+            }
         }
 
         return  neededSolarPower;
     }
 
-    @Scheduled(initialDelay = 120000, fixedRate = 300000)
-    private void monitorSessions() {
-        for (Session session : sessions) {
-
-        }
-    }
-
     private void pauseChargingProcessBySystem(Session session) {
         session.setTemporaryPausedBySystem(true);
-        simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
+        session.setOptimized(false);
+        session.setChargingPower(0.0);
+        EvSimChargingPoint tmpPoint = simulation.getChargingPoint(session.getLoadingPort().getPort());
+        tmpPoint.pauseCharging();
         sessionRepository.save(session);
     }
 
     private void pauseChargingProcessByUser(Session session) {
         session.setTemporaryPausedByUser(true);
-        simulation.getChargingPoint(session.getLoadingPort().getPort()).stopCharging();
+        simulation.getChargingPoint(session.getLoadingPort().getPort()).pauseCharging();
         notifyUser("Charging Process successfully paused. ");
         sessionRepository.save(session);
     }
@@ -514,8 +545,11 @@ public class Optimizer implements Runnable, UpdateOptimizer {
         Date date = new Date();
         this.sessions.addAll(sessionRepository.findAllSessionsCurrentRunning(date));
         ArrayList<Session> sessionsToDelete = new ArrayList(sessionRepository.findAllSessionNotRunning(date));
-        sessionRepository.deleteAll(sessionRepository.findAllSessionNotRunning(date));
 
+        for(Session session : sessionRepository.findAllSessionNotRunning(date)){
+            session.setOld(true);
+            sessionRepository.save(session);
+        }
         for (Session session : sessions) {
             simulation.setVehicleToChargingPoint(session);
             simulation.getChargingPoint(session.getLoadingPort().getPort()).startCharging();

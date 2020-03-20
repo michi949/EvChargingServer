@@ -11,8 +11,7 @@ import java.util.*;
 public class Session implements Serializable {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     int id;
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,6 +30,7 @@ public class Session implements Serializable {
     double timeToEnd;
     boolean isTemporaryPausedByUser = false;
     boolean isTemporaryPausedBySystem = false;
+    boolean isOld = false;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(unique = true)
@@ -41,7 +41,7 @@ public class Session implements Serializable {
     @JoinColumn(unique = true)
     LoadingPort loadingPort;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "session", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     Set<SessionChange> sessionChanges = new HashSet<>();
 
     public Session(){}
@@ -203,22 +203,42 @@ public class Session implements Serializable {
     }
 
     public double getCurrentCapacityForHTML(){
+        if(currentCapacity == null){
+            return 0;
+        }
+
         return round(currentCapacity, 2);
     }
 
     public double getGoalCapacityForHTML(){
+        if(endCapacity == null){
+            return 0;
+        }
+
         return round(endCapacity, 2);
     }
 
     public double getMinPowerForHTML(){
+        if(minPower == null){
+            return 0;
+        }
+
         return round(minPower, 2);
     }
 
     public double getOptimizedPowerForHTML(){
+        if(optimizedPower == null){
+            return 0;
+        }
+
         return round(optimizedPower, 2);
     }
 
     public double getChargingPowerForHTML(){
+        if(chargingPower == null){
+            return 0;
+        }
+
         return round(chargingPower, 2);
     }
 
@@ -229,5 +249,13 @@ public class Session implements Serializable {
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
+    }
+
+    public boolean isOld() {
+        return isOld;
+    }
+
+    public void setOld(boolean old) {
+        isOld = old;
     }
 }

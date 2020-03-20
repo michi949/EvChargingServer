@@ -76,7 +76,10 @@ public class LoadyServer {
             loadingStationRepository.save(new LoadingStation(2, "FH-OOE", new ArrayList<LoadingPort>(List.of(port3, port4))));
             loadingStationRepository.save(new LoadingStation(3, "FH-OOE", new ArrayList<LoadingPort>(List.of(port5, port6))));
 
-            User user = new User("Michael Reder", "reder949@gmail.com", 123456789);
+            User user = userRepository.findUserByCard(123456789);
+            if(user == null){
+                user = new User("Michael Reder", "reder949@gmail.com", 123456789);
+            }
             userRepository.save(user);
 
             SolarPanels solarPanels = new SolarPanels();

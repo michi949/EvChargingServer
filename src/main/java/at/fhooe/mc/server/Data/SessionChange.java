@@ -11,14 +11,14 @@ import java.util.Date;
 public class SessionChange implements Serializable {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     int id;
 
     @Temporal(TemporalType.TIMESTAMP)
     Date timestamp;
 
+    int portId; //Only for Frontenduse
     double capacity;
     double minChargingPower;
     double optimizedPower;
@@ -37,7 +37,7 @@ public class SessionChange implements Serializable {
     public SessionChange() {
     }
 
-    public SessionChange(Session session){
+    public SessionChange(Session session, SystemReport systemReport){
         if(session.getCurrentCapacity() != null){
             this.capacity = session.getCurrentCapacity();
         } else {
@@ -62,6 +62,13 @@ public class SessionChange implements Serializable {
             this.chargingPower = 0;
         }
 
+        if(session.getLoadingPort() != null){
+            this.portId = session.getLoadingPort().port;
+        } else {
+            this.portId = 0;
+        }
+
+        this.systemReport = systemReport;
         this.timestamp = new Date();
         this.session = session;
     }
@@ -120,5 +127,13 @@ public class SessionChange implements Serializable {
 
     public void setSystemReport(SystemReport systemReport) {
         this.systemReport = systemReport;
+    }
+
+    public int getPortId() {
+        return portId;
+    }
+
+    public void setPortId(int portId) {
+        this.portId = portId;
     }
 }

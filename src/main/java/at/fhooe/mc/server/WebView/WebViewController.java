@@ -3,6 +3,7 @@ package at.fhooe.mc.server.WebView;
 import at.fhooe.mc.server.Data.*;
 import at.fhooe.mc.server.Repository.LoadingPortRepository;
 import at.fhooe.mc.server.Repository.ReservationRepository;
+import at.fhooe.mc.server.Repository.SessionRepository;
 import at.fhooe.mc.server.Repository.SystemReportRepository;
 import at.fhooe.mc.server.Services.Optimizer.Optimizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class WebViewController {
     @Autowired
     SystemReportRepository systemReportRepository;
 
+    @Autowired
+    SessionRepository sessionRepository;
+
     @Value("${spring.application.name}")
     String appName;
 
@@ -39,9 +43,6 @@ public class WebViewController {
     public String indexView(Model model) {
         ArrayList<HourlyWeatherForecast> weatherForecast = optimizer.getWeatherForecasts();
         model.addAttribute("weatherForecast", weatherForecast);
-
-        ArrayList<Session> sessions = optimizer.getSessions();
-        model.addAttribute("sessions", sessions);
 
         double aviableSolarPower = optimizer.getAvailableSolarPower();
         model.addAttribute("aviableSolarPower", aviableSolarPower);
@@ -56,6 +57,9 @@ public class WebViewController {
         Date endDate = c.getTime();
         ArrayList<SystemReport> systemReports = new ArrayList<>(systemReportRepository.findAllReportsInAllRange(startDate));
         model.addAttribute("systemReports", systemReports);
+
+        ArrayList<Session> sessions = new ArrayList<>(sessionRepository.findAllSessionsInRange(startDate, endDate));
+        model.addAttribute("sessions", sessions);
 
         c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
@@ -90,16 +94,14 @@ public class WebViewController {
 
     @GetMapping("/SessionsID")
     public String SessionsDetailView(@RequestParam(value = "id", required = true) Integer id, Model model) {
-        ArrayList<Session> sessions = optimizer.getSessions();
+        Session session = sessionRepository.findSessionById(id);
 
-        for(Session session : sessions) {
-            if(session.getId() == id){
-                model.addAttribute("sessionItem", session);
-                 return "sessionsDetailView";
-            }
+        if(session != null){
+            model.addAttribute("sessionItem", session);
+            return "sessionsDetailView";
         }
 
-        return "sessionsDetailView";
+        return "";
     }
 
     @GetMapping("/Settings")

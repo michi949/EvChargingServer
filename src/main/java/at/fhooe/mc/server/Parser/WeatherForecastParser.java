@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * Parse the Data from JSON String.
- * Usin Jackson Parser, implementet into spring.
+ * Using Jackson Parser, implementet into spring.
  */
 @Service
 public class WeatherForecastParser {
@@ -86,7 +86,9 @@ public class WeatherForecastParser {
         JsonNode main = weatherForecast.get("main");
         JsonNode clouds = weatherForecast.get("clouds");
 
-        forecast.setClouds(clouds.get("all").asInt());
+        int fakeCloude = (int) (Math.random() * (95 - 44 + 1) + 44);
+        //forecast.setClouds(clouds.get("all").asInt());
+        forecast.setClouds(fakeCloude);
         forecast.setTemp(main.get("temp").asDouble());
 
         checkIfNextDay(forecast);

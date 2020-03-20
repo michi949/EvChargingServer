@@ -12,8 +12,7 @@ import java.util.Date;
 public class Reservation implements Serializable {
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy= GenerationType.IDENTITY
     )
     int id;
     @Temporal(TemporalType.TIMESTAMP)

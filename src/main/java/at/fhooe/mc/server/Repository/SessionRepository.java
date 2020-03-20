@@ -2,6 +2,7 @@ package at.fhooe.mc.server.Repository;
 
 import at.fhooe.mc.server.Data.Car;
 import at.fhooe.mc.server.Data.Session;
+import at.fhooe.mc.server.Data.SystemReport;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -19,9 +20,12 @@ public interface SessionRepository extends CrudRepository<Session, Integer> {
     @Query("SELECT u FROM Session u WHERE u.id = ?1")
     Session findSessionById(int id);
 
-    @Query("SELECT u FROM Session u WHERE u.startDate < ?1 AND u.endDate > ?1")
+    @Query("SELECT u FROM Session u WHERE u.startDate < ?1 AND u.endDate > ?1 AND u.isOld = false")
     Set<Session> findAllSessionsCurrentRunning(Date currentDate);
 
     @Query("SELECT u FROM Session u WHERE u.endDate < ?1")
     Set<Session> findAllSessionNotRunning(Date currentDate);
+
+    @Query("SELECT u FROM Session u WHERE u.startDate > ?1 AND u.endDate < ?2")
+    Set<Session> findAllSessionsInRange(Date startTime, Date endTime);
 }
