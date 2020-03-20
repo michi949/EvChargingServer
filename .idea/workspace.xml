@@ -1,44 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc857224-7bcc-464e-95b4-ec0805e9fc20" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/DailyWeather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/DailyWeather.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/HourlyWeatherForecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/HourlyWeatherForecast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SessionChange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SystemReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/SystemReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Data/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/LoadyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/LoadyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Logging/ExportFile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/ModbusTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Parser/WeatherForecastParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Parser/WeatherForecastParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/SessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Repository/SessionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Services/Optimizer/Optimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Simulation/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Simulation/Simulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/overview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sessions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sessionsDetailView.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sessionsDetailView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Car.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Car.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/DailyWeather.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/DailyWeather.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/HourlyWeatherForecast.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/HourlyWeatherForecast.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Reservation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Reservation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/Session.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChange.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SessionChange.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SystemReport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/SystemReport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Data/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/LoadyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/LoadyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/ModbusTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/SessionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Repository/SessionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Services/Optimizer/Optimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Simulation/Simulation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/Simulation/Simulation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhooe/mc/server/WebView/WebViewController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/overview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sessions.html" afterDir="false" />
-    </list>
+    <list default="true" id="cc857224-7bcc-464e-95b4-ec0805e9fc20" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -282,6 +245,7 @@
       <workItem from="1583953968319" duration="8411000" />
       <workItem from="1583996213796" duration="13199000" />
       <workItem from="1584177679461" duration="38275000" />
+      <workItem from="1584706443085" duration="548000" />
     </task>
     <servers />
   </component>
@@ -437,8 +401,8 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="761" y="472" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584206119714" />
-    <state x="2030" y="0" width="738" height="773" maximized="true" key="dock-window-1" timestamp="1584289309086">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="2030" y="0" width="738" height="773" maximized="true" key="dock-window-1" timestamp="1584706991234">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="2030" y="0" width="738" height="773" maximized="true" key="dock-window-1/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584289309086" />
     <state x="302" y="115" width="1372" height="874" key="new project wizard" timestamp="1582553896956">
@@ -482,11 +446,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/SessionController.java</url>
           <line>103</line>
           <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/WebView/WebViewController.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/at/fhooe/mc/server/Controller/SessionController.java</url>
