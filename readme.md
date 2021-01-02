@@ -8,7 +8,7 @@ Clone the Project and install Docker and Docker-Compose [Link](https://docs.dock
 git clone https://github.com/michi949/EvChargingServer.git
 ```
 
-If no real environment charging environment is available, a simulation environment can be cloned [here](https://github.com/michi949/EvChargingEnv).
+If no real charging environment is available, a simulation environment can be cloned [here](https://github.com/michi949/EvChargingEnv).
 
 ## Running the tests
 
